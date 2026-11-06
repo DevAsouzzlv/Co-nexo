@@ -14,7 +14,8 @@ import {
   ChevronDown, 
   ShieldAlert, 
   Phone, 
-  FileText 
+  FileText,
+  Zap 
 } from 'lucide-react';
 
 export default function ReceptionCleanView({
