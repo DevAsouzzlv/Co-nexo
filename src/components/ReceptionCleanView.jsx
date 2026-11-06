@@ -161,27 +161,38 @@ export default function ReceptionCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* ABA 0: VISÃO GERAL DA RECEPÇÃO (DASHBOARD EXECUTIVO)           */}
+      {/* ABA 0: VISÃO GERAL DA RECEPÇÃO (DASHBOARD APPLE HIG)           */}
       {/* ============================================================== */}
       {currentTab === 'dashboard' && (
-        <div className="space-y-6">
-          {/* Banner de Boas-Vindas */}
-          <div className="bg-gradient-to-r from-[#0030A3] via-[#004A8D] to-[#002660] text-white rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 text-blue-100 border border-white/20">
-                Painel da Recepção • SENAC Hub
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight">
+        <div className="space-y-6 animate-fade-in">
+          {/* Header Banner com Vidro e Profundidade Apple */}
+          <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+            {/* Efeitos de Luz Difusa Apple */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="relative z-10 space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-blue-100 border border-white/20 inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F29100]" />
+                  Recepção & Governança • Hub SENAC
+                </span>
+                <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+                  8h Diárias Ativas
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Olá, Max Ferreira!
               </h2>
-              <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-                Acompanhe a ocupação das salas, o fluxo diário de atendimentos e gerencie encaixes sem janelas ociosas.
+              <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
+                Monitoramento contínuo das 8 horas de atendimento (4h Aline + 4h Jamile), confirmações ativas e zero ociosidade na grade docente.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+
+            <div className="relative z-10 flex items-center gap-2.5 shrink-0">
               <button
                 onClick={onOpenNovoMentorado}
-                className="px-4 py-2.5 rounded-2xl bg-[#F29100] hover:bg-[#d98200] active:scale-98 text-slate-950 font-black text-xs flex items-center gap-2 transition cursor-pointer shadow-md"
+                className="px-5 py-2.5 rounded-full bg-[#F29100] hover:bg-[#E08500] active:scale-95 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#F29100]/25 transition cursor-pointer"
               >
                 <UserPlus className="w-4 h-4" />
                 <span>+ Cadastrar Mentorado</span>
@@ -189,89 +200,109 @@ export default function ReceptionCleanView({
             </div>
           </div>
 
-          {/* 4 Cards de Métricas Estratégicas (SENAC Blue & Orange) */}
+          {/* 4 Cards de Métricas Estilo Apple Widgets */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            {/* Card 1: Ocupação */}
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-5 flex flex-col justify-between min-h-[160px]">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Ocupação do Turno
-                </span>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#004A8D]/10 text-[#004A8D]">
-                  Hoje
+                <div className="w-9 h-9 rounded-2xl bg-blue-500/10 flex items-center justify-center text-[#004A8D]">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-[#004A8D]">
+                  Hoje • 8h
                 </span>
               </div>
               <div className="my-2">
-                <h3 className="text-3xl font-black text-[#004A8D] tracking-tight">100%</h3>
-                <p className="text-xs text-slate-500 mt-1">4h fechadas sem janelas ociosas</p>
+                <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider block">
+                  Ocupação do Hub
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-bold text-[#1D1D1F] tracking-tight mt-0.5">
+                  100%
+                </h3>
               </div>
-              <span className="text-[11px] font-semibold text-emerald-700 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Grade otimizada
-              </span>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>4h Aline + 4h Jamile</span>
+              </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            {/* Card 2: Assiduidade */}
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-5 flex flex-col justify-between min-h-[160px]">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Assiduidade
-                </span>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                  +12.4%
+                <div className="w-9 h-9 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                  +12.4% este mês
                 </span>
               </div>
               <div className="my-2">
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">92.4%</h3>
-                <p className="text-xs text-slate-500 mt-1">Taxa de no-show controlada</p>
+                <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider block">
+                  Assiduidade Global
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-bold text-[#1D1D1F] tracking-tight mt-0.5">
+                  92.4%
+                </h3>
               </div>
-              <span className="text-[11px] font-semibold text-[#004A8D] flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Confirmação ativa via WhatsApp
-              </span>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#004A8D]">
+                <ShieldAlert className="w-3.5 h-3.5" />
+                <span>Régua anti-no show</span>
+              </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            {/* Card 3: Formalização MEI */}
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-5 flex flex-col justify-between min-h-[160px]">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                  Meta MEI D+60
-                </span>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                  Meta
+                <div className="w-9 h-9 rounded-2xl bg-[#F29100]/10 flex items-center justify-center text-[#C87500]">
+                  <Sparkles className="w-4 h-4 text-[#F29100]" />
+                </div>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#F29100]/15 text-[#9A5B00]">
+                  Meta D+60
                 </span>
               </div>
               <div className="my-2">
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">
+                <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider block">
+                  MEIs Formalizados
+                </span>
+                <h3 className="text-3xl sm:text-4xl font-bold text-[#1D1D1F] tracking-tight mt-0.5">
                   {students.filter((s) => s.statusNegocio === 'MEI').length}
                 </h3>
-                <p className="text-xs text-slate-500 mt-1">Alunos formalizados com CNPJ</p>
               </div>
-              <span className="text-[11px] font-semibold text-amber-700 flex items-center gap-1">
-                <AlertTriangle className="w-3.5 h-3.5" /> 2 em formalização D+60
-              </span>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-[#86868B]">
+                <Building2 className="w-3.5 h-3.5 text-[#004A8D]" />
+                <span>Esteira CNPJ ativa</span>
+              </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm flex flex-col justify-between">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Ações Rápidas
-              </span>
+            {/* Card 4: Ações Operacionais */}
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-5 flex flex-col justify-between min-h-[160px]">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-[#86868B] uppercase tracking-wider">
+                  Comandos Rápidos
+                </span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              </div>
               <div className="space-y-2 my-2">
                 <button
                   onClick={handleDispararWhatsApp}
-                  className="w-full py-2 px-3 rounded-2xl bg-[#F29100]/15 hover:bg-[#F29100]/25 text-[#9A5B00] font-bold text-xs border border-[#F29100]/30 flex items-center justify-center gap-1.5 transition cursor-pointer"
+                  className="w-full py-2 px-3 rounded-full bg-[#F29100]/15 hover:bg-[#F29100]/25 active:scale-95 text-[#9A5B00] font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border border-[#F29100]/30"
                 >
                   <Send className="w-3.5 h-3.5 text-[#C87500]" />
                   <span>{isWhatsappSent ? '✓ Lembretes Enviados' : 'Disparar WhatsApp 24h'}</span>
                 </button>
                 <button
                   onClick={() => setCurrentTab && setCurrentTab('grade')}
-                  className="w-full py-2 px-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
+                  className="w-full py-2 px-3 rounded-full bg-black/[0.04] hover:bg-black/[0.08] active:scale-95 text-[#1D1D1F] font-semibold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
                 >
                   <Clock className="w-3.5 h-3.5 text-[#004A8D]" />
-                  <span>Gerenciar Turno de 4h</span>
+                  <span>Gerenciar Turnos (8h)</span>
                 </button>
               </div>
-              <span className="text-[10px] text-slate-400 text-center font-medium">Recepção Hub SENAC</span>
+              <span className="text-[10px] text-[#86868B] text-center font-medium">Recepção Hub SENAC</span>
             </div>
           </div>
 
-          {/* Grade Dividida em 2 Seções Espaçosas */}
+          {/* Grade Dividida em 2 Seções Espaçosas com Vidro Apple */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Seção 1: Consultores em Atendimento Agora */}
             <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-4">
@@ -578,14 +609,14 @@ export default function ReceptionCleanView({
                   <Calendar className="w-5 h-5 text-[#004A8D]" />
                   <span>Agenda & Calendário Co.Nexo</span>
                 </h2>
-                <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                <div className="apple-segmented-container flex items-center">
                   <button
                     type="button"
                     onClick={() => setAgendaMode('semanal')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+                    className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
                       agendaMode === 'semanal'
-                        ? 'bg-[#004A8D] text-white shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
+                        ? 'bg-white text-[#1D1D1F] shadow-sm font-bold'
+                        : 'text-[#86868B] hover:text-[#1D1D1F]'
                     }`}
                   >
                     Visão Semanal
@@ -593,54 +624,54 @@ export default function ReceptionCleanView({
                   <button
                     type="button"
                     onClick={() => setAgendaMode('mensal')}
-                    className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+                    className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
                       agendaMode === 'mensal'
-                        ? 'bg-[#004A8D] text-white shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
+                        ? 'bg-white text-[#1D1D1F] shadow-sm font-bold'
+                        : 'text-[#86868B] hover:text-[#1D1D1F]'
                     }`}
                   >
                     Calendário do Ano Todo
                   </button>
                 </div>
               </div>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-[#86868B] mt-1 font-normal">
                 {agendaMode === 'semanal' 
                   ? 'Grade semanal contínua com caixas clicáveis para confirmação, presença e encaixe rápido.' 
                   : 'Navegação por todos os meses do ano letivo do Hub Co.Nexo e acompanhamento dos 4 ciclos.'}
               </p>
             </div>
 
-            {/* Controles de Filtros e Botão de Agendamento */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-1.5 text-xs">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Mentora:</span>
+            {/* Controles de Filtros e Botão de Agendamento Estilo Apple */}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-1.5 bg-black/[0.04] hover:bg-black/[0.06] rounded-full px-3.5 py-1.5 text-xs transition">
+                <span className="text-[10px] font-semibold text-[#86868B] uppercase tracking-wider">Mentora:</span>
                 <select
                   value={agendaConsultorFilter}
                   onChange={(e) => setAgendaConsultorFilter(e.target.value)}
-                  className="bg-transparent font-bold text-slate-700 focus:outline-none cursor-pointer text-xs"
+                  className="bg-transparent font-semibold text-[#1D1D1F] focus:outline-none cursor-pointer text-xs"
                 >
-                  <option value="todos">Todas (8h Totais do Hub)</option>
-                  <option value="cons-1">Aline Ferreira (Manhã • 08h-12h)</option>
-                  <option value="cons-2">Jamile Mendes (Tarde • 14h-18h)</option>
+                  <option value="todos">Todas (8h Totais)</option>
+                  <option value="cons-1">Aline Ferreira (Manhã)</option>
+                  <option value="cons-2">Jamile Mendes (Tarde)</option>
                 </select>
               </div>
 
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-1.5 text-xs">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Sala:</span>
+              <div className="flex items-center gap-1.5 bg-black/[0.04] hover:bg-black/[0.06] rounded-full px-3.5 py-1.5 text-xs transition">
+                <span className="text-[10px] font-semibold text-[#86868B] uppercase tracking-wider">Sala:</span>
                 <select
                   value={agendaSalaFilter}
                   onChange={(e) => setAgendaSalaFilter(e.target.value)}
-                  className="bg-transparent font-bold text-slate-700 focus:outline-none cursor-pointer text-xs"
+                  className="bg-transparent font-semibold text-[#1D1D1F] focus:outline-none cursor-pointer text-xs"
                 >
                   <option value="todas">Todas as Salas</option>
-                  <option value="Sala 01 Presencial">Sala 01 Presencial (Aline)</option>
-                  <option value="Sala 02 Presencial">Sala 02 Presencial (Jamile)</option>
+                  <option value="Sala 01 Presencial">Sala 01 (Aline)</option>
+                  <option value="Sala 02 Presencial">Sala 02 (Jamile)</option>
                 </select>
               </div>
 
               <button
                 onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
-                className="px-4 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+                className="px-4 py-2 rounded-full bg-[#004A8D] hover:bg-[#00386C] active:scale-95 text-white font-semibold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-md shadow-[#004A8D]/20"
               >
                 <Plus className="w-3.5 h-3.5 text-[#F29100]" />
                 <span>+ Novo Agendamento</span>

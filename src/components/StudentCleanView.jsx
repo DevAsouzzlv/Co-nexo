@@ -189,25 +189,27 @@ export default function StudentCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* TELA 1: MEU PAINEL (PORTAL DO ALUNO)                           */}
+      {/* TELA 1: MEU PAINEL (PORTAL DO ALUNO APPLE HIG)                 */}
       {/* ============================================================== */}
       {currentTab === 'portal' && (
-        <div className="space-y-6">
-          {/* Card Destaque - Sessão de Hoje com Cores Oficiais SENAC */}
-          <div className="bg-gradient-to-br from-[#00386C] via-[#004A8D] to-[#00264A] text-white rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden">
+        <div className="space-y-6 animate-fade-in">
+          {/* Card Destaque - Sessão de Hoje com Estilo Apple */}
+          <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none" />
+
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F29100] text-slate-950 text-xs font-black shadow-xs">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F29100] text-slate-950 text-xs font-bold shadow-sm">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-950"></span>
                   </span>
                   Hoje • 16:00 às 18:00 (Sala 02 Presencial)
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
                   Sessão {currentStudent.sessaoAtual || 3}: Precificação na Prática & Margem
                 </h2>
-                <p className="text-xs sm:text-sm text-blue-100 max-w-xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
                   Mentora Aline Ferreira • Foco: Calibragem de CMV, corte de desperdício na bancada e preço do prato executivo.
                 </p>
               </div>
@@ -215,10 +217,10 @@ export default function StudentCleanView({
               <button
                 onClick={handleConfirmarPresenca}
                 disabled={localWhatsappConfirmed}
-                className={`px-6 py-3.5 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition cursor-pointer shrink-0 shadow-lg ${
+                className={`px-6 py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer shrink-0 shadow-lg active:scale-95 ${
                   localWhatsappConfirmed 
                     ? 'bg-emerald-500 text-white cursor-default' 
-                    : 'bg-[#F29100] hover:bg-[#D97D00] text-slate-950'
+                    : 'bg-[#F29100] hover:bg-[#D97D00] text-slate-950 shadow-[#F29100]/30'
                 }`}
               >
                 <Send className="w-4 h-4" />
@@ -227,15 +229,15 @@ export default function StudentCleanView({
             </div>
           </div>
 
-          {/* RÉGUA TRANSPARENTE DE ASSIDUIDADE (REGRA DE NEGÓCIO ESSENCIAL) */}
-          <div className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          {/* RÉGUA TRANSPARENTE DE ASSIDUIDADE */}
+          <div className="apple-glass-card rounded-[28px] p-6 space-y-4 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-black/[0.05]">
               <div>
-                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <h3 className="text-sm font-bold text-[#1D1D1F] uppercase tracking-wider flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-[#004A8D]" />
                   <span>Sua Régua de Assiduidade no Hub</span>
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[#86868B] font-normal">
                   Regra institucional: máximo de 2 faltas sem aviso prévio de 24h para manter sua vaga.
                 </p>
               </div>

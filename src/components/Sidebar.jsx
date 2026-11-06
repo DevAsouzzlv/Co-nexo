@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Building2,
   GraduationCap,
-  UserCheck
+  UserCheck,
+  Sparkles
 } from 'lucide-react';
 import { USER_PROFILES } from './LoginModal';
 import logoConexo from '../assets/logo-conexo.png';
@@ -34,8 +35,8 @@ export default function Sidebar({
       case 'max':
         return [
           { id: 'dashboard', label: 'Visão Geral', icon: BarChart3 },
-          { id: 'grade', label: 'Turno de Hoje (4h)', icon: Clock, badge: 'Hoje' },
-          { id: 'agenda', label: 'Agenda Semanal', icon: Calendar },
+          { id: 'grade', label: 'Turnos de Hoje (8h)', icon: Clock, badge: 'Hoje' },
+          { id: 'agenda', label: 'Agenda & Calendário', icon: Calendar },
           { id: 'mentorados', label: 'Gestão de Alunos', icon: Users, badge: '14' },
           { id: 'antilimbo', label: 'Pós-Ciclo & MEI', icon: CheckCircle2 },
           { id: 'espera', label: 'Fila & Encaixes', icon: Layers, badge: '2' }
@@ -74,68 +75,71 @@ export default function Sidebar({
     <aside
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-3.5 flex flex-col justify-between shadow-sm shrink-0 hidden lg:flex h-[calc(100vh-2rem)] sticky top-4 z-30 transition-all duration-300 ease-in-out ${
-        isHovered ? 'w-64 shadow-xl' : 'w-20'
+      className={`apple-glass rounded-[28px] p-3 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/80 shrink-0 hidden lg:flex h-[calc(100vh-2.5rem)] sticky top-4 z-30 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        isHovered ? 'w-64' : 'w-20'
       }`}
     >
-      {/* Topo: Logo & Identidade Co.Nexo SENAC */}
-      <div className="space-y-5">
+      {/* Topo: macOS Window Dots & Logo */}
+      <div className="space-y-4">
+        {/* macOS Traffic Lights Simbólicos */}
+        <div className={`flex items-center gap-1.5 px-2 pt-1 transition-all duration-300 ${isHovered ? 'justify-start' : 'justify-center'}`}>
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
+        </div>
+
+        {/* Logo & Marca Co.Nexo */}
         <div className={`flex items-center gap-3 px-1 transition-all duration-300 ${isHovered ? 'justify-start' : 'justify-center'}`}>
-          <img 
-            src={logoConexo} 
-            alt="Co.Nexo SENAC" 
-            className="h-10 w-10 object-contain shrink-0 drop-shadow-xs"
-          />
+          <div className="h-10 w-10 rounded-2xl bg-white/90 p-1.5 flex items-center justify-center shadow-xs border border-black/[0.04] shrink-0">
+            <img 
+              src={logoConexo} 
+              alt="Co.Nexo SENAC" 
+              className="h-full w-full object-contain"
+            />
+          </div>
           {isHovered && (
             <div className="overflow-hidden transition-all duration-300 animate-fade-in whitespace-nowrap">
               <div className="flex items-center gap-1.5">
-                <span className="font-black text-[#004A8D] text-lg tracking-tight">Co.Nexo</span>
-                <span className="text-[10px] font-extrabold px-1.5 py-0.2 rounded-md bg-[#F29100]/15 text-[#C87500] border border-[#F29100]/30">
+                <span className="font-bold text-[#1D1D1F] text-base tracking-tight">Co.Nexo</span>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-md bg-[#F29100]/15 text-[#C87500]">
                   SENAC
                 </span>
               </div>
-              <p className="text-[11px] font-semibold text-slate-500">Hub Empreendedor</p>
+              <p className="text-[11px] text-[#86868B] font-medium">Hub de Inovação</p>
             </div>
           )}
         </div>
 
         {/* Card do Usuário Autenticado */}
-        <div className={`p-2 rounded-2xl bg-slate-50 border border-slate-200/80 transition-all duration-300 ${
-          isHovered ? 'p-3' : 'flex flex-col items-center'
+        <div className={`p-2 rounded-2xl bg-black/[0.02] border border-black/[0.04] transition-all duration-300 ${
+          isHovered ? 'p-2.5' : 'flex flex-col items-center'
         }`}>
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-2xl bg-[#004A8D] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-b from-[#0055A5] to-[#004A8D] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
               {currentProfile.nome.substring(0, 2).toUpperCase()}
             </div>
             {isHovered && (
-              <div className="text-left overflow-hidden whitespace-nowrap animate-fade-in">
-                <p className="text-xs font-bold text-slate-900 truncate">
+              <div className="text-left overflow-hidden whitespace-nowrap animate-fade-in min-w-0">
+                <p className="text-xs font-semibold text-[#1D1D1F] truncate">
                   {currentProfile.nome}
                 </p>
-                <p className="text-[10px] text-slate-500 font-medium truncate">
+                <p className="text-[10px] text-[#86868B] truncate">
                   {currentProfile.cargo}
                 </p>
               </div>
             )}
           </div>
-
-          {isHovered && (
-            <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-[#004A8D] font-bold animate-fade-in whitespace-nowrap">
-              <span>Módulo</span>
-              <span className="bg-[#004A8D]/10 text-[#004A8D] px-2 py-0.5 rounded-full">{currentProfile.roleLabel}</span>
-            </div>
-          )}
         </div>
 
-        {/* Menu de Navegação */}
-        <div className="space-y-1.5">
+        {/* Menu de Navegação Estilo macOS Sidebar */}
+        <div className="space-y-1">
           {isHovered && (
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 animate-fade-in whitespace-nowrap">
-              Navegação
+            <p className="text-[10px] font-semibold text-[#86868B] uppercase tracking-wider px-2 pt-1 animate-fade-in whitespace-nowrap">
+              Menu Principal
             </p>
           )}
 
-          <nav className="space-y-1.5">
+          <nav className="space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentTab === item.id || (!currentTab && item === menuItems[0]);
@@ -153,20 +157,20 @@ export default function Sidebar({
                     }
                   }}
                   title={!isHovered ? item.label : undefined}
-                  className={`w-full flex items-center rounded-2xl text-xs font-bold transition-all duration-200 cursor-pointer relative group ${
-                    isHovered ? 'px-3.5 py-2.5 justify-between' : 'h-12 w-12 mx-auto justify-center'
+                  className={`w-full flex items-center rounded-2xl text-xs font-semibold transition-all duration-200 cursor-pointer relative group ${
+                    isHovered ? 'px-3 py-2.5 justify-between' : 'h-11 w-11 mx-auto justify-center'
                   } ${
                     isActive
-                      ? 'bg-[#004A8D] text-white shadow-md shadow-[#004A8D]/25 ring-2 ring-[#004A8D]/20'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-[#004A8D] text-white shadow-md shadow-[#004A8D]/20'
+                      : 'text-[#1D1D1F]/80 hover:text-[#1D1D1F] hover:bg-black/[0.04]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`w-5 h-5 shrink-0 transition-transform ${
-                      isActive ? 'text-[#F29100] scale-110' : 'text-slate-400 group-hover:text-[#004A8D]'
+                    <Icon className={`w-4 h-4 shrink-0 transition-transform ${
+                      isActive ? 'text-[#F29100] scale-110' : 'text-[#86868B] group-hover:text-[#004A8D]'
                     }`} />
                     {isHovered && (
-                      <span className="whitespace-nowrap animate-fade-in">{item.label}</span>
+                      <span className="whitespace-nowrap animate-fade-in font-medium">{item.label}</span>
                     )}
                   </div>
 
@@ -174,22 +178,22 @@ export default function Sidebar({
                   {item.badge && (
                     <>
                       {isHovered ? (
-                        <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap animate-fade-in ${
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap animate-fade-in ${
                           isActive 
-                            ? 'bg-[#F29100] text-slate-950 font-black' 
-                            : 'bg-slate-200 text-slate-700'
+                            ? 'bg-white/20 text-white' 
+                            : 'bg-black/[0.05] text-[#86868B]'
                         }`}>
                           {item.badge}
                         </span>
                       ) : (
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#F29100] ring-2 ring-white" />
+                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#F29100] ring-2 ring-white" />
                       )}
                     </>
                   )}
 
-                  {/* Tooltip quando a barra está retraída */}
+                  {/* Tooltip Apple Style quando a barra está retraída */}
                   {!isHovered && (
-                    <div className="absolute left-full ml-3 px-2.5 py-1 bg-slate-900 text-white text-[11px] font-semibold rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-150 shadow-lg whitespace-nowrap z-50">
+                    <div className="absolute left-full ml-3 px-2.5 py-1 apple-glass text-[#1D1D1F] text-[11px] font-semibold rounded-xl opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-150 shadow-lg whitespace-nowrap z-50 border border-black/[0.06]">
                       {item.label}
                     </div>
                   )}
@@ -200,17 +204,17 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* Base: Ações Adicionais e Logout */}
-      <div className="space-y-2 pt-4 border-t border-slate-100">
+      {/* Base: Logout */}
+      <div className="pt-3 border-t border-black/[0.05]">
         <button
           onClick={onLogout}
           title={!isHovered ? 'Sair do Sistema' : undefined}
-          className={`w-full flex items-center rounded-2xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition cursor-pointer ${
-            isHovered ? 'px-3.5 py-2.5 justify-start gap-3' : 'h-12 w-12 mx-auto justify-center'
+          className={`w-full flex items-center rounded-2xl text-xs font-semibold text-rose-600 hover:bg-rose-50/80 active:scale-95 transition cursor-pointer ${
+            isHovered ? 'px-3 py-2 justify-start gap-2.5' : 'h-11 w-11 mx-auto justify-center'
           }`}
         >
-          <LogOut className="w-5 h-5 shrink-0 text-rose-500" />
-          {isHovered && <span className="whitespace-nowrap animate-fade-in">Sair da Sessão</span>}
+          <LogOut className="w-4 h-4 shrink-0 text-rose-500" />
+          {isHovered && <span className="whitespace-nowrap animate-fade-in">Encerrar Sessão</span>}
         </button>
       </div>
     </aside>

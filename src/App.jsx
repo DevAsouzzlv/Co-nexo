@@ -307,7 +307,11 @@ export default function App() {
 
   // Se autenticado, entra no painel exclusivo do usuário
   return (
-    <div className="min-h-screen bg-[#F4F6F9] text-slate-800 flex font-sans p-2 sm:p-5 gap-5 pb-24 lg:pb-5">
+    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] flex p-3 sm:p-5 gap-5 pb-24 lg:pb-5 relative overflow-x-hidden selection:bg-[#004A8D]/15 selection:text-[#004A8D]">
+      {/* Luz Ambiente Sutil Estilo Apple */}
+      <div className="fixed -top-24 -right-24 w-96 h-96 rounded-full bg-[#004A8D]/5 blur-[120px] pointer-events-none z-0" />
+      <div className="fixed -bottom-24 left-1/4 w-96 h-96 rounded-full bg-[#F29100]/5 blur-[100px] pointer-events-none z-0" />
+
       {/* 1. Sidebar Fixa no Desktop (Escondida no Mobile) */}
       <Sidebar
         currentPersona={currentPersona}
@@ -318,7 +322,7 @@ export default function App() {
       />
 
       {/* 2. Área Principal da Tela Autenticada */}
-      <div className="flex-1 flex flex-col gap-4 sm:gap-5 min-w-0">
+      <div className="flex-1 flex flex-col gap-4 sm:gap-5 min-w-0 relative z-10">
         {/* Top Navbar Responsiva */}
         <TopNavbar
           currentPersona={currentPersona}

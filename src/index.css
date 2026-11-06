@@ -1,7 +1,59 @@
 @import "tailwindcss";
 
 @layer base {
-  body {
-    @apply bg-slate-50 text-slate-900 antialiased font-sans min-h-screen;
+  :root {
+    --apple-canvas: #F5F5F7;
+    --apple-surface: rgba(255, 255, 255, 0.82);
+    --apple-border: rgba(0, 0, 0, 0.06);
+    --apple-text-primary: #1D1D1F;
+    --apple-text-secondary: #86868B;
+    --apple-blue: #0071E3;
+    --senac-navy: #004A8D;
+    --senac-orange: #F29100;
   }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
+    background-color: var(--apple-canvas);
+    color: var(--apple-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.011em;
+  }
+}
+
+/* Utilitários Apple HIG / Frosted Glass */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.apple-glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.apple-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -4px rgba(0, 74, 141, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 74, 141, 0.2);
+}
+
+.apple-segmented-container {
+  background: rgba(118, 118, 128, 0.12);
+  padding: 3px;
+  border-radius: 14px;
+}
+
+.apple-squircle {
+  border-radius: 20px;
 }

@@ -66,50 +66,50 @@ export default function CoordinatorCleanView({
   return (
     <div className="space-y-6">
       {/* ============================================================== */}
-      {/* ABA 1: PAINEL EXECUTIVO & INDICADORES                          */}
+      {/* ABA 1: PAINEL EXECUTIVO & INDICADORES (APPLE HIG)              */}
       {/* ============================================================== */}
       {currentTab === 'indicadores' && (
-        <div className="space-y-6">
+        <div className="space-y-6 animate-fade-in">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-gradient-to-br from-[#00386C] via-[#004A8D] to-[#00264A] text-white rounded-3xl p-6 shadow-md flex flex-col justify-between relative overflow-hidden">
-              <span className="text-[10px] font-black uppercase tracking-wider text-blue-200">Horas Docentes Executadas</span>
+            <div className="relative overflow-hidden rounded-[26px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 shadow-md flex flex-col justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-200">Horas Docentes Executadas</span>
               <div className="my-3">
-                <h3 className="text-3xl font-black tracking-tight">{horasDisplay} Horas</h3>
+                <h3 className="text-3xl font-bold tracking-tight">{horasDisplay} Horas</h3>
                 <p className="text-xs text-blue-100 mt-1">100% dos turnos docentes sem intervalos ociosos</p>
               </div>
-              <span className="text-[11px] text-[#F29100] font-black">Zero ociosidade nas salas 1 a 4</span>
+              <span className="text-[11px] text-[#F29100] font-bold">Zero ociosidade nas salas</span>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm flex flex-col justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Taxa de No-Show</span>
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-6 flex flex-col justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#86868B]">Taxa de No-Show</span>
               <div className="my-3">
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">{taxaNoShow}%</h3>
-                <p className="text-xs text-slate-500 mt-1">Queda acentuada com confirmação 24h via WhatsApp</p>
+                <h3 className="text-3xl font-bold text-[#1D1D1F] tracking-tight">{taxaNoShow}%</h3>
+                <p className="text-xs text-[#86868B] mt-1">Queda com confirmação 24h via WhatsApp</p>
               </div>
-              <span className="text-xs font-bold text-[#004A8D]">✓ Encaixes automáticos ativos</span>
+              <span className="text-xs font-semibold text-[#004A8D]">✓ Encaixes automáticos ativos</span>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm flex flex-col justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Conversão em MEI</span>
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-6 flex flex-col justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#86868B]">Conversão em MEI</span>
               <div className="my-3">
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">{taxaMei}%</h3>
-                <p className="text-xs text-slate-500 mt-1">{totalMeis} de {totalAlunos} empreendedores com CNPJ ativo</p>
+                <h3 className="text-3xl font-bold text-[#1D1D1F] tracking-tight">{taxaMei}%</h3>
+                <p className="text-xs text-[#86868B] mt-1">{totalMeis} de {totalAlunos} empreendedores com CNPJ ativo</p>
               </div>
-              <span className="text-xs font-bold text-emerald-700">Régua de Acompanhamento D+60</span>
+              <span className="text-xs font-semibold text-emerald-600">Régua de Acompanhamento D+60</span>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm flex flex-col justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Prestação de Contas</span>
+            <div className="apple-glass-card apple-card-hover rounded-[26px] p-6 flex flex-col justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#86868B]">Prestação de Contas</span>
               <div className="my-3">
                 <button
                   onClick={exportarCSV}
-                  className="w-full py-3 px-4 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-sm"
+                  className="w-full py-2.5 px-4 rounded-full bg-[#004A8D] hover:bg-[#00386C] active:scale-95 text-white font-semibold text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-sm shadow-[#004A8D]/20"
                 >
                   <Download className="w-4 h-4 text-[#F29100]" />
                   <span>Exportar Prestação CSV</span>
                 </button>
               </div>
-              <span className="text-[11px] text-slate-400 text-center font-medium">Relatório Homologado p/ Diretoria</span>
+              <span className="text-[11px] text-[#86868B] text-center font-medium">Relatório Homologado p/ Diretoria</span>
             </div>
           </div>
 

@@ -184,27 +184,31 @@ export default function MentorCleanView({
       {/* TELA 1: ATENDIMENTOS DE HOJE (MEUS TURNOS)                     */}
       {/* ============================================================== */}
       {currentTab === 'minha-agenda' && (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-r from-[#0030A3] via-[#004A8D] to-[#002660] text-white rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 text-blue-100 border border-white/20">
-                Turno de Atendimentos • Quarta-feira
+        <div className="space-y-6 animate-fade-in">
+          <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 space-y-1.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-blue-100 border border-white/20 inline-block">
+                Turno de Atendimentos • Turno da Manhã
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black mt-2 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Olá, Aline Ferreira!
               </h2>
-              <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-                Você tem 4 horas contínuas de consultoria agendadas hoje na <strong>Sala 02 Presencial</strong>.
+              <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
+                Você tem 4 horas contínuas de consultoria agendadas hoje na <strong>Sala 01 Presencial</strong> (Finanças & CMV).
               </p>
             </div>
-            <span className="text-xs font-black px-4 py-2 rounded-2xl bg-[#F29100] text-slate-950">
-              14:00 às 18:00 (100% Ocupado)
-            </span>
+            <div className="relative z-10">
+              <span className="text-xs font-bold px-4 py-2 rounded-full bg-[#F29100] text-slate-950 shadow-md">
+                08:00 às 12:00 (4h Fechadas)
+              </span>
+            </div>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-base font-extrabold text-slate-900">Programação de Atendimentos de Hoje</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <h3 className="text-base font-bold text-[#1D1D1F]">Programação de Atendimentos de Hoje</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {todayAppointments.map((ap) => {
                 const student = students.find(s => s.id === ap.alunoId);
                 const isAvailable = !ap.alunoId || ap.status === 'Disponivel';
