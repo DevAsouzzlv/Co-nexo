@@ -17,7 +17,7 @@ import {
 import logoConexo from '../assets/logo-conexo.png';
 
 // Contas oficiais institucionais para acesso
-export const ACCOUNTS_DIRECTORY = [
+const ACCOUNTS_DIRECTORY = [
   {
     id: 'max',
     nome: 'Max Ferreira',
