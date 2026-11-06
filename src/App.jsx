@@ -407,7 +407,7 @@ export default function App() {
       />
 
       <AgendamentoModal
-        key={selectedSlotParaAgendar?.id || selectedTurnoParaAgendar?.id || 'modal-agend'}
+        key={selectedSlotParaAgendar?.id || `${selectedSlotParaAgendar?.data}-${selectedSlotParaAgendar?.diaSemana}-${selectedSlotParaAgendar?.horario || 'novo'}`}
         isOpen={isAgendamentoOpen}
         onClose={() => {
           setIsAgendamentoOpen(false);

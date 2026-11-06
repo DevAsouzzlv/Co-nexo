@@ -58,6 +58,12 @@ export default function ReceptionCleanView({
   const [agendaConsultorFilter, setAgendaConsultorFilter] = useState('todos');
   const [agendaSalaFilter, setAgendaSalaFilter] = useState('todas');
 
+  // Alternância de visão da Agenda e Calendário Anual
+  const [agendaMode, setAgendaMode] = useState('semanal'); // 'semanal' | 'mensal'
+  const [calendarMonth, setCalendarMonth] = useState(9); // Outubro (0-indexed: 9 = Outubro)
+  const [calendarYear, setCalendarYear] = useState(2026);
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState('2026-10-21');
+
   const currentConsultor = consultors.find((c) => c.id === selectedConsultorId) || consultors[0];
   const currentTurno = currentConsultor?.turnos?.find((t) => t.id === selectedTurnoId) || currentConsultor?.turnos?.[0];
 
@@ -501,31 +507,53 @@ export default function ReceptionCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* ABA 2: AGENDA SEMANAL COMPLETA & INTERATIVA (DROPBOX CLICÁVEL) */}
+      {/* ABA 2: AGENDA COMPLETA DO CO.NEXO (SEMANAL E ANUAL MENSAL)     */}
       {/* ============================================================== */}
       {currentTab === 'agenda' && (
-        <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-6">
-          {/* Topo da Agenda: Filtros de Consultores, Salas e Ação Rápida */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6">
+          {/* Topo da Agenda: Alternador Semanal vs Calendário Anual + Filtros */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
                   <Calendar className="w-5 h-5 text-[#004A8D]" />
-                  <span>Agenda Semanal do Hub</span>
+                  <span>Agenda & Calendário Co.Nexo</span>
                 </h2>
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#004A8D]/10 text-[#004A8D]">
-                  {appointments.length} horários cadastrados
-                </span>
+                <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                  <button
+                    type="button"
+                    onClick={() => setAgendaMode('semanal')}
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+                      agendaMode === 'semanal'
+                        ? 'bg-[#004A8D] text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Visão Semanal
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAgendaMode('mensal')}
+                    className={`px-3 py-1 text-xs font-bold rounded-xl transition cursor-pointer ${
+                      agendaMode === 'mensal'
+                        ? 'bg-[#004A8D] text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Calendário do Ano Todo
+                  </button>
+                </div>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Clique nas caixas de agendamento para abrir as opções de confirmação, prontuário e encaixe rápido.
+              <p className="text-xs text-slate-500 mt-1">
+                {agendaMode === 'semanal' 
+                  ? 'Grade semanal contínua com caixas clicáveis para confirmação, presença e encaixe rápido.' 
+                  : 'Navegação por todos os meses do ano letivo do Hub Co.Nexo e acompanhamento dos 4 ciclos.'}
               </p>
             </div>
 
-            {/* Controles de Filtros Dropdown e Novo Agendamento */}
+            {/* Controles de Filtros e Botão de Agendamento */}
             <div className="flex flex-wrap items-center gap-2.5">
-              {/* Filtro por Consultor */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-1.5 text-xs">
                 <span className="text-[10px] font-bold text-slate-400 uppercase">Consultor:</span>
                 <select
                   value={agendaConsultorFilter}
@@ -539,8 +567,7 @@ export default function ReceptionCleanView({
                 </select>
               </div>
 
-              {/* Filtro por Sala */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-1.5 text-xs">
                 <span className="text-[10px] font-bold text-slate-400 uppercase">Sala:</span>
                 <select
                   value={agendaSalaFilter}
@@ -555,8 +582,8 @@ export default function ReceptionCleanView({
               </div>
 
               <button
-                onClick={() => onOpenAgendamento(currentTurno, currentConsultor)}
-                className="px-4 py-2 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
+                onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
+                className="px-4 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5 text-[#F29100]" />
                 <span>+ Novo Agendamento</span>
@@ -564,233 +591,437 @@ export default function ReceptionCleanView({
             </div>
           </div>
 
-          {/* Grade Semanal de 6 Colunas (Segunda a Sábado) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 items-start">
-            {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((dia, idx) => {
-              // Filtra os agendamentos pertencentes ao dia
-              const dayAppointments = appointments.filter((ap) => {
-                const matchesDia = ap.diaSemana === dia || 
-                  (dia === 'Quarta' && (ap.turnoId === 'turno-1' || ap.diaSemana === 'Quarta')) ||
-                  (ap.data && ap.data.includes(`-${19 + idx}`));
-                
-                if (!matchesDia) return false;
-                if (agendaConsultorFilter !== 'todos' && ap.consultorId !== agendaConsultorFilter) return false;
-                if (agendaSalaFilter !== 'todas' && ap.sala !== agendaSalaFilter) return false;
-                return true;
-              });
+          {/* ============================================================== */}
+          {/* MODO 1: VISÃO SEMANAL (GRADE DE 6 COLUNAS COM DROPBOX CLICÁVEL) */}
+          {/* ============================================================== */}
+          {agendaMode === 'semanal' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 items-start">
+              {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((dia, idx) => {
+                const normalizeStr = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const dayDateStr = `2026-10-${19 + idx}`;
 
-              const isToday = dia === 'Quarta';
+                const dayAppointments = appointments.filter((ap) => {
+                  const matchesDia = 
+                    (ap.diaSemana && normalizeStr(ap.diaSemana).includes(normalizeStr(dia).substring(0, 3))) ||
+                    (dia === 'Quarta' && ap.turnoId === 'turno-1') ||
+                    (ap.data && ap.data === dayDateStr);
+                  
+                  if (!matchesDia) return false;
+                  if (agendaConsultorFilter !== 'todos' && ap.consultorId && ap.consultorId !== agendaConsultorFilter) return false;
+                  if (agendaSalaFilter !== 'todas' && ap.sala && ap.sala !== agendaSalaFilter) return false;
+                  return true;
+                }).sort((a, b) => (a.horarioInicio || '').localeCompare(b.horarioInicio || ''));
 
-              return (
-                <div 
-                  key={dia} 
-                  className={`p-3.5 rounded-2xl border transition ${
-                    isToday 
-                      ? 'bg-blue-50/40 border-[#004A8D]/40 ring-1 ring-[#004A8D]/30' 
-                      : 'bg-slate-50/80 border-slate-200/80'
-                  }`}
-                >
-                  {/* Cabeçalho do Dia */}
-                  <div className="flex items-center justify-between border-b border-slate-200/70 pb-2.5 mb-3">
-                    <div>
-                      <span className="text-xs font-black text-slate-800">{dia}</span>
-                      <p className="text-[10px] text-slate-400 font-mono">14h - 18h</p>
-                    </div>
-                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                const isToday = dia === 'Quarta';
+
+                return (
+                  <div 
+                    key={dia} 
+                    className={`p-3.5 rounded-2xl border transition ${
                       isToday 
-                        ? 'bg-[#004A8D] text-white' 
-                        : 'bg-slate-200 text-slate-700'
-                    }`}>
-                      {isToday ? 'Hoje' : `${dayAppointments.length} slots`}
-                    </span>
-                  </div>
-
-                  {/* Lista de Caixas de Agendamento Interativas / Dropbox Clicável */}
-                  <div className="space-y-2.5">
-                    {dayAppointments.length === 0 ? (
-                      <div className="p-3 text-center rounded-xl border border-dashed border-slate-200 text-slate-400 text-[11px]">
-                        Nenhum horário
+                        ? 'bg-blue-50/40 border-[#004A8D]/40 ring-1 ring-[#004A8D]/30' 
+                        : 'bg-slate-50/80 border-slate-200/80'
+                    }`}
+                  >
+                    {/* Cabeçalho do Dia */}
+                    <div className="flex items-center justify-between border-b border-slate-200/70 pb-2.5 mb-3">
+                      <div>
+                        <span className="text-xs font-black text-slate-800">{dia}</span>
+                        <p className="text-[10px] text-slate-400 font-mono">{19 + idx}/10 • 14h-18h</p>
                       </div>
-                    ) : (
-                      dayAppointments.map((ap) => {
-                        const student = students.find((s) => s.id === ap.alunoId);
-                        const isExpanded = activeDropdownId === ap.id;
-                        const isAvailable = !ap.alunoId || ap.status === 'Disponivel';
-                        const consultorName = consultors.find(c => c.id === ap.consultorId)?.nome || 'Consultor SENAC';
+                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                        isToday 
+                          ? 'bg-[#004A8D] text-white' 
+                          : 'bg-slate-200 text-slate-700'
+                      }`}>
+                        {isToday ? 'Hoje' : `${dayAppointments.length} slots`}
+                      </span>
+                    </div>
 
-                        return (
-                          <div 
-                            key={ap.id}
-                            className={`rounded-2xl transition shadow-2xs relative ${
-                              isAvailable
-                                ? 'bg-[#F29100]/5 border-2 border-dashed border-[#F29100]/50 hover:bg-[#F29100]/10'
-                                : isExpanded
-                                  ? 'bg-white border-2 border-[#004A8D] shadow-md ring-2 ring-[#004A8D]/15'
-                                  : 'bg-white border border-slate-200/90 hover:border-[#004A8D]/60 hover:shadow-xs'
-                            }`}
-                          >
-                            {/* Card Clicável Principal */}
-                            <button
-                              type="button"
-                              onClick={() => setActiveDropdownId(isExpanded ? null : ap.id)}
-                              className="w-full text-left p-3 cursor-pointer focus:outline-none"
+                    {/* Lista de Caixas de Agendamento Interativas */}
+                    <div className="space-y-2.5">
+                      {dayAppointments.length === 0 ? (
+                        <div className="p-3 text-center rounded-2xl border border-dashed border-slate-200 text-slate-400 text-[11px]">
+                          Nenhum agendamento
+                        </div>
+                      ) : (
+                        dayAppointments.map((ap) => {
+                          const student = students.find((s) => s.id === ap.alunoId);
+                          const isExpanded = activeDropdownId === ap.id;
+                          const isAvailable = !ap.alunoId || ap.status === 'Disponivel';
+                          const consultorName = consultors.find(c => c.id === ap.consultorId)?.nome || 'Aline Ferreira';
+
+                          return (
+                            <div 
+                              key={ap.id}
+                              className={`rounded-2xl transition shadow-2xs relative ${
+                                isAvailable
+                                  ? 'bg-[#F29100]/5 border-2 border-dashed border-[#F29100]/50 hover:bg-[#F29100]/10'
+                                  : isExpanded
+                                    ? 'bg-white border-2 border-[#004A8D] shadow-md ring-2 ring-[#004A8D]/15'
+                                    : 'bg-white border border-slate-200/90 hover:border-[#004A8D]/60 hover:shadow-xs'
+                              }`}
                             >
-                              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
-                                <span className="font-bold text-slate-700">{ap.horarioInicio} - {ap.horarioFim}</span>
-                                <span className={`font-bold px-1.5 py-0.2 rounded-md ${
-                                  isAvailable 
-                                    ? 'bg-[#F29100] text-slate-950 font-black' 
-                                    : ap.tipo === 'Diagnostico_1h'
-                                      ? 'bg-blue-100 text-[#004A8D]'
-                                      : 'bg-slate-100 text-slate-700'
-                                }`}>
-                                  {isAvailable ? 'Vaga' : ap.tipo === 'Diagnostico_1h' ? '1h Diag' : '2h Ment'}
-                                </span>
-                              </div>
-
-                              {isAvailable ? (
-                                <div>
-                                  <p className="text-xs font-black text-[#9A5B00]">Horário Livre (Encaixe)</p>
-                                  <p className="text-[10px] text-slate-500">Clique para reservar vaga</p>
+                              <button
+                                type="button"
+                                onClick={() => setActiveDropdownId(isExpanded ? null : ap.id)}
+                                className="w-full text-left p-3 cursor-pointer focus:outline-none"
+                              >
+                                <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+                                  <span className="font-bold text-slate-700">{ap.horarioInicio} - {ap.horarioFim}</span>
+                                  <span className={`font-bold px-1.5 py-0.2 rounded-md ${
+                                    isAvailable 
+                                      ? 'bg-[#F29100] text-slate-950 font-black' 
+                                      : ap.tipo === 'Diagnostico_1h'
+                                        ? 'bg-blue-100 text-[#004A8D]'
+                                        : 'bg-slate-100 text-slate-700'
+                                  }`}>
+                                    {isAvailable ? 'Vaga' : ap.tipo === 'Diagnostico_1h' ? '1h Diag' : '2h Ment'}
+                                  </span>
                                 </div>
-                              ) : (
-                                <div>
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="text-xs">{student?.avatar || '👤'}</span>
-                                    <p className="text-xs font-bold text-slate-900 truncate">
-                                      {student?.nome || 'Aluno Alocado'}
-                                    </p>
-                                  </div>
-                                  <p className="text-[10px] text-slate-500 truncate mt-0.5">
-                                    {student?.negocio || 'Empreendimento'}
-                                  </p>
-                                </div>
-                              )}
 
-                              {/* Rodapé com Indicador de Dropdown */}
-                              <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                                <span className="text-slate-400 truncate max-w-[100px]">{ap.sala || 'Sala 02'}</span>
-                                <div className="flex items-center gap-1 text-[#004A8D] font-bold">
-                                  <span>Opções</span>
-                                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-                                </div>
-                              </div>
-                            </button>
-
-                            {/* ========================================================= */}
-                            {/* DROPDOWN / POPOVER CLICÁVEL COM AÇÕES COMPLETAS           */}
-                            {/* ========================================================= */}
-                            {isExpanded && (
-                              <div className="p-3 bg-slate-50 border-t border-slate-200/80 rounded-b-2xl space-y-2.5 animate-fade-in text-xs">
                                 {isAvailable ? (
-                                  <div className="space-y-2">
-                                    <p className="text-[11px] text-slate-600 font-medium">
-                                      Vaga livre para manter o turno contínuo e sem intervalos ociosos.
-                                    </p>
-                                    <button
-                                      onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { horario: ap.horarioInicio, tipo: ap.tipo })}
-                                      className="w-full py-2 px-2.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer"
-                                    >
-                                      <Plus className="w-3.5 h-3.5 text-[#F29100]" />
-                                      <span>Encaixar Aluno Neste Horário</span>
-                                    </button>
+                                  <div>
+                                    <p className="text-xs font-black text-[#9A5B00]">Horário Livre (Encaixe)</p>
+                                    <p className="text-[10px] text-slate-500">Clique para reservar vaga</p>
                                   </div>
                                 ) : (
-                                  <div className="space-y-2.5">
-                                    {/* Detalhes do Aluno */}
-                                    <div className="bg-white p-2.5 rounded-xl border border-slate-200/70 space-y-1">
-                                      <div className="flex items-center justify-between">
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Status</span>
-                                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                          ap.status === 'Realizada'
-                                            ? 'bg-emerald-100 text-emerald-800'
-                                            : ap.status?.includes('Falta')
-                                              ? 'bg-rose-100 text-rose-800'
-                                              : 'bg-blue-100 text-[#004A8D]'
-                                        }`}>
-                                          {ap.status || 'Confirmado'}
-                                        </span>
-                                      </div>
-                                      <p className="text-[11px] text-slate-700 font-medium">
-                                        <strong>Consultor:</strong> {consultorName}
+                                  <div>
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="text-xs">{student?.avatar || '👤'}</span>
+                                      <p className="text-xs font-bold text-slate-900 truncate">
+                                        {student?.nome || 'Aluno Alocado'}
                                       </p>
-                                      {student?.whatsapp && (
-                                        <p className="text-[10px] text-slate-500 font-mono">
-                                          Tel: {student.whatsapp}
-                                        </p>
-                                      )}
                                     </div>
-
-                                    {/* Botões Rápidos de Ação Operacional */}
-                                    <div className="grid grid-cols-2 gap-1.5">
-                                      <button
-                                        onClick={() => {
-                                          handleMarcarPresenca(ap.id, student?.nome);
-                                          setActiveDropdownId(null);
-                                        }}
-                                        className="py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-[10px] flex items-center justify-center gap-1 transition cursor-pointer"
-                                      >
-                                        <Check className="w-3 h-3 text-emerald-700" />
-                                        <span>Presença</span>
-                                      </button>
-                                      <button
-                                        onClick={() => {
-                                          handleMarcarFalta(ap.id, student?.nome);
-                                          setActiveDropdownId(null);
-                                        }}
-                                        className="py-1.5 px-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold text-[10px] flex items-center justify-center gap-1 transition cursor-pointer"
-                                      >
-                                        <AlertTriangle className="w-3 h-3 text-rose-600" />
-                                        <span>Falta &lt;24h</span>
-                                      </button>
-                                    </div>
-
-                                    {student && (
-                                      <button
-                                        onClick={() => {
-                                          onOpenDiario(student);
-                                          setActiveDropdownId(null);
-                                        }}
-                                        className="w-full py-1.5 px-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 font-bold text-[10px] text-slate-700 flex items-center justify-center gap-1 transition cursor-pointer"
-                                      >
-                                        <FileText className="w-3 h-3 text-[#004A8D]" />
-                                        <span>Abrir Prontuário Digital</span>
-                                      </button>
-                                    )}
-
-                                    {student?.whatsapp && (
-                                      <a
-                                        href={`https://wa.me/55${student.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(student.nome)},%20confirmamos%20seu%20atendimento%20no%20Hub%20SENAC%20às%20${ap.horarioInicio}.`}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="w-full py-1.5 px-2 rounded-xl bg-[#F29100]/15 hover:bg-[#F29100]/25 border border-[#F29100]/30 font-bold text-[10px] text-[#9A5B00] flex items-center justify-center gap-1 transition text-center"
-                                      >
-                                        <Phone className="w-3 h-3 text-[#C87500]" />
-                                        <span>Confirmar WhatsApp</span>
-                                      </a>
-                                    )}
+                                    <p className="text-[10px] text-slate-500 truncate mt-0.5">
+                                      {student?.negocio || 'Empreendimento'}
+                                    </p>
                                   </div>
                                 )}
+
+                                <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
+                                  <span className="text-slate-400 truncate max-w-[100px]">{ap.sala || 'Sala 02'}</span>
+                                  <div className="flex items-center gap-1 text-[#004A8D] font-bold">
+                                    <span>Opções</span>
+                                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                                  </div>
+                                </div>
+                              </button>
+
+                              {/* Dropdown Expandido com Ações */}
+                              {isExpanded && (
+                                <div className="p-3 bg-slate-50 border-t border-slate-200/80 rounded-b-2xl space-y-2.5 animate-fade-in text-xs">
+                                  {isAvailable ? (
+                                    <div className="space-y-2">
+                                      <p className="text-[11px] text-slate-600 font-medium">
+                                        Vaga livre para manter o turno contínuo e sem intervalos ociosos.
+                                      </p>
+                                      <button
+                                        onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { horario: ap.horarioInicio, tipo: ap.tipo, diaSemana: dia, data: dayDateStr })}
+                                        className="w-full py-2 px-2.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer"
+                                      >
+                                        <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                                        <span>Encaixar Aluno Neste Horário</span>
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div className="space-y-2.5">
+                                      <div className="bg-white p-2.5 rounded-xl border border-slate-200/70 space-y-1">
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Status</span>
+                                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                            ap.status === 'Realizada'
+                                              ? 'bg-emerald-100 text-emerald-800'
+                                              : ap.status?.includes('Falta')
+                                                ? 'bg-rose-100 text-rose-800'
+                                                : 'bg-blue-100 text-[#004A8D]'
+                                          }`}>
+                                            {ap.status || 'Confirmado'}
+                                          </span>
+                                        </div>
+                                        <p className="text-[11px] text-slate-700 font-medium">
+                                          <strong>Consultor:</strong> {consultorName}
+                                        </p>
+                                        {student?.whatsapp && (
+                                          <p className="text-[10px] text-slate-500 font-mono">
+                                            Tel: {student.whatsapp}
+                                          </p>
+                                        )}
+                                      </div>
+
+                                      <div className="grid grid-cols-2 gap-1.5">
+                                        <button
+                                          onClick={() => {
+                                            handleMarcarPresenca(ap.id, student?.nome);
+                                            setActiveDropdownId(null);
+                                          }}
+                                          className="py-1.5 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-[10px] flex items-center justify-center gap-1 transition cursor-pointer"
+                                        >
+                                          <Check className="w-3 h-3 text-emerald-700" />
+                                          <span>Presença</span>
+                                        </button>
+                                        <button
+                                          onClick={() => {
+                                            handleMarcarFalta(ap.id, student?.nome);
+                                            setActiveDropdownId(null);
+                                          }}
+                                          className="py-1.5 px-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold text-[10px] flex items-center justify-center gap-1 transition cursor-pointer"
+                                        >
+                                          <AlertTriangle className="w-3 h-3 text-rose-600" />
+                                          <span>Falta &lt;24h</span>
+                                        </button>
+                                      </div>
+
+                                      {student && (
+                                        <button
+                                          onClick={() => {
+                                            onOpenDiario(student);
+                                            setActiveDropdownId(null);
+                                          }}
+                                          className="w-full py-1.5 px-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 font-bold text-[10px] text-slate-700 flex items-center justify-center gap-1 transition cursor-pointer"
+                                        >
+                                          <FileText className="w-3 h-3 text-[#004A8D]" />
+                                          <span>Abrir Prontuário Digital</span>
+                                        </button>
+                                      )}
+
+                                      {student?.whatsapp && (
+                                        <a
+                                          href={`https://wa.me/55${student.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(student.nome)},%20confirmamos%20seu%20atendimento%20no%20Hub%20SENAC%20às%20${ap.horarioInicio}.`}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          className="w-full py-1.5 px-2 rounded-xl bg-[#F29100]/15 hover:bg-[#F29100]/25 border border-[#F29100]/30 font-bold text-[10px] text-[#9A5B00] flex items-center justify-center gap-1 transition text-center"
+                                        >
+                                          <Phone className="w-3 h-3 text-[#C87500]" />
+                                          <span>Confirmar WhatsApp</span>
+                                        </a>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
+
+                      <button
+                        onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { diaSemana: dia, data: dayDateStr })}
+                        className="w-full py-2 rounded-xl border border-dashed border-slate-200 hover:border-[#004A8D] hover:text-[#004A8D] text-slate-400 font-bold text-[11px] flex items-center justify-center gap-1 transition cursor-pointer"
+                      >
+                        <Plus className="w-3 h-3" />
+                        <span>+ Agendar</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* ============================================================== */}
+          {/* MODO 2: CALENDÁRIO GERAL DO ANO TODO & CICLOS DO CO.NEXO       */}
+          {/* ============================================================== */}
+          {agendaMode === 'mensal' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Calendário Mensal (Grid de Dias) */}
+                <div className="lg:col-span-7 bg-slate-50/70 border border-slate-200/90 rounded-3xl p-5 space-y-4">
+                  {/* Seletor de Mês e Ano */}
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                    <button
+                      onClick={() => setCalendarMonth(prev => prev === 0 ? 11 : prev - 1)}
+                      className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-bold text-xs cursor-pointer"
+                    >
+                      ◀ Mês Anterior
+                    </button>
+                    <div className="text-center">
+                      <h3 className="text-sm font-black text-slate-900 capitalize">
+                        {new Date(calendarYear, calendarMonth, 1).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
+                      </h3>
+                      <span className="text-[10px] font-bold text-[#004A8D]">Ciclo 3 do Co.Nexo (Em Andamento)</span>
+                    </div>
+                    <button
+                      onClick={() => setCalendarMonth(prev => prev === 11 ? 0 : prev + 1)}
+                      className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 font-bold text-xs cursor-pointer"
+                    >
+                      Próximo Mês ▶
+                    </button>
+                  </div>
+
+                  {/* Dias da Semana (D, S, T, Q, Q, S, S) */}
+                  <div className="grid grid-cols-7 gap-1.5 text-center text-[10px] font-black text-slate-400 uppercase">
+                    <span>Dom</span>
+                    <span>Seg</span>
+                    <span>Ter</span>
+                    <span>Qua</span>
+                    <span>Qui</span>
+                    <span>Sex</span>
+                    <span>Sáb</span>
+                  </div>
+
+                  {/* Dias do Mês */}
+                  <div className="grid grid-cols-7 gap-1.5">
+                    {/* Espaçadores iniciais */}
+                    {Array.from({ length: new Date(calendarYear, calendarMonth, 1).getDay() }).map((_, i) => (
+                      <div key={`empty-${i}`} className="h-14 rounded-2xl bg-transparent" />
+                    ))}
+
+                    {/* Dias reais */}
+                    {Array.from({ length: new Date(calendarYear, calendarMonth + 1, 0).getDate() }).map((_, i) => {
+                      const dayNum = i + 1;
+                      const dayIso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+                      const isSelected = selectedCalendarDate === dayIso;
+                      const dayAps = appointments.filter(a => a.data === dayIso);
+
+                      return (
+                        <button
+                          key={dayIso}
+                          type="button"
+                          onClick={() => setSelectedCalendarDate(dayIso)}
+                          className={`h-14 p-1.5 rounded-2xl border text-left flex flex-col justify-between transition cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#004A8D] text-white border-[#004A8D] shadow-md ring-2 ring-[#004A8D]/20'
+                              : dayAps.length > 0
+                                ? 'bg-white border-[#004A8D]/40 hover:border-[#004A8D] text-slate-900 shadow-2xs'
+                                : 'bg-white/80 border-slate-200/70 hover:bg-white text-slate-600'
+                          }`}
+                        >
+                          <span className={`text-[11px] font-black ${isSelected ? 'text-white' : 'text-slate-800'}`}>
+                            {dayNum}
+                          </span>
+                          {dayAps.length > 0 && (
+                            <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded-md truncate ${
+                              isSelected ? 'bg-[#F29100] text-slate-950 font-black' : 'bg-blue-100 text-[#004A8D]'
+                            }`}>
+                              {dayAps.length} {dayAps.length === 1 ? 'atend' : 'atends'}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Detalhes do Dia Selecionado */}
+                <div className="lg:col-span-5 bg-white border border-slate-200/90 rounded-3xl p-5 space-y-4 shadow-sm">
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#004A8D]">Atendimentos do Dia</span>
+                      <h4 className="text-sm font-black text-slate-900">
+                        {new Date(selectedCalendarDate + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                      </h4>
+                    </div>
+                    <button
+                      onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
+                      className="px-3 py-1.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1 cursor-pointer shadow-xs"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                      <span>+ Agendar</span>
+                    </button>
+                  </div>
+
+                  {/* Lista de Atendimentos da Data Selecionada */}
+                  <div className="space-y-2.5 max-h-[380px] overflow-y-auto">
+                    {appointments.filter(a => a.data === selectedCalendarDate).length === 0 ? (
+                      <div className="p-8 text-center bg-slate-50 border border-dashed border-slate-200 rounded-2xl text-xs text-slate-500 space-y-2">
+                        <p>Nenhum atendimento cadastrado para esta data.</p>
+                        <button
+                          onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
+                          className="px-4 py-2 rounded-xl bg-[#004A8D] text-white font-bold text-xs inline-flex items-center gap-1.5"
+                        >
+                          <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                          <span>Agendar Novo Horário Neste Dia</span>
+                        </button>
+                      </div>
+                    ) : (
+                      appointments.filter(a => a.data === selectedCalendarDate).map((ap) => {
+                        const student = students.find(s => s.id === ap.alunoId);
+                        const isDone = ap.status === 'Realizada';
+
+                        return (
+                          <div key={ap.id} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/60 space-y-2">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="font-mono font-bold text-[#004A8D]">
+                                {ap.horarioInicio} - {ap.horarioFim} ({ap.tipo === 'Diagnostico_1h' ? '1h' : '2h'})
+                              </span>
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                isDone ? 'bg-emerald-100 text-emerald-800' : 'bg-blue-100 text-[#004A8D]'
+                              }`}>
+                                {ap.status || 'Confirmado'}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-base">{student?.avatar || '👤'}</span>
+                              <div>
+                                <h5 className="text-xs font-bold text-slate-900">{student?.nome || 'Aluno Alocado'}</h5>
+                                <p className="text-[10px] text-slate-500">{student?.negocio || 'Empreendimento'}</p>
                               </div>
-                            )}
+                            </div>
+                            <div className="flex items-center justify-between pt-2 border-t border-slate-200/60 text-[10px]">
+                              <span className="text-slate-500">{ap.sala || 'Sala 02 Presencial'}</span>
+                              <div className="flex items-center gap-1">
+                                <button
+                                  onClick={() => handleMarcarPresenca(ap.id, student?.nome)}
+                                  className="px-2 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-bold"
+                                >
+                                  Presença
+                                </button>
+                                <button
+                                  onClick={() => handleMarcarFalta(ap.id, student?.nome)}
+                                  className="px-2 py-1 rounded-lg bg-rose-100 text-rose-900 font-bold"
+                                >
+                                  Falta
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         );
                       })
                     )}
-
-                    {/* Botão sutil para agendar mais um horário no dia */}
-                    <button
-                      onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { diaSemana: dia })}
-                      className="w-full py-2 rounded-xl border border-dashed border-slate-200 hover:border-[#004A8D] hover:text-[#004A8D] text-slate-400 font-bold text-[11px] flex items-center justify-center gap-1 transition cursor-pointer"
-                    >
-                      <Plus className="w-3 h-3" />
-                      <span>+ Agendar</span>
-                    </button>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+
+              {/* Quadro Oficial dos 4 Ciclos Anuais do Co.Nexo SENAC */}
+              <div className="p-6 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-slate-700">
+                    Cronograma Oficial dos 4 Ciclos de Formação Co.Nexo (Ano Letivo 2026)
+                  </h4>
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#004A8D] text-white">
+                    SENAC Hub
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400">Ciclo 1 (1º Trimestre)</span>
+                    <h5 className="text-xs font-black text-slate-900">02/03 a 29/05</h5>
+                    <p className="text-[11px] text-emerald-700 font-bold">✓ Concluído (42 MEIs)</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400">Ciclo 2 (2º Trimestre)</span>
+                    <h5 className="text-xs font-black text-slate-900">01/06 a 28/08</h5>
+                    <p className="text-[11px] text-emerald-700 font-bold">✓ Concluído (38 MEIs)</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#004A8D] text-white shadow-xs space-y-1">
+                    <span className="text-[10px] font-bold text-[#F29100]">Ciclo 3 (Ciclo Ativo)</span>
+                    <h5 className="text-xs font-black text-white">01/09 a 27/11</h5>
+                    <p className="text-[11px] text-blue-100 font-bold">14 Empreendedores na esteira</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400">Ciclo 4 (Bancas & MEI)</span>
+                    <h5 className="text-xs font-black text-slate-900">01/12 a 18/12</h5>
+                    <p className="text-[11px] text-slate-500 font-medium">Formaturas e Alvarás</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
