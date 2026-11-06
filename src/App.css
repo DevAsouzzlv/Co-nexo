@@ -1,0 +1,24 @@
+/* src/App.css - Design System Co.Nexo SENAC */
+:root {
+  --bg-primary: #f8fafc;
+  --surface-primary: #ffffff;
+  --border-primary: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent-blue: #004a8d;
+  --accent-mint: #10b981;
+  --accent-orange: #f29100;
+  --border-radius-base: 6px;
+  --border-radius-card: 8px;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #12141c;
+  --surface-primary: #1e2230;
+  --border-primary: #2a3044;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-mint: #10b981;
+  --accent-orange: #f29100;
+}
