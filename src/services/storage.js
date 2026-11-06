@@ -17,12 +17,12 @@ import {
 } from './mockData';
 
 const STORAGE_KEYS = {
-  STUDENTS: 'conexo_students_v2',
-  APPOINTMENTS: 'conexo_appointments_v2',
-  DIARIOS: 'conexo_diarios_v2',
-  CONSULTORS: 'conexo_consultors_v2',
-  WAITING_LIST: 'conexo_waiting_list_v2',
-  LAST_BACKUP: 'conexo_last_backup_v2'
+  STUDENTS: 'conexo_students_v3',
+  APPOINTMENTS: 'conexo_appointments_v3',
+  DIARIOS: 'conexo_diarios_v3',
+  CONSULTORS: 'conexo_consultors_v3',
+  WAITING_LIST: 'conexo_waiting_list_v3',
+  LAST_BACKUP: 'conexo_last_backup_v3'
 };
 
 /**

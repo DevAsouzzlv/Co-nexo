@@ -36,7 +36,7 @@ export const ACCOUNTS_DIRECTORY = [
     email: 'aline.consultora@sp.senac.br',
     badge: 'Prontuário & Trilha',
     icon: GraduationCap,
-    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br']
+    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'jamile', 'jamile.consultora', 'jamile@senac.br']
   },
   {
     id: 'arthur',

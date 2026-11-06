@@ -33,8 +33,8 @@ export default function ReceptionCleanView({
   currentTab = 'dashboard',
   setCurrentTab
 }) {
-  const [selectedConsultorId] = useState(consultors[0]?.id || 'cons-1');
-  const [selectedTurnoId] = useState('turno-1');
+  const [selectedConsultorId, setSelectedConsultorId] = useState(consultors[0]?.id || 'cons-1');
+  const [selectedTurnoId, setSelectedTurnoId] = useState('turno-ali-qua');
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('todos');
   const [isWhatsappSent, setIsWhatsappSent] = useState(false);
@@ -357,22 +357,81 @@ export default function ReceptionCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* ABA 1: GRADE DE TURNOS (4 HORAS FECHADAS)                      */}
+      {/* ABA 1: GRADE DE TURNOS (8 HORAS TOTAIS: 4h ALINE + 4h JAMILE)  */}
       {/* ============================================================== */}
       {currentTab === 'grade' && (
         <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-6">
+          {/* Seletor Superior dos 2 Mentores do Hub (8h Totais Diárias) */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 via-slate-50 to-orange-50/50 border border-slate-200/80 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#004A8D] bg-white px-2.5 py-0.5 rounded-full border border-blue-200 shadow-2xs">
+                  Regra Co.Nexo: 8h Diárias de Atendimento
+                </span>
+                <h3 className="text-sm font-black text-slate-900 mt-1">
+                  Selecione a Mentora para Gerenciar o Turno de 4 Horas:
+                </h3>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold text-slate-500">
+                  4h Aline + 4h Jamile = <strong>8h/dia</strong>
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {consultors.map((c) => {
+                const isSelected = selectedConsultorId === c.id;
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedConsultorId(c.id);
+                      if (c.turnos && c.turnos[0]) {
+                        setSelectedTurnoId(c.turnos[0].id);
+                      }
+                    }}
+                    className={`p-3 rounded-2xl border-2 text-left transition cursor-pointer flex items-center justify-between ${
+                      isSelected
+                        ? 'border-[#004A8D] bg-white text-[#004A8D] shadow-md ring-2 ring-[#004A8D]/15'
+                        : 'border-slate-200 bg-white/70 hover:bg-white text-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`h-10 w-10 rounded-xl flex items-center justify-center font-black text-xs ${
+                        isSelected ? 'bg-[#004A8D] text-white' : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {c.nome.substring(0, 2).toUpperCase()}
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black">{c.nome}</h4>
+                        <p className="text-[11px] text-slate-500 font-bold">{c.periodoPadrao || (c.id === 'cons-1' ? 'Manhã (08h às 12h • 4h)' : 'Tarde (14h às 18h • 4h)')}</p>
+                      </div>
+                    </div>
+                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                      isSelected ? 'bg-[#F29100] text-slate-950' : 'bg-slate-100 text-slate-600'
+                    }`}>
+                      {c.sala}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-black text-slate-900">
-                  Grade de Turnos (4h Fechadas)
+                  Grade de Turnos (4h Fechadas) • {currentConsultor.nome}
                 </h2>
                 <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
-                  Consultora: {currentConsultor.nome}
+                  {currentConsultor.sala}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Blocos contínuos sem intervalos vazios. Alocação: 1h + 1h + 2h ou 2h + 2h.
+                Blocos contínuos sem intervalos vazios. Modelos válidos: <strong>2 Mentorias (2h+2h)</strong>, <strong>4 Diagnósticos (1hx4)</strong> ou <strong>1 Mentoria + 2 Diagnósticos (2h+1h+1h)</strong>.
               </p>
             </div>
 
@@ -400,8 +459,8 @@ export default function ReceptionCleanView({
           {/* Visual Proporcional do Bloco de 4 Horas */}
           <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-4">
             <div className="flex items-center justify-between text-xs font-bold text-slate-600">
-              <span>Composição do Turno (14:00 às 18:00):</span>
-              <span className="text-[#004A8D] font-extrabold">{totalHorasOcupadas} de 4 horas preenchidas</span>
+              <span>Composição do Turno ({currentTurno?.horarioInicio || '08:00'} às {currentTurno?.horarioFim || '12:00'}):</span>
+              <span className="text-[#004A8D] font-extrabold">{totalHorasOcupadas} de 4 horas preenchidas ({Math.round((totalHorasOcupadas / 4) * 100)}%)</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -554,16 +613,15 @@ export default function ReceptionCleanView({
             {/* Controles de Filtros e Botão de Agendamento */}
             <div className="flex flex-wrap items-center gap-2.5">
               <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-2xl px-3 py-1.5 text-xs">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">Consultor:</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Mentora:</span>
                 <select
                   value={agendaConsultorFilter}
                   onChange={(e) => setAgendaConsultorFilter(e.target.value)}
                   className="bg-transparent font-bold text-slate-700 focus:outline-none cursor-pointer text-xs"
                 >
-                  <option value="todos">Todos os Consultores</option>
-                  {consultors.map((c) => (
-                    <option key={c.id} value={c.id}>{c.nome}</option>
-                  ))}
+                  <option value="todos">Todas (8h Totais do Hub)</option>
+                  <option value="cons-1">Aline Ferreira (Manhã • 08h-12h)</option>
+                  <option value="cons-2">Jamile Mendes (Tarde • 14h-18h)</option>
                 </select>
               </div>
 
@@ -575,9 +633,8 @@ export default function ReceptionCleanView({
                   className="bg-transparent font-bold text-slate-700 focus:outline-none cursor-pointer text-xs"
                 >
                   <option value="todas">Todas as Salas</option>
-                  <option value="Sala 02 Presencial">Sala 02 Presencial</option>
-                  <option value="Sala 03 Presencial">Sala 03 Presencial</option>
-                  <option value="Balcão do Empreendedor">Balcão do Empreendedor</option>
+                  <option value="Sala 01 Presencial">Sala 01 Presencial (Aline)</option>
+                  <option value="Sala 02 Presencial">Sala 02 Presencial (Jamile)</option>
                 </select>
               </div>
 
