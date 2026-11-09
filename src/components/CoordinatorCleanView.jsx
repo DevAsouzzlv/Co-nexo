@@ -124,6 +124,29 @@ export default function CoordinatorCleanView({
     }, 1200);
   };
 
+  const handleProvisionRegis = () => {
+    if (accounts.some(a => a.id === 'regis' || a.email === 'regis.coordenacao@sp.senac.br')) {
+      alert('O perfil de Coordenação Geral (Regis Moreira) já está ativo no sistema.');
+      return;
+    }
+    const regisAcc = {
+      id: 'regis',
+      nome: 'Regis Moreira',
+      cargo: 'Coordenação Geral',
+      roleLabel: 'Diretoria',
+      roleType: 'regis',
+      email: 'regis.coordenacao@sp.senac.br',
+      password: 'senac123',
+      badge: 'Auditoria & Contas',
+      gradient: 'from-purple-600 to-violet-800',
+      color: '#7C3AED',
+      aliases: ['regis', 'regis.coordenacao', 'regis@senac.br', 'diretoria@sp.senac.br']
+    };
+    const updated = addStoredAccount(regisAcc);
+    setAccounts(updated);
+    alert('✓ Perfil de Coordenação Geral (Regis Moreira) criado com sucesso! Agora Regis pode acessar e criar as outras contas.');
+  };
+
   const handleDeleteAccount = (accId) => {
     if (accId === 'regis') {
       alert('Você não pode excluir a conta principal do Coordenador Regis.');
@@ -427,22 +450,35 @@ export default function CoordinatorCleanView({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 border border-purple-200">
-                  Exclusivo Coordenação
+                  Governança & Acessos
                 </span>
                 <h3 className="text-lg font-black text-slate-900">Gestão de Perfis & Acessos do Hub</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
-                Controle centralizado de credenciais. Apenas Regis como coordenador pode cadastrar e gerenciar perfis de atuação.
+                Controle centralizado de credenciais. O Admin Supremo e o Coordenador Regis gerenciam todos os perfis institucionais.
               </p>
             </div>
 
-            <button
-              onClick={() => setIsNewAccountModalOpen(true)}
-              className="px-4 py-2.5 rounded-full bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-2 shadow-sm transition cursor-pointer shrink-0"
-            >
-              <UserPlus className="w-4 h-4 text-[#F29100]" />
-              <span>+ Cadastrar Novo Perfil</span>
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              {!accounts.some(a => a.id === 'regis' || a.email === 'regis.coordenacao@sp.senac.br') && (
+                <button
+                  onClick={handleProvisionRegis}
+                  className="px-4 py-2.5 rounded-full bg-[#F29100] hover:bg-[#D97D00] text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                  title="Criar o perfil oficial de Coordenação Geral em 1 clique"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>+ Criar Perfil de Coordenação (Regis)</span>
+                </button>
+              )}
+
+              <button
+                onClick={() => setIsNewAccountModalOpen(true)}
+                className="px-4 py-2.5 rounded-full bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-2 shadow-sm transition cursor-pointer"
+              >
+                <UserPlus className="w-4 h-4 text-[#F29100]" />
+                <span>+ Cadastrar Novo Perfil</span>
+              </button>
+            </div>
           </div>
 
           {/* Grid de Perfis Cadastrados */}

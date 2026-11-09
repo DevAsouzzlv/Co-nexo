@@ -1,4 +1,4 @@
-﻿// src/services/storage.js
+// src/services/storage.js
 /**
  * CO.NEXO - CAMADA DE REPOSITÓRIO E INTEGRIDADE DE DADOS
  * 
@@ -27,8 +27,36 @@ const STORAGE_KEYS = {
   LAST_BACKUP: 'conexo_last_backup_v5'
 };
 
+// Conta Mestra Raiz do Sistema
+export const MASTER_ADMIN_ACCOUNT = {
+  id: 'super-admin',
+  nome: 'Admin Supremo',
+  cargo: 'Governança Master & TI',
+  roleLabel: 'Admin Supremo',
+  roleType: 'regis',
+  email: 'admin@conexo.senac.br',
+  password: 'admin123',
+  badge: 'Admin Supremo (Master)',
+  gradient: 'from-slate-900 via-indigo-950 to-slate-900',
+  color: '#004A8D',
+  aliases: ['admin', 'admin@conexo.senac.br', 'admin@senac.br', 'superadmin', 'root', 'master']
+};
+
 // Contas e Perfis Padrão do Hub SENAC
 export const DEFAULT_ACCOUNTS = [
+  MASTER_ADMIN_ACCOUNT,
+  {
+    id: 'regis',
+    nome: 'Regis Moreira',
+    cargo: 'Coordenação Geral',
+    roleLabel: 'Diretoria',
+    roleType: 'regis',
+    email: 'regis.coordenacao@sp.senac.br',
+    badge: 'Auditoria & Contas',
+    gradient: 'from-purple-600 to-violet-800',
+    color: '#7C3AED',
+    aliases: ['regis', 'regis.coordenacao', 'regis@senac.br', 'diretoria@sp.senac.br']
+  },
   {
     id: 'max',
     nome: 'Max Ferreira',
@@ -64,18 +92,6 @@ export const DEFAULT_ACCOUNTS = [
     gradient: 'from-emerald-500 to-teal-700',
     color: '#10B981',
     aliases: ['arthur', 'arthur.silva', 'arthur@tempero.com', 'arthur@senac.br', 'tempero']
-  },
-  {
-    id: 'regis',
-    nome: 'Regis Moreira',
-    cargo: 'Coordenação Geral',
-    roleLabel: 'Diretoria',
-    roleType: 'regis',
-    email: 'regis.coordenacao@sp.senac.br',
-    badge: 'Auditoria & Contas',
-    gradient: 'from-purple-600 to-violet-800',
-    color: '#7C3AED',
-    aliases: ['regis', 'regis.coordenacao', 'regis@senac.br', 'diretoria@sp.senac.br']
   }
 ];
 
@@ -129,12 +145,20 @@ export const StorageRepository = {
   getAccounts() {
     try {
       const raw = localStorage.getItem(STORAGE_KEYS.ACCOUNTS);
+      let list = [];
       if (!raw) {
-        localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(DEFAULT_ACCOUNTS));
-        return DEFAULT_ACCOUNTS;
+        list = DEFAULT_ACCOUNTS;
+        localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(list));
+        return list;
       }
       const parsed = safeJsonParse(raw, DEFAULT_ACCOUNTS);
-      return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_ACCOUNTS;
+      list = Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_ACCOUNTS;
+      // Garante que o Admin Supremo sempre esteja disponível como chave mestra
+      if (!list.some(a => a.id === 'super-admin' || a.email === 'admin@conexo.senac.br')) {
+        list = [MASTER_ADMIN_ACCOUNT, ...list];
+        localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(list));
+      }
+      return list;
     } catch {
       return DEFAULT_ACCOUNTS;
     }
@@ -207,9 +231,10 @@ export const StorageRepository = {
     }
   },
 
-  // RESET TOTAL LIMPO: Zera todos os alunos, agendamentos, diários e fila (Banco do Zero)
+  // RESET TOTAL LIMPO: Zera todos os alunos, agendamentos, diários e mantém apenas o Admin Supremo para provisionar Coordenação
   resetCleanEmpty() {
     this.purgeLegacyKeys();
+    localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify([MASTER_ADMIN_ACCOUNT]));
     localStorage.setItem(STORAGE_KEYS.STUDENTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DIARIOS, JSON.stringify([]));

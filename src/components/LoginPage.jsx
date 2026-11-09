@@ -14,7 +14,8 @@ import {
 import logoConexo from '../assets/logo-conexo.png';
 import { 
   getStoredAccounts, 
-  DEFAULT_ACCOUNTS 
+  DEFAULT_ACCOUNTS,
+  MASTER_ADMIN_ACCOUNT 
 } from '../services/storage';
 
 export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
@@ -138,6 +139,27 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
+          </div>
+
+          {/* Dica Institucional de Acesso Master (Admin Supremo) */}
+          <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between text-[11px] text-slate-500">
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="font-bold text-slate-700 shrink-0">Admin Supremo:</span>
+              <code className="text-[#004A8D] font-mono bg-white px-2 py-0.5 rounded border border-slate-200 truncate">
+                admin@conexo.senac.br
+              </code>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setEmailInput('admin@conexo.senac.br');
+                setPasswordInput('admin123');
+                setErrorMessage('');
+              }}
+              className="text-[#004A8D] font-bold hover:underline cursor-pointer shrink-0 ml-2"
+            >
+              Preencher
+            </button>
           </div>
 
           {/* Erro */}
