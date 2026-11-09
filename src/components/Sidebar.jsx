@@ -87,7 +87,7 @@ export default function Sidebar({
     <aside
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`apple-glass rounded-[28px] p-3 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/80 shrink-0 hidden lg:flex h-[calc(100vh-2.5rem)] sticky top-4 z-30 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`apple-glass rounded-[28px] p-3 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/80 shrink-0 hidden lg:flex h-full z-30 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-none ${
         isHovered ? 'w-64' : 'w-20'
       }`}
     >
