@@ -1,4 +1,4 @@
-﻿// src/components/ReceptionCleanView.jsx
+// src/components/ReceptionCleanView.jsx
 import React, { useState } from 'react';
 import { 
   Clock, 
@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function ReceptionCleanView({
+  currentUser,
   students,
   consultors,
   appointments,
@@ -182,7 +183,7 @@ export default function ReceptionCleanView({
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Olá, Max Ferreira!
+                Olá, {currentUser?.nome || 'Max Ferreira'}!
               </h2>
               <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
                 Monitoramento contínuo das 8 horas de atendimento (4h Aline + 4h Laíse), confirmações ativas e zero ociosidade na grade docente.

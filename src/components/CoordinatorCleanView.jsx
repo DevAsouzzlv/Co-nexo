@@ -27,6 +27,7 @@ import {
 } from '../services/storage';
 
 export default function CoordinatorCleanView({
+  currentUser,
   students = [],
   consultors = [],
   appointments = [],
@@ -265,14 +266,25 @@ export default function CoordinatorCleanView({
               Resumo Operacional das Salas de Atendimento
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                <span className="text-xs font-bold text-slate-900">Sala 2 - Gastronomia, Custos & CMV</span>
-                <p className="text-xs text-slate-500 mt-1">Consultora Aline Ferreira • 100% ocupada às quartas-feiras</p>
-              </div>
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                <span className="text-xs font-bold text-slate-900">Sala 3 - Vendas, Estratégia & Mercado</span>
-                <p className="text-xs text-slate-500 mt-1">Consultor Roberto Souza • Turnos contínuos de 4 horas</p>
-              </div>
+              {consultors && consultors.length > 0 ? (
+                consultors.map((c, i) => (
+                  <div key={c.id || i} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <span className="text-xs font-bold text-slate-900">{c.sala || `Sala 0${i + 1}`} - {c.especialidade || c.cargo}</span>
+                    <p className="text-xs text-slate-500 mt-1">Consultoria {c.nome} • {c.periodoLabel || 'Turno contínuo de 4 horas'}</p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <span className="text-xs font-bold text-slate-900">Sala 01 - Finanças, Custos & CMV</span>
+                    <p className="text-xs text-slate-500 mt-1">Consultoria Aline Ferreira • Turno Matutino (08h-12h)</p>
+                  </div>
+                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                    <span className="text-xs font-bold text-slate-900">Sala 02 - Vendas & Formalização MEI</span>
+                    <p className="text-xs text-slate-500 mt-1">Consultoria Laíse Mendes • Turno Vespertino (14h-18h)</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

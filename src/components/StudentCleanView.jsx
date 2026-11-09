@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 
 export default function StudentCleanView({
+  currentUser,
   student,
   appointments = [],
   diarios = [],
@@ -38,8 +39,8 @@ export default function StudentCleanView({
 }) {
   const currentStudent = student || {
     id: 'aluno-1',
-    nome: 'Arthur Silva',
-    negocio: 'Tempero do Arthur (Alimentação)',
+    nome: currentUser?.nome || 'Arthur Silva',
+    negocio: currentUser?.cargo || 'Tempero do Arthur (Alimentação)',
     statusNegocio: 'Informal',
     totalFaltas: 1,
     totalReagendamentos: 1,
@@ -57,7 +58,8 @@ export default function StudentCleanView({
   const isMeiFormalizado = currentStudent.statusNegocio === 'MEI' || Boolean(currentStudent.cnpj);
 
   // Confirmação de Presença
-  const todayAppointment = appointments.find(a => a.alunoId === currentStudent.id && (a.turnoId === 'turno-1' || a.horarioInicio === '16:00'));
+  const todayAppointment = appointments.find(a => a.alunoId === currentStudent.id) || appointments.find(a => a.horarioInicio === '16:00') || appointments[0];
+  const consultorDesignado = consultors.find(c => c.id === todayAppointment?.consultorId) || consultors[0];
   const isConfirmed = todayAppointment?.whatsappStatus?.includes('Confirmado');
 
   const [localWhatsappConfirmed, setLocalWhatsappConfirmed] = useState(isConfirmed);
@@ -168,7 +170,7 @@ export default function StudentCleanView({
     if (onConfirmWhatsApp) {
       onConfirmWhatsApp(todayAppointment?.id || 'agend-3');
     }
-    showToast('✓ Presença confirmada no WhatsApp! A recepção e a mentora Aline foram notificadas.');
+    showToast('✓ Presença confirmada no WhatsApp! A recepção e a equipe de consultoria foram notificadas.');
   };
 
   const handleFormalizarAgora = () => {
@@ -195,7 +197,8 @@ export default function StudentCleanView({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `Ficha_Tecnica_Tempero_do_Arthur_${Date.now()}.csv`);
+    const nomeSeguro = (currentStudent.negocio || currentStudent.nome || 'Negocio').replace(/[^a-zA-Z0-9]/g, '_');
+    link.setAttribute('download', `Ficha_Tecnica_${nomeSeguro}_${Date.now()}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -212,7 +215,7 @@ export default function StudentCleanView({
       "- Acesse: gov.br/empresas-e-negocios/pt-br/empreendedor\r\n" +
       "- Faca login com sua conta Gov.br (Prata ou Ouro)\r\n\r\n" +
       "Passo 2: Dados do Negocio\r\n" +
-      "- Nome Fantasia: Tempero do Arthur\r\n" +
+      "- Nome Fantasia: " + (currentStudent.negocio || currentStudent.nome) + "\r\n" +
       "- CNAE Principal: 5620-1/04 - Fornecimento de alimentos preparados preponderantemente para consumo domiciliar\r\n\r\n" +
       "Passo 3: Emissao do CCMEI\r\n" +
       "- Ao finalizar, imprima seu Certificado da Condicao de Microempreendedor Individual (CCMEI)\r\n" +
@@ -287,7 +290,7 @@ export default function StudentCleanView({
                   Sessão {currentStudent.sessaoAtual || 3}: Precificação na Prática & Margem
                 </h2>
                 <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
-                  Mentora Aline Ferreira • Foco: Calibragem de CMV, corte de desperdício na bancada e preço do prato executivo.
+                  {consultorDesignado ? `Mentora ${consultorDesignado.nome}` : 'Consultoria Especializada SENAC Hub'} • Foco: Calibragem de CMV, corte de desperdício e precificação.
                 </p>
               </div>
 
@@ -621,7 +624,7 @@ export default function StudentCleanView({
         <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6">
           <div>
             <h3 className="text-base font-black text-slate-900">Materiais & Fichas Técnicas para Download</h3>
-            <p className="text-xs text-slate-500">Documentos oficiais disponibilizados pela mentora Aline</p>
+            <p className="text-xs text-slate-500">Documentos oficiais disponibilizados pela equipe de consultoria do Hub</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -629,7 +632,7 @@ export default function StudentCleanView({
               <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-100 text-[#004A8D]">
                 Planilha CSV
               </span>
-              <h4 className="text-sm font-bold text-slate-900">Ficha_Tecnica_Tempero_do_Arthur.csv</h4>
+              <h4 className="text-sm font-bold text-slate-900">Ficha_Tecnica_{(currentStudent.negocio || currentStudent.nome || 'Negocio').replace(/[^a-zA-Z0-9]/g, '_')}.csv</h4>
               <p className="text-xs text-slate-500">Planilha calculada de CMV por porção (carnes, grãos, embalagens e ponto de equilíbrio).</p>
               <button
                 type="button"

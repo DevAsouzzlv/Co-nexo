@@ -3,16 +3,19 @@ import React, { useState } from 'react';
 import { CheckCircle2, Download, Calculator, Plus, BookOpen, Phone, Layers, Trash2, Save } from 'lucide-react';
 
 export default function MentorCleanView({
-  consultors,
-  students,
-  appointments,
+  currentUser,
+  consultors = [],
+  students = [],
+  appointments = [],
+  diarios = [],
+  onOpenDiario,
   onSaveDiario,
   onSaveSimulacao,
   onFormalizarAluno,
   currentTab = 'minha-agenda',
   setCurrentTab
 }) {
-  const mentor = consultors[0]; // Aline Ferreira
+  const mentor = currentUser || consultors.find(c => c.email === currentUser?.email) || consultors[0] || { nome: 'Consultora SENAC' };
   const [selectedStudentId, setSelectedStudentId] = useState('aluno-1');
   const currentStudent = students.find((s) => s.id === selectedStudentId) || students[0] || {
     id: 'novo',
@@ -201,7 +204,7 @@ export default function MentorCleanView({
                 Turno de Atendimentos • Turno da Manhã
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Olá, Aline Ferreira!
+                Olá, {mentor.nome}!
               </h2>
               <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
                 Você tem 4 horas contínuas de consultoria agendadas hoje na <strong>Sala 01 Presencial</strong> (Finanças & CMV).
@@ -326,7 +329,7 @@ export default function MentorCleanView({
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Consultora: Aline Ferreira • Sala 02 Presencial • Sessão {currentStudent.sessaoAtual || 3} de 5 • Status: {currentStudent.statusNegocio}
+                  Consultora: {mentor.nome} • Sala 02 Presencial • Sessão {currentStudent.sessaoAtual || 3} de 5 • Status: {currentStudent.statusNegocio}
                 </p>
               </div>
             </div>
@@ -678,7 +681,7 @@ export default function MentorCleanView({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
-              <h3 className="text-base font-extrabold text-slate-900">Carteira de Mentorados da Aline Ferreira</h3>
+              <h3 className="text-base font-extrabold text-slate-900">Carteira de Mentorados de {mentor.nome}</h3>
               <p className="text-xs text-slate-500">Empreendedores acompanhados nesta trilha</p>
             </div>
             <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-[#004A8D] border border-blue-200">
@@ -713,7 +716,7 @@ export default function MentorCleanView({
                   </button>
                   {s.whatsapp && (
                     <a
-                      href={`https://wa.me/55${s.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(s.nome)},%20aqui%20é%20a%20Aline%20do%20SENAC!`}
+                      href={`https://wa.me/55${s.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(s.nome)},%20aqui%20é%20${encodeURIComponent(mentor.nome.split(' ')[0])}%20do%20SENAC!`}
                       target="_blank"
                       rel="noreferrer"
                       className="p-1.5 rounded-xl bg-[#F29100]/15 hover:bg-[#F29100]/25 text-[#9A5B00] transition"

@@ -18,7 +18,9 @@ import {
   saveStoredData,
   resetToInitial,
   resetCleanEmpty,
-  exportBackupJSON
+  exportBackupJSON,
+  getStoredAccounts,
+  DEFAULT_ACCOUNTS
 } from './services/storage';
 
 export default function App() {
@@ -324,7 +326,31 @@ export default function App() {
     exportBackupJSON(data);
   };
 
-  const arthurStudent = data.students?.find((s) => s.id === 'aluno-1') || data.students?.[0] || null;
+  const accounts = getStoredAccounts();
+  const authEmail = localStorage.getItem('conexo_auth_email');
+  const currentProfile = accounts.find((p) => 
+    (authEmail && p.email?.toLowerCase() === authEmail.toLowerCase()) ||
+    p.id === currentPersona || 
+    p.roleType === currentPersona
+  ) || DEFAULT_ACCOUNTS.find((p) => p.id === currentPersona || p.roleType === currentPersona) || accounts[0] || DEFAULT_ACCOUNTS[0];
+
+  // Resolve dinamicamente o perfil do mentorado autenticado
+  const loggedInStudent = data.students?.find((s) => 
+    (authEmail && s.email?.toLowerCase() === authEmail.toLowerCase()) ||
+    (currentProfile?.email && s.email?.toLowerCase() === currentProfile.email.toLowerCase()) ||
+    s.id === currentPersona ||
+    s.id === currentProfile?.id ||
+    s.nome?.toLowerCase() === currentProfile?.nome?.toLowerCase()
+  ) || data.students?.find((s) => s.id === 'aluno-1') || data.students?.[0] || {
+    id: currentProfile?.id || 'aluno-custom',
+    nome: currentProfile?.nome || 'Mentorado Empreendedor',
+    negocio: currentProfile?.cargo || 'Negócio em Validação',
+    segmento: 'Empreendedorismo',
+    etapaPrograma: 'Trilha',
+    sessaoAtual: 1,
+    whatsapp: '(11) 99999-0000',
+    email: currentProfile?.email || 'mentorado@sp.senac.br'
+  };
 
   // Se não estiver autenticado, exibe EXCLUSIVAMENTE a tela de login inicial
   if (!isAuthenticated) {
@@ -347,6 +373,7 @@ export default function App() {
       {/* 1. Sidebar Fixa no Desktop (Escondida no Mobile) */}
       <Sidebar
         currentPersona={currentPersona}
+        currentUser={currentProfile}
         onLogout={handleLogout}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
@@ -358,6 +385,7 @@ export default function App() {
         {/* Top Navbar Responsiva */}
         <TopNavbar
           currentPersona={currentPersona}
+          currentUser={currentProfile}
           onLogout={handleLogout}
           onResetData={handleResetData}
           onExportBackup={handleExportBackup}
@@ -368,6 +396,7 @@ export default function App() {
           <ErrorBoundary key={currentPersona}>
             {currentPersona === 'max' && (
               <ReceptionCleanView
+                currentUser={currentProfile}
                 students={data.students}
                 consultors={data.consultors}
                 appointments={data.appointments}
@@ -386,6 +415,7 @@ export default function App() {
 
             {currentPersona === 'aline' && (
               <MentorCleanView
+                currentUser={currentProfile}
                 consultors={data.consultors}
                 students={data.students}
                 appointments={data.appointments}
@@ -401,7 +431,8 @@ export default function App() {
 
             {currentPersona === 'arthur' && (
               <StudentCleanView
-                student={arthurStudent}
+                currentUser={currentProfile}
+                student={loggedInStudent}
                 appointments={data.appointments}
                 diarios={data.diarios}
                 consultors={data.consultors}
@@ -415,6 +446,7 @@ export default function App() {
 
             {currentPersona === 'admin' && (
               <AdminCleanView
+                currentUser={currentProfile}
                 students={data.students}
                 consultors={data.consultors}
                 appointments={data.appointments}
@@ -428,6 +460,7 @@ export default function App() {
 
             {currentPersona === 'regis' && (
               <CoordinatorCleanView
+                currentUser={currentProfile}
                 students={data.students}
                 consultors={data.consultors}
                 appointments={data.appointments}

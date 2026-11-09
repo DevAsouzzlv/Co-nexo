@@ -16,12 +16,14 @@ import { getStoredAccounts, DEFAULT_ACCOUNTS } from '../services/storage';
 
 export default function TopNavbar({
   currentPersona,
+  currentUser,
   onLogout,
   onResetData,
   onExportBackup
 }) {
   const accounts = getStoredAccounts();
-  const currentProfile = accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+  const currentProfile = currentUser || 
+    accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
     DEFAULT_ACCOUNTS.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
     accounts[0] || DEFAULT_ACCOUNTS[0];
   const today = new Date().toLocaleDateString('pt-BR', { 

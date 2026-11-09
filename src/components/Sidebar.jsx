@@ -21,6 +21,7 @@ import logoConexo from '../assets/logo-conexo.png';
 
 export default function Sidebar({
   currentPersona,
+  currentUser,
   onLogout,
   currentTab,
   setCurrentTab,
@@ -28,7 +29,8 @@ export default function Sidebar({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const accounts = getStoredAccounts();
-  const currentProfile = accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+  const currentProfile = currentUser || 
+    accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
     DEFAULT_ACCOUNTS.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
     accounts[0] || DEFAULT_ACCOUNTS[0];
 
