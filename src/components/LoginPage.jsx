@@ -202,26 +202,18 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
       {/* Cartão Central Apple HIG */}
       <div className="w-full max-w-xl bg-white/95 backdrop-blur-2xl rounded-[36px] border border-white/80 shadow-[0_20px_60px_-15px_rgba(0,40,90,0.08)] p-6 sm:p-9 relative z-10 space-y-5">
         
-        {/* Topo: Marca & Identidade Co.Nexo SENAC */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center p-2 rounded-2xl bg-white shadow-sm border border-slate-100 mb-1">
+        {/* Topo: Marca Oficial co.nexo Senac */}
+        <div className="text-center space-y-1.5 flex flex-col items-center">
+          <div className="py-1 px-4 flex items-center justify-center">
             <img 
               src={logoConexo} 
-              alt="Co.Nexo SENAC" 
-              className="h-12 w-auto object-contain"
+              alt="co.nexo Senac" 
+              className="h-14 sm:h-16 w-auto object-contain transition-transform hover:scale-105"
             />
           </div>
-          <div>
-            <div className="flex items-center justify-center gap-2">
-              <h1 className="text-2xl font-black tracking-tight text-slate-900">Co.Nexo</h1>
-              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F29100] text-slate-950 shadow-xs">
-                SENAC
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              Hub Integrado de Empreendedorismo & Gestão de Mentorias
-            </p>
-          </div>
+          <p className="text-xs text-slate-500 font-medium tracking-wide">
+            Hub Integrado de Empreendedorismo & Gestão de Mentorias
+          </p>
         </div>
 
         {/* Alternador de Abas Apple: Entrar ou Cadastrar Novo Perfil */}

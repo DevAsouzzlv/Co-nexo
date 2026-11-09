@@ -88,24 +88,22 @@ export default function Sidebar({
           <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80" />
         </div>
 
-        {/* Logo & Marca Co.Nexo */}
-        <div className={`flex items-center gap-3 px-1 transition-all duration-300 ${isHovered ? 'justify-start' : 'justify-center'}`}>
-          <div className="h-10 w-10 rounded-2xl bg-white/90 p-1.5 flex items-center justify-center shadow-xs border border-black/[0.04] shrink-0">
+        {/* Logo & Marca co.nexo Senac */}
+        <div className={`flex items-center px-1 transition-all duration-300 ${isHovered ? 'justify-start gap-2.5' : 'justify-center'}`}>
+          <div className="h-10 w-10 rounded-2xl bg-white/95 p-1 flex items-center justify-center shadow-xs border border-black/[0.04] shrink-0">
             <img 
               src={logoConexo} 
-              alt="Co.Nexo SENAC" 
+              alt="co.nexo Senac" 
               className="h-full w-full object-contain"
             />
           </div>
           {isHovered && (
-            <div className="overflow-hidden transition-all duration-300 animate-fade-in whitespace-nowrap">
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-[#1D1D1F] text-base tracking-tight">Co.Nexo</span>
-                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-md bg-[#F29100]/15 text-[#C87500]">
-                  SENAC
-                </span>
-              </div>
-              <p className="text-[11px] text-[#86868B] font-medium">Hub de Inovação</p>
+            <div className="overflow-hidden transition-all duration-300 animate-fade-in whitespace-nowrap min-w-0">
+              <img 
+                src={logoConexo} 
+                alt="co.nexo Senac" 
+                className="h-7 w-auto object-contain"
+              />
             </div>
           )}
         </div>
