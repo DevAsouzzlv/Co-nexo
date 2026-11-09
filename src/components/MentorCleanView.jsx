@@ -14,7 +14,15 @@ export default function MentorCleanView({
 }) {
   const mentor = consultors[0]; // Aline Ferreira
   const [selectedStudentId, setSelectedStudentId] = useState('aluno-1');
-  const currentStudent = students.find((s) => s.id === selectedStudentId) || students[0];
+  const currentStudent = students.find((s) => s.id === selectedStudentId) || students[0] || {
+    id: 'novo',
+    nome: 'Nenhum mentorado selecionado',
+    negocio: 'Aguardando cadastro de alunos',
+    etapaPrograma: 'Inscrito',
+    sessaoAtual: 1,
+    statusNegocio: 'Informal',
+    totalFaltas: 0
+  };
 
   // Feedback Toast
   const [toastMessage, setToastMessage] = useState(null);

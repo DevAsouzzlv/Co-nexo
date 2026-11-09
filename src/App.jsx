@@ -16,6 +16,7 @@ import {
   getStoredData,
   saveStoredData,
   resetToInitial,
+  resetCleanEmpty,
   exportBackupJSON
 } from './services/storage';
 
@@ -287,12 +288,23 @@ export default function App() {
     }));
   };
 
+  const handleResetClean = () => {
+    const clean = resetCleanEmpty();
+    setData(clean);
+    setIsAuthenticated(false);
+    localStorage.removeItem('conexo_auth_persona');
+  };
+
+  const handleResetDemo = () => {
+    const initial = resetToInitial();
+    setData(initial);
+    setIsAuthenticated(false);
+    localStorage.removeItem('conexo_auth_persona');
+  };
+
   const handleResetData = () => {
-    if (confirm('Deseja resetar todos os dados, perfis e agendamentos para o estado inicial de fábrica?')) {
-      const initial = resetToInitial();
-      setData(initial);
-      setIsAuthenticated(false);
-      localStorage.removeItem('conexo_auth_persona');
+    if (confirm('Deseja ZERAR o banco de dados (remover todos os alunos/mentorados e agendamentos)?\n\nClique em OK para ZERAR TUDO ou Cancelar para manter.')) {
+      handleResetClean();
     }
   };
 
@@ -300,11 +312,17 @@ export default function App() {
     exportBackupJSON(data);
   };
 
-  const arthurStudent = data.students.find((s) => s.id === 'aluno-1') || data.students[0];
+  const arthurStudent = data.students?.find((s) => s.id === 'aluno-1') || data.students?.[0] || null;
 
   // Se não estiver autenticado, exibe EXCLUSIVAMENTE a tela de login inicial
   if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} onResetData={handleResetData} />;
+    return (
+      <LoginPage 
+        onLogin={handleLogin} 
+        onResetClean={handleResetClean} 
+        onResetDemo={handleResetDemo} 
+      />
+    );
   }
 
   // Se autenticado, entra no painel exclusivo do usuário

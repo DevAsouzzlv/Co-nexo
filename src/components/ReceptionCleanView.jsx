@@ -1201,7 +1201,30 @@ export default function ReceptionCleanView({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {filteredStudents.map((student) => (
+                  {filteredStudents.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="py-12 text-center">
+                        <div className="max-w-sm mx-auto space-y-3">
+                          <div className="h-12 w-12 rounded-2xl bg-blue-50 text-[#004A8D] flex items-center justify-center mx-auto">
+                            <Users className="w-6 h-6" />
+                          </div>
+                          <h4 className="text-sm font-bold text-slate-800">Nenhum mentorado cadastrado</h4>
+                          <p className="text-xs text-slate-500">
+                            A base de dados de alunos está limpa e pronta para receber novos cadastros.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={onOpenNovoMentorado}
+                            className="px-4 py-2 rounded-full bg-[#004A8D] hover:bg-[#00386C] text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                          >
+                            <UserPlus className="w-3.5 h-3.5" />
+                            <span>Cadastrar Novo Mentorado</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredStudents.map((student) => (
                     <tr key={student.id} className="hover:bg-slate-50/70 transition">
                       <td className="py-3 px-3">
                         <div className="flex items-center gap-2.5">
@@ -1262,7 +1285,8 @@ export default function ReceptionCleanView({
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  )))
+                }
                 </tbody>
               </table>
             )}
