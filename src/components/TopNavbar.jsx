@@ -19,7 +19,8 @@ export default function TopNavbar({
   currentUser,
   onLogout,
   onResetData,
-  onExportBackup
+  onExportBackup,
+  onOpenBlindTestGuide
 }) {
   const accounts = getStoredAccounts();
   const currentProfile = currentUser || 
@@ -66,6 +67,19 @@ export default function TopNavbar({
             Zero Ociosidade
           </span>
         </div>
+
+        {/* Botão Especial do Teste às Cegas */}
+        <button
+          onClick={onOpenBlindTestGuide}
+          title="Abrir Roteiro & Guia Interativo do Teste às Cegas"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 text-amber-950 text-xs font-bold hover:brightness-105 active:scale-95 transition cursor-pointer shadow-xs"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600" />
+          </span>
+          <span className="font-extrabold tracking-tight">🧪 Guia do Teste</span>
+        </button>
 
         {/* Badge do Perfil Logado com Estilo Apple Squircle */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#004A8D]/10 text-[#004A8D] text-xs font-semibold">

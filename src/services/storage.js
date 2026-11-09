@@ -42,11 +42,7 @@ export const MASTER_ADMIN_ACCOUNT = {
   aliases: ['admin', 'admin@conexo.senac.br', 'admin@senac.br', 'superadmin', 'root', 'master']
 };
 
-// Contas e Perfis Padrão do Hub SENAC (Apenas o Admin Supremo Raiz, sem perfis pré-setados estáticos)
-export const DEFAULT_ACCOUNTS = [
-  MASTER_ADMIN_ACCOUNT
-];
-
+// Contas e Perfis Padrão do Hub SENAC para o Teste às Cegas e Produção
 export const DEMO_ACCOUNTS = [
   MASTER_ADMIN_ACCOUNT,
   {
@@ -56,6 +52,7 @@ export const DEMO_ACCOUNTS = [
     roleLabel: 'Diretoria',
     roleType: 'regis',
     email: 'regis.coordenacao@sp.senac.br',
+    password: 'senac123',
     badge: 'Auditoria & Contas',
     gradient: 'from-purple-600 to-violet-800',
     color: '#7C3AED',
@@ -68,6 +65,7 @@ export const DEMO_ACCOUNTS = [
     roleLabel: 'Recepção',
     roleType: 'max',
     email: 'max.operacao@sp.senac.br',
+    password: 'senac123',
     badge: 'Grade & Atendimentos',
     gradient: 'from-blue-600 to-indigo-700',
     color: '#004A8D',
@@ -80,10 +78,11 @@ export const DEMO_ACCOUNTS = [
     roleLabel: 'Consultora',
     roleType: 'aline',
     email: 'aline.consultora@sp.senac.br',
+    password: 'senac123',
     badge: 'Prontuário & Trilha',
     gradient: 'from-amber-500 to-orange-600',
     color: '#F29100',
-    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'Laíse', 'Laíse.consultora', 'Laíse@senac.br']
+    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'laise', 'laise.consultora', 'laise@senac.br']
   },
   {
     id: 'arthur',
@@ -92,12 +91,15 @@ export const DEMO_ACCOUNTS = [
     roleLabel: 'Mentorado',
     roleType: 'arthur',
     email: 'arthur.silva@sp.senac.br',
+    password: 'senac123',
     badge: 'Portal do Aluno',
     gradient: 'from-emerald-500 to-teal-700',
     color: '#10B981',
     aliases: ['arthur', 'arthur.silva', 'arthur@tempero.com', 'arthur@senac.br', 'tempero']
   }
 ];
+
+export const DEFAULT_ACCOUNTS = DEMO_ACCOUNTS;
 
 /**
  * Sanitiza valores textuais para prevenir execução de fórmulas maliciosas (CSV/Formula Injection - CWE-1236).
@@ -157,11 +159,14 @@ export const StorageRepository = {
       }
       const parsed = safeJsonParse(raw, DEFAULT_ACCOUNTS);
       list = Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_ACCOUNTS;
+      // Garante que todas as contas padrão do Hub SENAC existam para o teste às cegas
+      DEMO_ACCOUNTS.forEach((demoAcc) => {
+        if (!list.some(a => a.email.toLowerCase() === demoAcc.email.toLowerCase())) {
+          list.push(demoAcc);
+        }
+      });
       // Garante que o Admin Supremo sempre esteja disponível com roleType: 'admin'
       list = list.map(a => (a.email === 'admin@conexo.senac.br' || a.id === 'super-admin' || a.id === 'admin') ? MASTER_ADMIN_ACCOUNT : a);
-      if (!list.some(a => a.email === 'admin@conexo.senac.br')) {
-        list = [MASTER_ADMIN_ACCOUNT, ...list];
-      }
       localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(list));
       return list;
     } catch {

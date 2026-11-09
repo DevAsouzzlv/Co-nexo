@@ -13,6 +13,8 @@ import AgendamentoModal from './components/AgendamentoModal';
 import DiarioBordoModal from './components/DiarioBordoModal';
 import NovoMentoradoModal from './components/NovoMentoradoModal';
 import ErrorBoundary from './components/ErrorBoundary';
+import BlindTestGuideModal from './components/BlindTestGuideModal';
+import { Sparkles } from 'lucide-react';
 import {
   getStoredData,
   saveStoredData,
@@ -50,6 +52,15 @@ export default function App() {
   const [selectedStudentParaDiario, setSelectedStudentParaDiario] = useState(null);
 
   const [isNovoMentoradoOpen, setIsNovoMentoradoOpen] = useState(false);
+  const [isBlindTestGuideOpen, setIsBlindTestGuideOpen] = useState(false);
+  const [globalToast, setGlobalToast] = useState(null);
+
+  const showGlobalToast = (message) => {
+    setGlobalToast(message);
+    setTimeout(() => {
+      setGlobalToast(null);
+    }, 3500);
+  };
 
   // Sincroniza LocalStorage
   useEffect(() => {
@@ -78,6 +89,15 @@ export default function App() {
     setIsAuthenticated(false);
     localStorage.removeItem('conexo_auth_persona');
     localStorage.removeItem('conexo_auth_email');
+    showGlobalToast('Sessão encerrada com sucesso.');
+  };
+
+  // Alternância rápida de perfil para o Teste às Cegas
+  const handleSwitchPersona = (personaId) => {
+    const accs = getStoredAccounts();
+    const acc = accs.find(a => a.id === personaId || a.roleType === personaId);
+    handleLogin(personaId, acc);
+    showGlobalToast(`✓ Alternado para o perfil de ${acc?.nome || personaId}`);
   };
 
   // Ações de Agendamento
@@ -123,6 +143,7 @@ export default function App() {
         students: updatedStudents
       };
     });
+    showGlobalToast('✓ Agendamento salvo com sucesso!');
   };
 
   const handleUpdateAppointmentStatus = (appointmentId, newStatus) => {
@@ -177,6 +198,7 @@ export default function App() {
       });
       return { ...prev, appointments: updatedAppointments };
     });
+    showGlobalToast('📲 Presença confirmada via WhatsApp!');
   };
 
   // Formalização MEI (Arthur -> Regis & Max)
@@ -196,6 +218,7 @@ export default function App() {
       });
       return { ...prev, students: updatedStudents };
     });
+    showGlobalToast('🎉 Formalização MEI registrada com sucesso!');
   };
 
   const handleOpenDiario = (student) => {
@@ -228,6 +251,7 @@ export default function App() {
 
       return { ...prev, diarios: updatedDiarios, students: updatedStudents };
     });
+    showGlobalToast('📝 Diário de bordo e metas salvos com sucesso!');
   };
 
   const handleSaveNovoMentorado = (novoAluno) => {
@@ -235,6 +259,7 @@ export default function App() {
       ...prev,
       students: [novoAluno, ...prev.students]
     }));
+    showGlobalToast('✓ Novo mentorado cadastrado no SENAC Hub!');
   };
 
   // Encaixe Rápido de Aluno em Horário Vago
@@ -266,6 +291,7 @@ export default function App() {
         waitingList: updatedWaiting
       };
     });
+    showGlobalToast('⚡ Encaixe realizado com sucesso! Ociosidade eliminada.');
   };
 
   // Adicionar à Fila de Espera
@@ -389,7 +415,47 @@ export default function App() {
           onLogout={handleLogout}
           onResetData={handleResetData}
           onExportBackup={handleExportBackup}
+          onOpenBlindTestGuide={() => setIsBlindTestGuideOpen(true)}
         />
+
+        {/* Banner de Aviso de Teste às Cegas & Contexto do Perfil */}
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-blue-500/5 border border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-2xs">
+          <div className="flex items-start sm:items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-[#F29100] text-slate-950 font-black shrink-0 shadow-xs text-xs">
+              🧪
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-extrabold text-amber-950 uppercase tracking-wide text-[10px]">
+                  Ambiente de Teste às Cegas
+                </span>
+                <span className="text-[10px] bg-white px-2 py-0.5 rounded-full border border-amber-200 text-slate-700 font-bold">
+                  {currentProfile?.roleLabel}: {currentProfile?.nome}
+                </span>
+                <span className="text-[10px] text-slate-400 hidden md:inline">
+                  • {currentProfile?.badge}
+                </span>
+              </div>
+              <p className="text-slate-600 text-[11px] mt-0.5 leading-relaxed">
+                {currentPersona === 'max' && 'Recepção: Teste encaixes na grade de 8h, confirmação de presença WhatsApp e novo mentorado.'}
+                {currentPersona === 'aline' && 'Consultoria: Teste prontuário individual, diário de bordo e simulação de custos/CMV.'}
+                {currentPersona === 'arthur' && 'Mentorado: Teste compromissos de bancada, upload de tarefas respondidas e presença WhatsApp.'}
+                {currentPersona === 'regis' && 'Coordenação: Audite metas de 8h dos docentes, no-show e exporte relatório CSV homologado.'}
+                {currentPersona === 'admin' && 'Admin Supremo: Gerencie perfis institucionais e permissões de acesso do SENAC Hub.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+            <button
+              onClick={() => setIsBlindTestGuideOpen(true)}
+              className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-[#004A8D] font-bold text-xs border border-blue-200 shadow-2xs transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#F29100]" />
+              <span>Roteiro de Teste</span>
+            </button>
+          </div>
+        </div>
 
         {/* Conteúdo Exclusivo da Persona Autenticada */}
         <main className="flex-1">
@@ -510,6 +576,41 @@ export default function App() {
         diarios={data.diarios}
         onSaveDiario={handleSaveDiario}
         isReadOnly={currentPersona === 'regis' || currentPersona === 'arthur'}
+      />
+
+      {/* Botão Flutuante Permanente para o Teste às Cegas */}
+      <div className="fixed bottom-5 right-5 z-40 hidden sm:flex">
+        <button
+          onClick={() => setIsBlindTestGuideOpen(true)}
+          className="bg-slate-900/90 hover:bg-slate-900 text-white px-4 py-2.5 rounded-full shadow-[0_10px_25px_rgba(0,0,0,0.2)] border border-slate-700/50 flex items-center gap-2.5 text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-md"
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
+          </span>
+          <span>🧪 Guia do Teste às Cegas</span>
+        </button>
+      </div>
+
+      {/* Toast de Notificação Global Apple HIG */}
+      {globalToast && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-fade-in">
+          <div className="bg-slate-900/95 text-white px-5 py-2.5 rounded-2xl shadow-2xl border border-white/20 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold tracking-tight">
+            <Sparkles className="w-4 h-4 text-[#F29100] shrink-0" />
+            <span>{globalToast}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Modal do Guia de Teste às Cegas */}
+      <BlindTestGuideModal
+        isOpen={isBlindTestGuideOpen}
+        onClose={() => setIsBlindTestGuideOpen(false)}
+        currentPersona={currentPersona}
+        onSwitchPersona={handleSwitchPersona}
+        onResetDemo={handleResetDemo}
+        onResetClean={handleResetClean}
+        onExportBackup={handleExportBackup}
       />
     </div>
   );
