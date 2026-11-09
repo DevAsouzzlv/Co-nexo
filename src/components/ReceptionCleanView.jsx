@@ -15,7 +15,8 @@ import {
   ShieldAlert, 
   Phone, 
   FileText,
-  Zap 
+  Zap,
+  Sparkles
 } from 'lucide-react';
 
 export default function ReceptionCleanView({
