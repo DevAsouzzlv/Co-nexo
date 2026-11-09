@@ -266,25 +266,22 @@ export default function CoordinatorCleanView({
               Resumo Operacional das Salas de Atendimento
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {consultors && consultors.length > 0 ? (
-                consultors.map((c, i) => (
+              {(() => {
+                const consultorAccs = accounts.filter(a => a.roleType === 'aline');
+                if (consultorAccs.length === 0) {
+                  return (
+                    <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 col-span-2 text-center text-xs text-slate-500">
+                      Nenhuma sala com consultoria cadastrada ainda. Cadastre consultores para associar às salas de atendimento.
+                    </div>
+                  );
+                }
+                return consultorAccs.map((c, i) => (
                   <div key={c.id || i} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                    <span className="text-xs font-bold text-slate-900">{c.sala || `Sala 0${i + 1}`} - {c.especialidade || c.cargo}</span>
-                    <p className="text-xs text-slate-500 mt-1">Consultoria {c.nome} • {c.periodoLabel || 'Turno contínuo de 4 horas'}</p>
+                    <span className="text-xs font-bold text-slate-900">{`Sala 0${(i % 2) + 1} Presencial`} - {c.cargo || 'Consultoria'}</span>
+                    <p className="text-xs text-slate-500 mt-1">Consultoria {c.nome} • Turno contínuo de 4 horas</p>
                   </div>
-                ))
-              ) : (
-                <>
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                    <span className="text-xs font-bold text-slate-900">Sala 01 - Finanças, Custos & CMV</span>
-                    <p className="text-xs text-slate-500 mt-1">Consultoria Aline Ferreira • Turno Matutino (08h-12h)</p>
-                  </div>
-                  <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                    <span className="text-xs font-bold text-slate-900">Sala 02 - Vendas & Formalização MEI</span>
-                    <p className="text-xs text-slate-500 mt-1">Consultoria Laíse Mendes • Turno Vespertino (14h-18h)</p>
-                  </div>
-                </>
-              )}
+                ));
+              })()}
             </div>
           </div>
         </div>
@@ -416,39 +413,60 @@ export default function CoordinatorCleanView({
               <p className="text-xs text-slate-500">Acompanhamento dos consultores homologados do SENAC Hub</p>
             </div>
             <span className="text-xs font-bold text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-              3 Consultores Homologados
+              Consultores do Hub
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {consultors.map((c) => (
-              <div key={c.id} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-[#004A8D] text-white flex items-center justify-center font-black text-xs shadow-xs">
-                    {c.nome.substring(0, 2).toUpperCase()}
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-900">{c.nome}</h4>
-                    <p className="text-[10px] text-slate-500">{c.especialidade}</p>
-                  </div>
-                </div>
+            {(() => {
+              const consultorAccs = accounts.filter(a => a.roleType === 'aline');
+              const list = consultorAccs.length > 0 
+                ? consultorAccs.map((a, i) => ({
+                    id: a.id,
+                    nome: a.nome,
+                    especialidade: a.cargo || 'Consultoria de Negócios',
+                    sala: `Sala 0${(i % 2) + 1} Presencial`,
+                    turnos: ['Turno de 4h']
+                  }))
+                : [];
 
-                <div className="p-3 bg-white rounded-xl border border-slate-200/70 text-xs space-y-1.5">
-                  <div className="flex justify-between text-slate-600">
-                    <span>Sala Fixa:</span>
-                    <strong className="text-slate-900">{c.sala}</strong>
+              if (list.length === 0) {
+                return (
+                  <div className="p-8 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200 text-center space-y-2 col-span-full">
+                    <p className="text-xs text-slate-500">Nenhuma consultoria cadastrada ainda. Use a aba "Cadastrar & Gerenciar Perfis" para cadastrar consultores.</p>
                   </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>Ocupação dos Turnos:</span>
-                    <strong className="text-emerald-700">100% (Sem Ociosidade)</strong>
+                );
+              }
+
+              return list.map((c) => (
+                <div key={c.id} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-2xl bg-[#004A8D] text-white flex items-center justify-center font-black text-xs shadow-xs">
+                      {c.nome.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">{c.nome}</h4>
+                      <p className="text-[10px] text-slate-500">{c.especialidade}</p>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-slate-600">
-                    <span>Turnos Semanais:</span>
-                    <strong className="text-[#004A8D]">{c.turnos?.length || 2} turnos (8h/sem)</strong>
+
+                  <div className="p-3 bg-white rounded-xl border border-slate-200/70 text-xs space-y-1.5">
+                    <div className="flex justify-between text-slate-600">
+                      <span>Sala Fixa:</span>
+                      <strong className="text-slate-900">{c.sala}</strong>
+                    </div>
+                    <div className="flex justify-between text-slate-600">
+                      <span>Ocupação dos Turnos:</span>
+                      <strong className="text-emerald-700">100% (Sem Ociosidade)</strong>
+                    </div>
+                    <div className="flex justify-between text-slate-600">
+                      <span>Turnos Semanais:</span>
+                      <strong className="text-[#004A8D]">{c.turnos?.length || 2} turnos (8h/sem)</strong>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
         </div>
       )}
@@ -467,7 +485,7 @@ export default function CoordinatorCleanView({
                 <h3 className="text-lg font-black text-slate-900">Gestão de Perfis & Acessos do Hub</h3>
               </div>
               <p className="text-xs text-slate-500 mt-1">
-                Controle centralizado de credenciais. O Admin Supremo e o Coordenador Regis gerenciam todos os perfis institucionais.
+                Controle centralizado de credenciais. O Admin Supremo e a Coordenação Geral gerenciam todos os perfis institucionais.
               </p>
             </div>
 
@@ -479,7 +497,7 @@ export default function CoordinatorCleanView({
                   title="Criar o perfil oficial de Coordenação Geral em 1 clique"
                 >
                   <Sparkles className="w-4 h-4" />
-                  <span>+ Criar Perfil de Coordenação (Regis)</span>
+                  <span>+ Cadastrar Coordenação Geral</span>
                 </button>
               )}
 
@@ -559,7 +577,7 @@ export default function CoordinatorCleanView({
                 </div>
                 <div>
                   <h3 className="text-base font-black">Cadastrar Novo Perfil</h3>
-                  <p className="text-xs text-blue-100">Função exclusiva da Coordenação (Regis)</p>
+                  <p className="text-xs text-blue-100">Função da Coordenação Geral</p>
                 </div>
               </div>
               <button

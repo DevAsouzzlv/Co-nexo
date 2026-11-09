@@ -183,10 +183,10 @@ export default function ReceptionCleanView({
                 </span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Olá, {currentUser?.nome || 'Max Ferreira'}!
+                Olá, {currentUser?.nome || 'Recepção'}!
               </h2>
               <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
-                Monitoramento contínuo das 8 horas de atendimento (4h Aline + 4h Laíse), confirmações ativas e zero ociosidade na grade docente.
+                Monitoramento contínuo das 8 horas de atendimento (4h Manhã + 4h Tarde), confirmações ativas e zero ociosidade na grade docente.
               </p>
             </div>
 
@@ -223,7 +223,7 @@ export default function ReceptionCleanView({
               </div>
               <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>4h Aline + 4h Laíse</span>
+                <span>4h Manhã + 4h Tarde</span>
               </div>
             </div>
 
@@ -406,7 +406,7 @@ export default function ReceptionCleanView({
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold text-slate-500">
-                  4h Aline + 4h Laíse = <strong>8h/dia</strong>
+                  4h Manhã + 4h Tarde = <strong>8h/dia</strong>
                 </span>
               </div>
             </div>
@@ -652,7 +652,7 @@ export default function ReceptionCleanView({
                   className="bg-transparent font-semibold text-[#1D1D1F] focus:outline-none cursor-pointer text-xs"
                 >
                   <option value="todos">Todas (8h Totais)</option>
-                  <option value="cons-1">Aline Ferreira (Manhã)</option>
+                  <option value="cons-1">Consultoria Matutina (Manhã)</option>
                   <option value="cons-2">Laíse Mendes (Tarde)</option>
                 </select>
               </div>
@@ -738,7 +738,7 @@ export default function ReceptionCleanView({
                           const student = students.find((s) => s.id === ap.alunoId);
                           const isExpanded = activeDropdownId === ap.id;
                           const isAvailable = !ap.alunoId || ap.status === 'Disponivel';
-                          const consultorName = consultors.find(c => c.id === ap.consultorId)?.nome || 'Aline Ferreira';
+                          const consultorName = consultors.find(c => c.id === ap.consultorId)?.nome || 'Consultoria';
 
                           return (
                             <div 

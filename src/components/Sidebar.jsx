@@ -74,7 +74,7 @@ export default function Sidebar({
           { id: 'auditoria', label: 'Auditoria de Assiduidade', icon: CheckCircle2 },
           { id: 'prestacao', label: 'Prestação de Contas', icon: Layers },
           { id: 'corpo-docente', label: 'Desempenho Docente', icon: Users },
-          { id: 'usuarios', label: 'Cadastrar & Gerenciar Perfis', icon: UserCheck, badge: 'Exclusivo Regis' }
+          { id: 'usuarios', label: 'Cadastrar & Gerenciar Perfis', icon: UserCheck, badge: 'Equipe' }
         ];
       default:
         return [];

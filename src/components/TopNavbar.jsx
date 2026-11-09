@@ -61,7 +61,7 @@ export default function TopNavbar({
         {/* Dynamic Island Style Capsule: 8h Totais */}
         <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/[0.04] border border-black/[0.05] text-xs font-semibold text-[#1D1D1F]">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20 animate-pulse" />
-          <span>Meta: <strong>8h/dia</strong> (4h Aline + 4h Laíse)</span>
+          <span>Meta: <strong>8h/dia</strong> (4h Manhã + 4h Tarde)</span>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
             Zero Ociosidade
           </span>

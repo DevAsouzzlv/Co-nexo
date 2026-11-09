@@ -51,7 +51,7 @@ export default function DiarioBordoModal({
       tarefasProximoEncontro: tarefas.trim(),
       linksMateriais: linksMateriais.trim(),
       statusMei,
-      consultorNome: 'Aline Ferreira'
+      consultorNome: 'Consultoria'
     });
 
     setIsAddingNew(false);

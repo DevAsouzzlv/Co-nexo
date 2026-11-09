@@ -18,7 +18,7 @@ import { Modal, Button } from './ui';
 const MENTORES_CONFIG = {
   'cons-1': {
     id: 'cons-1',
-    nome: 'Aline Ferreira',
+    nome: 'Consultoria Matutina',
     cargo: 'Consultora de Negócios & Finanças',
     especialidade: 'Custos (CMV), Precificação e Gestão',
     sala: 'Sala 01 Presencial',
@@ -29,7 +29,7 @@ const MENTORES_CONFIG = {
   },
   'cons-2': {
     id: 'cons-2',
-    nome: 'Laíse Mendes',
+    nome: 'Consultoria Vespertina',
     cargo: 'Consultora de Mercado & Formalização',
     especialidade: 'Vendas, Canais Digitais e MEI',
     sala: 'Sala 02 Presencial',
@@ -230,7 +230,7 @@ export default function AgendamentoModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Agendar Mentoria na Grade"
-      subtitle="Governança de 8h Diárias • 4h Aline + 4h Laíse (Zero Ociosidade)"
+      subtitle="Governança de 8h Diárias • 4h Manhã + 4h Tarde (Zero Ociosidade)"
       icon={Calendar}
       badge="Regra Co.Nexo"
     >

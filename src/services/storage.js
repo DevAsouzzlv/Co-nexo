@@ -42,8 +42,12 @@ export const MASTER_ADMIN_ACCOUNT = {
   aliases: ['admin', 'admin@conexo.senac.br', 'admin@senac.br', 'superadmin', 'root', 'master']
 };
 
-// Contas e Perfis Padrão do Hub SENAC
+// Contas e Perfis Padrão do Hub SENAC (Apenas o Admin Supremo Raiz, sem perfis pré-setados estáticos)
 export const DEFAULT_ACCOUNTS = [
+  MASTER_ADMIN_ACCOUNT
+];
+
+export const DEMO_ACCOUNTS = [
   MASTER_ADMIN_ACCOUNT,
   {
     id: 'regis',
@@ -239,14 +243,14 @@ export const StorageRepository = {
     localStorage.setItem(STORAGE_KEYS.STUDENTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DIARIOS, JSON.stringify([]));
-    localStorage.setItem(STORAGE_KEYS.CONSULTORS, JSON.stringify(INITIAL_CONSULTORS));
+    localStorage.setItem(STORAGE_KEYS.CONSULTORS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.WAITING_LIST, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.LAST_BACKUP, new Date().toISOString());
     return {
       students: [],
       appointments: [],
       diarios: [],
-      consultors: INITIAL_CONSULTORS,
+      consultors: [],
       waitingList: []
     };
   },
@@ -254,7 +258,7 @@ export const StorageRepository = {
   // RESET PARA DADOS DE DEMONSTRAÇÃO SENAC
   resetDemo() {
     this.purgeLegacyKeys();
-    localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(DEFAULT_ACCOUNTS));
+    localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(DEMO_ACCOUNTS));
     localStorage.setItem(STORAGE_KEYS.STUDENTS, JSON.stringify(INITIAL_STUDENTS));
     localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(INITIAL_APPOINTMENTS));
     localStorage.setItem(STORAGE_KEYS.DIARIOS, JSON.stringify(INITIAL_DIARIOS));

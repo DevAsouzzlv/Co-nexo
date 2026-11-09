@@ -39,7 +39,7 @@ export default function StudentCleanView({
 }) {
   const currentStudent = student || {
     id: 'aluno-1',
-    nome: currentUser?.nome || 'Arthur Silva',
+    nome: currentUser?.nome || 'Mentorado',
     negocio: currentUser?.cargo || 'Tempero do Arthur (Alimentação)',
     statusNegocio: 'Informal',
     totalFaltas: 1,
@@ -427,7 +427,7 @@ export default function StudentCleanView({
                 </h3>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Tarefas práticas combinadas com a mentoria do SENAC Hub (Aline Ferreira & Laíse Mendes)
+                Tarefas práticas combinadas com a equipe de consultoria do SENAC Hub
               </p>
             </div>
             <span className="text-xs font-black text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200 shrink-0">
