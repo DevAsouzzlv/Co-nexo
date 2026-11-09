@@ -27,16 +27,16 @@ const STORAGE_KEYS = {
   LAST_BACKUP: 'conexo_last_backup_v5'
 };
 
-// Conta Mestra Raiz do Sistema
+// Conta Mestra Raiz do Sistema (Admin Supremo)
 export const MASTER_ADMIN_ACCOUNT = {
-  id: 'super-admin',
+  id: 'admin',
   nome: 'Admin Supremo',
-  cargo: 'Governança Master & TI',
+  cargo: 'Governança Master & Gestão de Perfis',
   roleLabel: 'Admin Supremo',
-  roleType: 'regis',
+  roleType: 'admin',
   email: 'admin@conexo.senac.br',
   password: 'admin123',
-  badge: 'Admin Supremo (Master)',
+  badge: 'Admin Supremo',
   gradient: 'from-slate-900 via-indigo-950 to-slate-900',
   color: '#004A8D',
   aliases: ['admin', 'admin@conexo.senac.br', 'admin@senac.br', 'superadmin', 'root', 'master']
@@ -153,11 +153,12 @@ export const StorageRepository = {
       }
       const parsed = safeJsonParse(raw, DEFAULT_ACCOUNTS);
       list = Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_ACCOUNTS;
-      // Garante que o Admin Supremo sempre esteja disponível como chave mestra
-      if (!list.some(a => a.id === 'super-admin' || a.email === 'admin@conexo.senac.br')) {
+      // Garante que o Admin Supremo sempre esteja disponível com roleType: 'admin'
+      list = list.map(a => (a.email === 'admin@conexo.senac.br' || a.id === 'super-admin' || a.id === 'admin') ? MASTER_ADMIN_ACCOUNT : a);
+      if (!list.some(a => a.email === 'admin@conexo.senac.br')) {
         list = [MASTER_ADMIN_ACCOUNT, ...list];
-        localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(list));
       }
+      localStorage.setItem(STORAGE_KEYS.ACCOUNTS, JSON.stringify(list));
       return list;
     } catch {
       return DEFAULT_ACCOUNTS;

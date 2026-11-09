@@ -63,7 +63,7 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      onLogin(matchedAccount.roleType || matchedAccount.id);
+      onLogin(matchedAccount.roleType || matchedAccount.id, matchedAccount);
     }, 200);
   };
 

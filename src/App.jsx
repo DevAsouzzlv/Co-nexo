@@ -8,6 +8,7 @@ import ReceptionCleanView from './components/ReceptionCleanView';
 import MentorCleanView from './components/MentorCleanView';
 import StudentCleanView from './components/StudentCleanView';
 import CoordinatorCleanView from './components/CoordinatorCleanView';
+import AdminCleanView from './components/AdminCleanView';
 import AgendamentoModal from './components/AgendamentoModal';
 import DiarioBordoModal from './components/DiarioBordoModal';
 import NovoMentoradoModal from './components/NovoMentoradoModal';
@@ -28,9 +29,14 @@ export default function App() {
     return localStorage.getItem('conexo_auth_persona') ? true : false;
   });
   const [currentPersona, setCurrentPersona] = useState(() => {
-    return localStorage.getItem('conexo_auth_persona') || 'max';
+    const authEmail = localStorage.getItem('conexo_auth_email');
+    if (authEmail === 'admin@conexo.senac.br') return 'admin';
+    return localStorage.getItem('conexo_auth_persona') || 'admin';
   });
-  const [currentTab, setCurrentTab] = useState('grade');
+  const [currentTab, setCurrentTab] = useState(() => {
+    const persona = localStorage.getItem('conexo_auth_persona');
+    return persona === 'admin' ? 'usuarios' : 'grade';
+  });
 
   // Controle de Modais
   const [isAgendamentoOpen, setIsAgendamentoOpen] = useState(false);
@@ -49,14 +55,19 @@ export default function App() {
   }, [data]);
 
   // Login handler
-  const handleLogin = (personaId) => {
-    setCurrentPersona(personaId);
+  const handleLogin = (personaId, account) => {
+    const effectivePersona = account?.roleType || personaId;
+    setCurrentPersona(effectivePersona);
     setIsAuthenticated(true);
-    localStorage.setItem('conexo_auth_persona', personaId);
+    localStorage.setItem('conexo_auth_persona', effectivePersona);
+    if (account?.email) {
+      localStorage.setItem('conexo_auth_email', account.email);
+    }
     setCurrentTab(
-      personaId === 'max' ? 'dashboard' :
-      personaId === 'aline' ? 'minha-agenda' :
-      personaId === 'arthur' ? 'portal' : 'indicadores'
+      effectivePersona === 'max' ? 'dashboard' :
+      effectivePersona === 'aline' ? 'minha-agenda' :
+      effectivePersona === 'arthur' ? 'portal' :
+      effectivePersona === 'admin' ? 'usuarios' : 'indicadores'
     );
   };
 
@@ -64,6 +75,7 @@ export default function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('conexo_auth_persona');
+    localStorage.removeItem('conexo_auth_email');
   };
 
   // Ações de Agendamento
@@ -396,6 +408,19 @@ export default function App() {
                 onUpdateAppointmentStatus={handleUpdateAppointmentStatus}
                 onConfirmWhatsApp={handleConfirmArthurWhatsApp}
                 onFormalizarAluno={handleFormalizarAluno}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+              />
+            )}
+
+            {currentPersona === 'admin' && (
+              <AdminCleanView
+                students={data.students}
+                consultors={data.consultors}
+                appointments={data.appointments}
+                onResetClean={handleResetClean}
+                onResetDemo={handleResetDemo}
+                onExportBackup={handleExportBackup}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}
               />

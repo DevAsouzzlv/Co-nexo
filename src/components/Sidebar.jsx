@@ -60,6 +60,12 @@ export default function Sidebar({
           { id: 'materiais', label: 'Fichas & Materiais', icon: Layers },
           { id: 'formalizacao', label: 'Formalização MEI', icon: CheckCircle2 }
         ];
+      case 'admin':
+        return [
+          { id: 'usuarios', label: 'Gestão de Perfis', icon: UserCheck, badge: 'Master' },
+          { id: 'governanca', label: 'Regras do Hub (8h)', icon: Clock },
+          { id: 'banco-dados', label: 'Banco de Dados', icon: Layers }
+        ];
       case 'regis':
         return [
           { id: 'indicadores', label: 'Painel Executivo', icon: BarChart3 },

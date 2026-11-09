@@ -42,6 +42,12 @@ export default function BottomMobileNav({
           { id: 'metricas', label: 'Finanças', icon: BarChart3 },
           { id: 'materiais', label: 'Fichas', icon: Layers }
         ];
+      case 'admin':
+        return [
+          { id: 'usuarios', label: 'Perfis', icon: Users },
+          { id: 'governanca', label: 'Regras 8h', icon: Clock },
+          { id: 'banco-dados', label: 'Banco', icon: Layers }
+        ];
       case 'regis':
         return [
           { id: 'indicadores', label: 'Painel', icon: BarChart3 },
