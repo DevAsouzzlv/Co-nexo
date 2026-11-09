@@ -17,12 +17,12 @@ import {
 } from './mockData';
 
 const STORAGE_KEYS = {
-  STUDENTS: 'conexo_students_v3',
-  APPOINTMENTS: 'conexo_appointments_v3',
-  DIARIOS: 'conexo_diarios_v3',
-  CONSULTORS: 'conexo_consultors_v3',
-  WAITING_LIST: 'conexo_waiting_list_v3',
-  LAST_BACKUP: 'conexo_last_backup_v3'
+  STUDENTS: 'conexo_students_v4',
+  APPOINTMENTS: 'conexo_appointments_v4',
+  DIARIOS: 'conexo_diarios_v4',
+  CONSULTORS: 'conexo_consultors_v4',
+  WAITING_LIST: 'conexo_waiting_list_v4',
+  LAST_BACKUP: 'conexo_last_backup_v4'
 };
 
 /**
@@ -57,9 +57,31 @@ function safeJsonParse(rawString, fallback) {
  * Repositório Central de Dados Co.Nexo
  */
 export const StorageRepository = {
+  // Limpa chaves obsoletas de versões anteriores
+  purgeLegacyKeys() {
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('conexo_') && !Object.values(STORAGE_KEYS).includes(k) && k !== 'conexo_auth_persona') {
+          keysToRemove.push(k);
+        }
+      }
+      keysToRemove.forEach(k => localStorage.removeItem(k));
+    } catch {
+      // Ignora erro em ambientes sem window.localStorage
+    }
+  },
+
   getData() {
     try {
+      this.purgeLegacyKeys();
+
       const studentsRaw = localStorage.getItem(STORAGE_KEYS.STUDENTS);
+      if (!studentsRaw) {
+        return this.resetDemo();
+      }
+
       const appointmentsRaw = localStorage.getItem(STORAGE_KEYS.APPOINTMENTS);
       const diariosRaw = localStorage.getItem(STORAGE_KEYS.DIARIOS);
       const consultorsRaw = localStorage.getItem(STORAGE_KEYS.CONSULTORS);
@@ -110,13 +132,20 @@ export const StorageRepository = {
   },
 
   resetDemo() {
+    this.purgeLegacyKeys();
     localStorage.setItem(STORAGE_KEYS.STUDENTS, JSON.stringify(INITIAL_STUDENTS));
     localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(INITIAL_APPOINTMENTS));
     localStorage.setItem(STORAGE_KEYS.DIARIOS, JSON.stringify(INITIAL_DIARIOS));
     localStorage.setItem(STORAGE_KEYS.CONSULTORS, JSON.stringify(INITIAL_CONSULTORS));
     localStorage.setItem(STORAGE_KEYS.WAITING_LIST, JSON.stringify(INITIAL_WAITING_LIST));
     localStorage.setItem(STORAGE_KEYS.LAST_BACKUP, new Date().toISOString());
-    return this.getData();
+    return {
+      students: INITIAL_STUDENTS,
+      appointments: INITIAL_APPOINTMENTS,
+      diarios: INITIAL_DIARIOS,
+      consultors: INITIAL_CONSULTORS,
+      waitingList: INITIAL_WAITING_LIST
+    };
   },
 
   exportBackupJSON(data) {

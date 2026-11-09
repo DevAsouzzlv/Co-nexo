@@ -60,7 +60,7 @@ const ACCOUNTS_DIRECTORY = [
   }
 ];
 
-export default function LoginPage({ onLogin }) {
+export default function LoginPage({ onLogin, onResetData }) {
   const [emailInput, setEmailInput] = useState('max.operacao@sp.senac.br');
   const [passwordInput, setPasswordInput] = useState('senac123');
   const [errorMessage, setErrorMessage] = useState('');
@@ -309,6 +309,19 @@ export default function LoginPage({ onLogin }) {
           {/* Rodapé */}
           <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
             <span>SENAC São Paulo • Hub Empreendedor</span>
+            {onResetData && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm('Deseja resetar todos os perfis e dados locais para o estado inicial de fábrica?')) {
+                    onResetData();
+                  }
+                }}
+                className="text-xs font-semibold text-[#004A8D] hover:underline cursor-pointer"
+              >
+                Restaurar Banco Local
+              </button>
+            )}
             <span>Versão 2.5 Homologada</span>
           </div>
         </div>

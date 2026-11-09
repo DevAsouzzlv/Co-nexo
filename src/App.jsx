@@ -288,9 +288,11 @@ export default function App() {
   };
 
   const handleResetData = () => {
-    if (confirm('Deseja restaurar os dados de demonstração iniciais?')) {
+    if (confirm('Deseja resetar todos os dados, perfis e agendamentos para o estado inicial de fábrica?')) {
       const initial = resetToInitial();
       setData(initial);
+      setIsAuthenticated(false);
+      localStorage.removeItem('conexo_auth_persona');
     }
   };
 
@@ -302,7 +304,7 @@ export default function App() {
 
   // Se não estiver autenticado, exibe EXCLUSIVAMENTE a tela de login inicial
   if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} />;
+    return <LoginPage onLogin={handleLogin} onResetData={handleResetData} />;
   }
 
   // Se autenticado, entra no painel exclusivo do usuário
