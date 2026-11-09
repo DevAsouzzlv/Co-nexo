@@ -1,7 +1,7 @@
 // src/services/mockData.js
 // Dados iniciais realistas para o Hub Co.Nexo SENAC
 // REGRAS DE GOVERNANÇA:
-// 1. Total diário: exatamente 8 horas de atendimento no Hub (4h de Aline + 4h de Jamile).
+// 1. Total diário: exatamente 8 horas de atendimento no Hub (4h de Aline + 4h de Laíse).
 // 2. Duração: Mentoria = 2 horas | Primeiro Encontro / Diagnóstico = 1 hora.
 // 3. Bloco de 4h de cada mentor sem horário vazio (zero ociosidade):
 //    - Opção A: 2 Mentorias (2h + 2h = 4h)
@@ -76,11 +76,11 @@ export const INITIAL_CONSULTORS = [
   },
   {
     id: 'cons-2',
-    nome: 'Jamile Mendes',
-    email: 'jamile.consultora@sp.senac.br',
+    nome: 'Laíse Mendes',
+    email: 'laise.consultora@sp.senac.br',
     especialidade: 'Estratégia de Vendas, Mercado & Formalização MEI',
     sala: 'Sala 02 Presencial',
-    periodoPadrao: 'Tarde (14:00 às 18:00 • 4h)',
+    periodoPadrao: 'Tarde e Começo da Noite (14:00 às 18:00 • 4h)',
     horariosTurno: ['14:00', '15:00', '16:00', '17:00'],
     turnos: [
       {
@@ -269,7 +269,7 @@ export const INITIAL_WAITING_LIST = [
 
 export const INITIAL_APPOINTMENTS = [
   // ==========================================================================
-  // SEGUNDA-FEIRA (19/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // SEGUNDA-FEIRA (19/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
@@ -321,7 +321,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
     id: 'agend-seg-jam-1',
     turnoId: 'turno-jam-seg',
@@ -356,7 +356,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // TERÇA-FEIRA (20/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // TERÇA-FEIRA (20/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -392,7 +392,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação B: 4 Diagnósticos de 1h (1h + 1h + 1h + 1h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação B: 4 Diagnósticos de 1h (1h + 1h + 1h + 1h)
   {
     id: 'agend-ter-jam-1',
     turnoId: 'turno-jam-ter',
@@ -459,7 +459,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // QUARTA-FEIRA (21/10/2026 - HOJE) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // QUARTA-FEIRA (21/10/2026 - HOJE) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h = 4h)
   {
@@ -495,7 +495,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
     id: 'agend-qua-jam-1',
     turnoId: 'turno-jam-qua',
@@ -546,7 +546,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // QUINTA-FEIRA (22/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // QUINTA-FEIRA (22/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
@@ -598,7 +598,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
     id: 'agend-qui-jam-1',
     turnoId: 'turno-jam-qui',
@@ -633,7 +633,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // SEXTA-FEIRA (23/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // SEXTA-FEIRA (23/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -669,7 +669,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
     id: 'agend-sex-jam-1',
     turnoId: 'turno-jam-sex',
@@ -704,7 +704,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // SÁBADO (24/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Jamile)
+  // SÁBADO (24/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -740,7 +740,7 @@ export const INITIAL_APPOINTMENTS = [
     sala: 'Sala 01 Presencial'
   },
 
-  // Jamile Mendes (14:00 - 18:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
+  // Laíse Mendes (14:00 - 18:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
     id: 'agend-sab-jam-1',
     turnoId: 'turno-jam-sab',
@@ -832,3 +832,4 @@ export const INITIAL_DIARIOS = [
     consultorNome: 'Aline Ferreira'
   }
 ];
+

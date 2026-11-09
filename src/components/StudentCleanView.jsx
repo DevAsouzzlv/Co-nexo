@@ -19,7 +19,10 @@ import {
   Plus,
   AlertTriangle,
   Award,
-  Sparkles
+  Sparkles,
+  Paperclip,
+  Upload,
+  Trash2
 } from 'lucide-react';
 
 export default function StudentCleanView({
@@ -65,11 +68,33 @@ export default function StudentCleanView({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Tarefas práticas de bancada
+  // Tarefas práticas de bancada com suporte a anexo de documento respondido
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'Pesar carnes e embalagens marmitex na bancada', done: true },
-    { id: 2, text: 'Separar notas de compra de temperos e embalagens', done: false },
-    { id: 3, text: 'Abrir conta jurídica PJ separada no banco digital', done: false }
+    { 
+      id: 1, 
+      text: 'Pesar carnes e embalagens marmitex na bancada', 
+      done: true,
+      attachedDoc: {
+        name: 'Ficha_Pesagem_Proteinas.pdf',
+        size: '245 KB',
+        uploadedAt: 'Enviado hoje às 14:15'
+      },
+      note: 'Pesagem realizada: 180g carne, 220g guarnição. Desperdício reduzido para 8%.'
+    },
+    { 
+      id: 2, 
+      text: 'Separar notas de compra de temperos e embalagens para cálculo do CMV', 
+      done: false,
+      attachedDoc: null,
+      note: ''
+    },
+    { 
+      id: 3, 
+      text: 'Abrir conta jurídica PJ separada no banco digital (separação pessoa física/jurídica)', 
+      done: false,
+      attachedDoc: null,
+      note: ''
+    }
   ]);
   const [newTaskInput, setNewTaskInput] = useState('');
 
@@ -81,9 +106,61 @@ export default function StudentCleanView({
   const handleAddTask = (e) => {
     e.preventDefault();
     if (!newTaskInput.trim()) return;
-    setTasks(prev => [...prev, { id: Date.now(), text: newTaskInput.trim(), done: false }]);
+    setTasks(prev => [...prev, { id: Date.now(), text: newTaskInput.trim(), done: false, attachedDoc: null, note: '' }]);
     setNewTaskInput('');
     showToast('✓ Tarefa adicionada ao seu plano de bancada!');
+  };
+
+  const handleAttachDocument = (taskId, fileName = 'Documento_Respondido.pdf', size = '312 KB') => {
+    setTasks(prev => prev.map(t => {
+      if (t.id === taskId) {
+        return {
+          ...t,
+          done: true,
+          attachedDoc: {
+            name: fileName,
+            size: size,
+            uploadedAt: 'Enviado hoje às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+          }
+        };
+      }
+      return t;
+    }));
+    showToast('✓ Documento respondido anexado com sucesso!');
+  };
+
+  const handleRemoveAttachment = (taskId) => {
+    setTasks(prev => prev.map(t => {
+      if (t.id === taskId) {
+        return { ...t, attachedDoc: null };
+      }
+      return t;
+    }));
+    showToast('Documento desanexado da tarefa.');
+  };
+
+  const handleDownloadDoc = (doc) => {
+    const textContent = `Comprovante: ${doc.name}\nData: ${doc.uploadedAt}\nStatus: Entregue.`;
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', doc.name);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(`Download de ${doc.name} iniciado!`);
+  };
+
+  const handleFileInputChange = (taskId, e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const sizeStr = file.size > 1024 * 1024 
+        ? (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+        : Math.round(file.size / 1024) + ' KB';
+      handleAttachDocument(taskId, file.name, sizeStr);
+    }
   };
 
   const handleConfirmarPresenca = () => {
@@ -332,16 +409,25 @@ export default function StudentCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* TELA 2: PLANO DE AÇÃO & TAREFAS DE BANCADA                     */}
+      {/* TELA 2: PLANO DE AÇÃO & TAREFAS COM DOCUMENTOS ANEXADOS        */}
       {/* ============================================================== */}
       {currentTab === 'metas' && (
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-5">
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
-              <h3 className="text-base font-black text-slate-900">Plano de Ação para Bancada & Cozinha</h3>
-              <p className="text-xs text-slate-500">Tarefas práticas combinadas com a mentora Aline Ferreira</p>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-[#004A8D] border border-blue-200">
+                  Compromissos Práticos
+                </span>
+                <h3 className="text-base font-black text-slate-900">
+                  Plano de Ação • {currentStudent.negocio || 'Seu Empreendimento'}
+                </h3>
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Tarefas práticas combinadas com a mentoria do SENAC Hub (Aline Ferreira & Laíse Mendes)
+              </p>
             </div>
-            <span className="text-xs font-black text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+            <span className="text-xs font-black text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200 shrink-0">
               {tasks.filter(t => t.done).length} de {tasks.length} Concluídas
             </span>
           </div>
@@ -364,29 +450,123 @@ export default function StudentCleanView({
             </button>
           </form>
 
-          <div className="space-y-2.5">
+          {/* Lista de Tarefas com Campo para Anexar Documento Respondido */}
+          <div className="space-y-3">
             {tasks.map((task) => (
               <div
                 key={task.id}
-                onClick={() => toggleTask(task.id)}
-                className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-center gap-3 ${
+                className={`p-4 rounded-2xl border transition-all space-y-3 ${
                   task.done 
-                    ? 'bg-blue-50/50 border-blue-200 text-slate-400 line-through' 
-                    : 'bg-slate-50 border-slate-200 text-slate-900 hover:border-slate-300'
+                    ? 'bg-blue-50/40 border-blue-200/80' 
+                    : 'bg-slate-50/80 border-slate-200/80 hover:border-slate-300'
                 }`}
               >
-                <input
-                  type="checkbox"
-                  checked={task.done}
-                  onChange={() => {}}
-                  className="rounded text-[#004A8D] focus:ring-[#004A8D] cursor-pointer h-4 w-4 shrink-0"
-                />
-                <span className="text-xs font-medium flex-1">{task.text}</span>
-                {task.done && (
-                  <span className="text-[10px] font-bold text-[#004A8D] bg-white px-2 py-0.5 rounded-md border border-blue-200 shrink-0">
-                    Concluído
+                {/* Linha Principal da Tarefa */}
+                <div className="flex items-center justify-between gap-3">
+                  <div 
+                    onClick={() => toggleTask(task.id)}
+                    className="flex items-center gap-3 flex-1 cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={task.done}
+                      onChange={() => {}}
+                      className="rounded text-[#004A8D] focus:ring-[#004A8D] cursor-pointer h-4 w-4 shrink-0"
+                    />
+                    <span className={`text-xs font-semibold ${task.done ? 'text-slate-700 line-through' : 'text-slate-900'}`}>
+                      {task.text}
+                    </span>
+                  </div>
+
+                  <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ${
+                    task.done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'
+                  }`}>
+                    {task.done ? 'Concluída' : 'Pendente'}
                   </span>
-                )}
+                </div>
+
+                {/* Área de Documento Respondido / Anexo */}
+                <div className="pt-2 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-2">
+                  {task.attachedDoc ? (
+                    // Documento Já Anexado
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-emerald-300 text-slate-800 shadow-xs text-xs">
+                        <Paperclip className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="font-bold text-slate-900 truncate max-w-[220px]">
+                          {task.attachedDoc.name}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">
+                          ({task.attachedDoc.size})
+                        </span>
+                        <span className="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded">
+                          {task.attachedDoc.uploadedAt}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handleDownloadDoc(task.attachedDoc)}
+                          className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#004A8D] text-[11px] font-bold inline-flex items-center gap-1 transition cursor-pointer"
+                          title="Baixar ou visualizar documento respondido"
+                        >
+                          <Download className="w-3 h-3 text-[#F29100]" />
+                          <span>Baixar/Ver</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAttachment(task.id)}
+                          className="px-2 py-1 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 text-[11px] font-bold transition cursor-pointer"
+                          title="Remover anexo"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    // Botão para Anexar Novo Documento Respondido
+                    <div className="flex flex-wrap items-center gap-2">
+                      <input
+                        type="file"
+                        id={`file-upload-${task.id}`}
+                        className="hidden"
+                        onChange={(e) => handleFileInputChange(task.id, e)}
+                      />
+                      <label
+                        htmlFor={`file-upload-${task.id}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-dashed border-[#004A8D]/50 hover:border-[#004A8D] bg-white hover:bg-blue-50 text-[#004A8D] text-[11px] font-bold transition cursor-pointer shadow-2xs"
+                      >
+                        <Paperclip className="w-3.5 h-3.5 text-[#F29100]" />
+                        <span>+ Anexar Documento Respondido</span>
+                      </label>
+
+                      <div className="flex items-center gap-1 text-[10px]">
+                        <span className="text-slate-400">Atalhos:</span>
+                        <button
+                          type="button"
+                          onClick={() => handleAttachDocument(task.id, `Ficha_Bancada_${currentStudent.nome.split(' ')[0]}.pdf`, '280 KB')}
+                          className="px-2 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 font-medium transition cursor-pointer"
+                        >
+                          + Ficha Preenchida
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleAttachDocument(task.id, `Comprovante_Foto_${currentStudent.nome.split(' ')[0]}.jpg`, '1.2 MB')}
+                          className="px-2 py-0.5 rounded bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 font-medium transition cursor-pointer"
+                        >
+                          + Foto Comprovante
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {task.note && (
+                    <p className="text-[11px] text-slate-600 italic bg-white/70 px-2.5 py-1 rounded-lg border border-slate-200/50 w-full">
+                      💬 Observação da entrega: "{task.note}"
+                    </p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -399,7 +579,7 @@ export default function StudentCleanView({
       {currentTab === 'metricas' && (
         <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6">
           <div>
-            <h3 className="text-base font-black text-slate-900">Evolução Financeira do Tempero do Arthur</h3>
+            <h3 className="text-base font-black text-slate-900">Evolução Financeira: {currentStudent.negocio || 'Seu Empreendimento'}</h3>
             <p className="text-xs text-slate-500">Métricas comparativas validadas pela mentoria do SENAC Hub</p>
           </div>
 

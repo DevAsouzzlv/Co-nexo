@@ -1,4 +1,4 @@
-// src/components/ReceptionCleanView.jsx
+﻿// src/components/ReceptionCleanView.jsx
 import React, { useState } from 'react';
 import { 
   Clock, 
@@ -185,7 +185,7 @@ export default function ReceptionCleanView({
                 Olá, Max Ferreira!
               </h2>
               <p className="text-xs sm:text-sm text-blue-100/90 max-w-xl font-normal leading-relaxed">
-                Monitoramento contínuo das 8 horas de atendimento (4h Aline + 4h Jamile), confirmações ativas e zero ociosidade na grade docente.
+                Monitoramento contínuo das 8 horas de atendimento (4h Aline + 4h Laíse), confirmações ativas e zero ociosidade na grade docente.
               </p>
             </div>
 
@@ -222,7 +222,7 @@ export default function ReceptionCleanView({
               </div>
               <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>4h Aline + 4h Jamile</span>
+                <span>4h Aline + 4h Laíse</span>
               </div>
             </div>
 
@@ -388,7 +388,7 @@ export default function ReceptionCleanView({
       )}
 
       {/* ============================================================== */}
-      {/* ABA 1: GRADE DE TURNOS (8 HORAS TOTAIS: 4h ALINE + 4h JAMILE)  */}
+      {/* ABA 1: GRADE DE TURNOS (8 HORAS TOTAIS: 4h ALINE + 4h Laíse)  */}
       {/* ============================================================== */}
       {currentTab === 'grade' && (
         <div className="bg-white rounded-3xl border border-slate-200/80 p-6 shadow-sm space-y-6">
@@ -405,7 +405,7 @@ export default function ReceptionCleanView({
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold text-slate-500">
-                  4h Aline + 4h Jamile = <strong>8h/dia</strong>
+                  4h Aline + 4h Laíse = <strong>8h/dia</strong>
                 </span>
               </div>
             </div>
@@ -652,7 +652,7 @@ export default function ReceptionCleanView({
                 >
                   <option value="todos">Todas (8h Totais)</option>
                   <option value="cons-1">Aline Ferreira (Manhã)</option>
-                  <option value="cons-2">Jamile Mendes (Tarde)</option>
+                  <option value="cons-2">Laíse Mendes (Tarde)</option>
                 </select>
               </div>
 
@@ -665,7 +665,7 @@ export default function ReceptionCleanView({
                 >
                   <option value="todas">Todas as Salas</option>
                   <option value="Sala 01 Presencial">Sala 01 (Aline)</option>
-                  <option value="Sala 02 Presencial">Sala 02 (Jamile)</option>
+                  <option value="Sala 02 Presencial">Sala 02 (Laíse)</option>
                 </select>
               </div>
 
@@ -1478,3 +1478,4 @@ export default function ReceptionCleanView({
     </div>
   );
 }
+

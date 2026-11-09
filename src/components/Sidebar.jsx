@@ -16,7 +16,7 @@ import {
   UserCheck,
   Sparkles
 } from 'lucide-react';
-import { USER_PROFILES } from './LoginModal';
+import { getStoredAccounts, DEFAULT_ACCOUNTS } from '../services/storage';
 import logoConexo from '../assets/logo-conexo.png';
 
 export default function Sidebar({
@@ -27,7 +27,10 @@ export default function Sidebar({
   onOpenNovoMentorado
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const currentProfile = USER_PROFILES.find((p) => p.id === currentPersona) || USER_PROFILES[0];
+  const accounts = getStoredAccounts();
+  const currentProfile = accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+    DEFAULT_ACCOUNTS.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+    accounts[0] || DEFAULT_ACCOUNTS[0];
 
   // Menus contextuais por perfil com nomes profissionais
   const getMenuItems = () => {
@@ -62,7 +65,8 @@ export default function Sidebar({
           { id: 'indicadores', label: 'Painel Executivo', icon: BarChart3 },
           { id: 'auditoria', label: 'Auditoria de Assiduidade', icon: CheckCircle2 },
           { id: 'prestacao', label: 'Prestação de Contas', icon: Layers },
-          { id: 'corpo-docente', label: 'Desempenho Docente', icon: Users }
+          { id: 'corpo-docente', label: 'Desempenho Docente', icon: Users },
+          { id: 'usuarios', label: 'Cadastrar & Gerenciar Perfis', icon: UserCheck, badge: 'Exclusivo Regis' }
         ];
       default:
         return [];

@@ -1,7 +1,30 @@
 // src/components/CoordinatorCleanView.jsx
 import React, { useState } from 'react';
-import { Download, BarChart3, ShieldCheck, Users, CheckCircle2, AlertTriangle, FileSpreadsheet, Search } from 'lucide-react';
-import { sanitizeForCsv } from '../services/storage';
+import { 
+  Download, 
+  BarChart3, 
+  ShieldCheck, 
+  Users, 
+  CheckCircle2, 
+  AlertTriangle, 
+  FileSpreadsheet, 
+  Search, 
+  UserPlus, 
+  Trash2, 
+  Building2, 
+  GraduationCap, 
+  UserCheck, 
+  Lock, 
+  Mail, 
+  Sparkles 
+} from 'lucide-react';
+import { 
+  sanitizeForCsv, 
+  getStoredAccounts, 
+  saveStoredAccounts, 
+  addStoredAccount,
+  DEFAULT_ACCOUNTS 
+} from '../services/storage';
 
 export default function CoordinatorCleanView({
   students = [],
@@ -11,6 +34,107 @@ export default function CoordinatorCleanView({
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [onlyFaltasFilter, setOnlyFaltasFilter] = useState(false);
+
+  // Gestão de Perfis (Exclusivo Regis)
+  const [accounts, setAccounts] = useState(() => getStoredAccounts());
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
+  const [newAccNome, setNewAccNome] = useState('');
+  const [newAccRoleType, setNewAccRoleType] = useState('max');
+  const [newAccCargo, setNewAccCargo] = useState('');
+  const [newAccEmail, setNewAccEmail] = useState('');
+  const [newAccPassword, setNewAccPassword] = useState('senac123');
+  const [accFormError, setAccFormError] = useState('');
+  const [accSuccessMsg, setAccSuccessMsg] = useState('');
+
+  const getProfileIcon = (roleType) => {
+    switch (roleType) {
+      case 'max': return Building2;
+      case 'aline': return GraduationCap;
+      case 'arthur': return UserCheck;
+      case 'regis': return BarChart3;
+      default: return Building2;
+    }
+  };
+
+  const getProfileGradient = (roleType) => {
+    switch (roleType) {
+      case 'max': return 'from-blue-600 to-indigo-700';
+      case 'aline': return 'from-amber-500 to-orange-600';
+      case 'arthur': return 'from-emerald-500 to-teal-700';
+      case 'regis': return 'from-purple-600 to-violet-800';
+      default: return 'from-blue-600 to-indigo-700';
+    }
+  };
+
+  const handleCreateAccount = (e) => {
+    e.preventDefault();
+    setAccFormError('');
+    setAccSuccessMsg('');
+
+    if (!newAccNome.trim() || newAccNome.trim().length < 3) {
+      setAccFormError('Informe o nome completo (mínimo 3 caracteres).');
+      return;
+    }
+
+    if (!newAccEmail.trim() || !newAccEmail.includes('@')) {
+      setAccFormError('Informe um e-mail institucional válido.');
+      return;
+    }
+
+    if (!newAccPassword || newAccPassword.length < 3) {
+      setAccFormError('A senha corporativa deve conter no mínimo 3 dígitos.');
+      return;
+    }
+
+    if (accounts.some(a => a.email.toLowerCase() === newAccEmail.trim().toLowerCase())) {
+      setAccFormError('Já existe um usuário cadastrado com este e-mail.');
+      return;
+    }
+
+    const roleLabels = {
+      max: 'Recepção',
+      aline: 'Consultora',
+      arthur: 'Mentorado',
+      regis: 'Diretoria'
+    };
+
+    const newAcc = {
+      id: `acc-${Date.now()}`,
+      nome: newAccNome.trim(),
+      cargo: newAccCargo.trim() || `${roleLabels[newAccRoleType]} do Hub`,
+      roleLabel: roleLabels[newAccRoleType],
+      roleType: newAccRoleType,
+      email: newAccEmail.trim().toLowerCase(),
+      badge: 'Perfil Cadastrado',
+      gradient: getProfileGradient(newAccRoleType),
+      color: '#004A8D',
+      aliases: [newAccNome.toLowerCase().split(' ')[0]]
+    };
+
+    const updated = addStoredAccount(newAcc);
+    setAccounts(updated);
+    setAccSuccessMsg(`✓ Perfil de ${newAcc.nome} cadastrado com sucesso!`);
+    setNewAccNome('');
+    setNewAccCargo('');
+    setNewAccEmail('');
+    setNewAccPassword('senac123');
+    setTimeout(() => {
+      setIsNewAccountModalOpen(false);
+      setAccSuccessMsg('');
+    }, 1200);
+  };
+
+  const handleDeleteAccount = (accId) => {
+    if (accId === 'regis') {
+      alert('Você não pode excluir a conta principal do Coordenador Regis.');
+      return;
+    }
+    if (confirm('Deseja realmente remover este perfil de usuário do sistema?')) {
+      const updated = accounts.filter(a => a.id !== accId);
+      setAccounts(updated);
+      saveStoredAccounts(updated);
+    }
+  };
 
   const totalAlunos = students.length;
   const totalMeis = students.filter((s) => s.statusNegocio === 'MEI' || s.cnpj).length;
@@ -290,6 +414,222 @@ export default function CoordinatorCleanView({
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================== */}
+      {/* ABA 5: GESTÃO DE PERFIS & ACESSOS (EXCLUSIVO REGIS)            */}
+      {/* ============================================================== */}
+      {currentTab === 'usuarios' && (
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-900 border border-purple-200">
+                  Exclusivo Coordenação
+                </span>
+                <h3 className="text-lg font-black text-slate-900">Gestão de Perfis & Acessos do Hub</h3>
+              </div>
+              <p className="text-xs text-slate-500 mt-1">
+                Controle centralizado de credenciais. Apenas Regis como coordenador pode cadastrar e gerenciar perfis de atuação.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsNewAccountModalOpen(true)}
+              className="px-4 py-2.5 rounded-full bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-2 shadow-sm transition cursor-pointer shrink-0"
+            >
+              <UserPlus className="w-4 h-4 text-[#F29100]" />
+              <span>+ Cadastrar Novo Perfil</span>
+            </button>
+          </div>
+
+          {/* Grid de Perfis Cadastrados */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {accounts.map((acc) => {
+              const Icon = getProfileIcon(acc.roleType);
+              const isDefaultRegis = acc.id === 'regis';
+
+              return (
+                <div 
+                  key={acc.id} 
+                  className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 transition flex flex-col justify-between space-y-3 relative group"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className={`h-10 w-10 rounded-2xl flex items-center justify-center text-white shadow-xs bg-gradient-to-br ${acc.gradient || 'from-blue-600 to-indigo-700'}`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+
+                    {!isDefaultRegis && (
+                      <button
+                        onClick={() => handleDeleteAccount(acc.id)}
+                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition opacity-0 group-hover:opacity-100 cursor-pointer"
+                        title="Excluir perfil"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-bold text-slate-900 block truncate leading-tight">
+                      {acc.nome}
+                    </span>
+                    <span className="text-[11px] text-slate-500 font-medium block truncate mt-0.5">
+                      {acc.cargo}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-mono block truncate mt-1">
+                      {acc.email}
+                    </span>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px]">
+                    <span className="font-bold uppercase px-2 py-0.5 rounded-md bg-white border border-slate-200 text-slate-700">
+                      {acc.roleLabel}
+                    </span>
+                    <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Ativo
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Cadastro de Novo Perfil (Exclusivo Regis) */}
+      {isNewAccountModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 animate-slide-in">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center font-bold">
+                  <UserPlus className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black">Cadastrar Novo Perfil</h3>
+                  <p className="text-xs text-blue-100">Função exclusiva da Coordenação (Regis)</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsNewAccountModalOpen(false);
+                  setAccFormError('');
+                }}
+                className="text-white/80 hover:text-white p-1.5 rounded-xl hover:bg-white/10 transition cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleCreateAccount} className="p-6 space-y-4">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">Nome Completo *</label>
+                <input
+                  type="text"
+                  placeholder="Ex: Carlos Eduardo Lima"
+                  value={newAccNome}
+                  onChange={(e) => setNewAccNome(e.target.value)}
+                  className="w-full px-3.5 py-2.5 text-xs rounded-2xl border border-slate-200 bg-slate-50/70 text-slate-900 focus:bg-white focus:outline-none focus:border-[#004A8D]"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">Papel / Função no Hub *</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { type: 'max', label: 'Recepção', desc: 'Grade & Alunos' },
+                    { type: 'aline', label: 'Consultoria', desc: 'Diários & Trilha' },
+                    { type: 'arthur', label: 'Mentorado', desc: 'Empreendedor' },
+                    { type: 'regis', label: 'Diretoria', desc: 'Coordenação' }
+                  ].map((item) => (
+                    <button
+                      key={item.type}
+                      type="button"
+                      onClick={() => setNewAccRoleType(item.type)}
+                      className={`p-2.5 rounded-2xl border text-left transition cursor-pointer ${
+                        newAccRoleType === item.type
+                          ? 'border-[#004A8D] bg-blue-50/80 text-[#004A8D] ring-2 ring-[#004A8D]/20 shadow-xs'
+                          : 'border-slate-200 hover:bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <span className="text-xs font-bold block">{item.label}</span>
+                      <span className="text-[10px] text-slate-500">{item.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-xs font-bold text-slate-700">Cargo / Empreendimento (Opcional)</label>
+                <input
+                  type="text"
+                  placeholder="Ex: Consultor Financeiro ou Marmitaria"
+                  value={newAccCargo}
+                  onChange={(e) => setNewAccCargo(e.target.value)}
+                  className="w-full px-3.5 py-2.5 text-xs rounded-2xl border border-slate-200 bg-slate-50/70 text-slate-900 focus:bg-white focus:outline-none focus:border-[#004A8D]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-slate-700">E-mail *</label>
+                  <input
+                    type="email"
+                    placeholder="usuario@sp.senac.br"
+                    value={newAccEmail}
+                    onChange={(e) => setNewAccEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 text-xs rounded-2xl border border-slate-200 bg-slate-50/70 text-slate-900 focus:bg-white focus:outline-none focus:border-[#004A8D]"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-xs font-bold text-slate-700">Senha Corporativa *</label>
+                  <input
+                    type="password"
+                    placeholder="Mínimo 3 caracteres"
+                    value={newAccPassword}
+                    onChange={(e) => setNewAccPassword(e.target.value)}
+                    className="w-full px-3.5 py-2.5 text-xs rounded-2xl border border-slate-200 bg-slate-50/70 text-slate-900 focus:bg-white focus:outline-none focus:border-[#004A8D]"
+                  />
+                </div>
+              </div>
+
+              {accFormError && (
+                <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0" />
+                  <span>{accFormError}</span>
+                </div>
+              )}
+
+              {accSuccessMsg && (
+                <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>{accSuccessMsg}</span>
+                </div>
+              )}
+
+              <div className="flex gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsNewAccountModalOpen(false)}
+                  className="flex-1 py-2.5 rounded-2xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-50 transition cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs shadow-sm transition cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <UserPlus className="w-4 h-4 text-[#F29100]" />
+                  <span>Salvar Perfil</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

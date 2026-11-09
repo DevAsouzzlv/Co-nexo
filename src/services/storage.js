@@ -1,4 +1,4 @@
-// src/services/storage.js
+﻿// src/services/storage.js
 /**
  * CO.NEXO - CAMADA DE REPOSITÓRIO E INTEGRIDADE DE DADOS
  * 
@@ -51,7 +51,7 @@ export const DEFAULT_ACCOUNTS = [
     badge: 'Prontuário & Trilha',
     gradient: 'from-amber-500 to-orange-600',
     color: '#F29100',
-    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'jamile', 'jamile.consultora', 'jamile@senac.br']
+    aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'Laíse', 'Laíse.consultora', 'Laíse@senac.br']
   },
   {
     id: 'arthur',
@@ -281,3 +281,4 @@ export const checkStudentStatus = (student) => {
   }
   return student;
 };
+

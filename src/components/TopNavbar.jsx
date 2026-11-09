@@ -12,7 +12,7 @@ import {
   Clock,
   Zap
 } from 'lucide-react';
-import { USER_PROFILES } from './LoginModal';
+import { getStoredAccounts, DEFAULT_ACCOUNTS } from '../services/storage';
 
 export default function TopNavbar({
   currentPersona,
@@ -20,7 +20,10 @@ export default function TopNavbar({
   onResetData,
   onExportBackup
 }) {
-  const currentProfile = USER_PROFILES.find((p) => p.id === currentPersona) || USER_PROFILES[0];
+  const accounts = getStoredAccounts();
+  const currentProfile = accounts.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+    DEFAULT_ACCOUNTS.find((p) => p.id === currentPersona || p.roleType === currentPersona) || 
+    accounts[0] || DEFAULT_ACCOUNTS[0];
   const today = new Date().toLocaleDateString('pt-BR', { 
     weekday: 'long', 
     day: 'numeric', 
@@ -56,7 +59,7 @@ export default function TopNavbar({
         {/* Dynamic Island Style Capsule: 8h Totais */}
         <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/[0.04] border border-black/[0.05] text-xs font-semibold text-[#1D1D1F]">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20 animate-pulse" />
-          <span>Meta: <strong>8h/dia</strong> (4h Aline + 4h Jamile)</span>
+          <span>Meta: <strong>8h/dia</strong> (4h Aline + 4h Laíse)</span>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
             Zero Ociosidade
           </span>
@@ -103,3 +106,4 @@ export default function TopNavbar({
     </header>
   );
 }
+

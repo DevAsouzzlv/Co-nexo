@@ -1,4 +1,4 @@
-// src/components/AgendamentoModal.jsx
+﻿// src/components/AgendamentoModal.jsx
 import React, { useState, useEffect } from 'react';
 import { 
   Calendar, 
@@ -29,7 +29,7 @@ const MENTORES_CONFIG = {
   },
   'cons-2': {
     id: 'cons-2',
-    nome: 'Jamile Mendes',
+    nome: 'Laíse Mendes',
     cargo: 'Consultora de Mercado & Formalização',
     especialidade: 'Vendas, Canais Digitais e MEI',
     sala: 'Sala 02 Presencial',
@@ -230,7 +230,7 @@ export default function AgendamentoModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Agendar Mentoria na Grade"
-      subtitle="Governança de 8h Diárias • 4h Aline + 4h Jamile (Zero Ociosidade)"
+      subtitle="Governança de 8h Diárias • 4h Aline + 4h Laíse (Zero Ociosidade)"
       icon={Calendar}
       badge="Regra Co.Nexo"
     >
@@ -243,7 +243,7 @@ export default function AgendamentoModal({
           </div>
         )}
 
-        {/* 1. SELETOR DE MENTOR (Aline 4h Manhã vs Jamile 4h Tarde) */}
+        {/* 1. SELETOR DE MENTOR (Aline 4h Manhã vs Laíse 4h Tarde) */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <label className="text-xs font-bold text-slate-700 block">
@@ -546,3 +546,4 @@ export default function AgendamentoModal({
     </Modal>
   );
 }
+
