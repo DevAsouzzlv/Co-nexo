@@ -25,25 +25,41 @@ export default function EncaixeModal({
   consultors = [],
   onConfirmEncaixe
 }) {
-  if (!isOpen) return null;
+  // Procura todos os slots vagos (sem alunoId ou status 'Disponivel')
+  const availableSlots = appointments.filter(
+    (a) => !a.alunoId || a.status === 'Disponivel'
+  );
 
   // Candidato selecionado (da fila de espera ou aluno)
   const [selectedCandidateId, setSelectedCandidateId] = useState(
     initialCandidate?.id || waitingList[0]?.id || ''
   );
   
-  // Vaga selecionada
-  // Procura todos os slots vagos (sem alunoId ou status 'Disponivel')
-  const availableSlots = appointments.filter(
-    (a) => !a.alunoId || a.status === 'Disponivel'
-  );
-
   const [selectedSlotId, setSelectedSlotId] = useState(
     initialSlot?.id || availableSlots[0]?.id || ''
   );
 
   const [sendWhatsApp, setSendWhatsApp] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Sincroniza quando o modal abre com novo candidato ou slot
+  React.useEffect(() => {
+    if (isOpen) {
+      if (initialCandidate?.id) {
+        setSelectedCandidateId(initialCandidate.id);
+      } else if (waitingList.length > 0) {
+        setSelectedCandidateId(waitingList[0].id);
+      }
+      if (initialSlot?.id) {
+        setSelectedSlotId(initialSlot.id);
+      } else if (availableSlots.length > 0) {
+        setSelectedSlotId(availableSlots[0].id);
+      }
+      setErrorMsg('');
+    }
+  }, [isOpen, initialCandidate, initialSlot]);
+
+  if (!isOpen) return null;
 
   // Identifica os objetos selecionados
   const selectedCandidate = waitingList.find((w) => w.id === selectedCandidateId) ||

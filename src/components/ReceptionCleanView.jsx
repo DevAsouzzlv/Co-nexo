@@ -95,7 +95,7 @@ export default function ReceptionCleanView({
       return {
         dia,
         dateIso: iso,
-        dateFormatted,
+        dateFormatted: dayFormatted,
         isToday
       };
     });
@@ -721,23 +721,19 @@ export default function ReceptionCleanView({
           {/* ============================================================== */}
           {agendaMode === 'semanal' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 items-start">
-              {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((dia, idx) => {
+              {getWeekDates().map(({ dia, dateIso, dateFormatted, isToday }) => {
                 const normalizeStr = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                const dayDateStr = `2026-10-${19 + idx}`;
 
                 const dayAppointments = appointments.filter((ap) => {
                   const matchesDia = 
                     (ap.diaSemana && normalizeStr(ap.diaSemana).includes(normalizeStr(dia).substring(0, 3))) ||
-                    (dia === 'Quarta' && ap.turnoId === 'turno-1') ||
-                    (ap.data && ap.data === dayDateStr);
+                    (ap.data && ap.data === dateIso);
                   
                   if (!matchesDia) return false;
                   if (agendaConsultorFilter !== 'todos' && ap.consultorId && ap.consultorId !== agendaConsultorFilter) return false;
                   if (agendaSalaFilter !== 'todas' && ap.sala && ap.sala !== agendaSalaFilter) return false;
                   return true;
                 }).sort((a, b) => (a.horarioInicio || '').localeCompare(b.horarioInicio || ''));
-
-                const isToday = dia === 'Quarta';
 
                 return (
                   <div 
@@ -935,7 +931,7 @@ export default function ReceptionCleanView({
                       )}
 
                       <button
-                        onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { diaSemana: dia, data: dayDateStr })}
+                        onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { diaSemana: dia, data: dateIso })}
                         className="w-full py-2 rounded-xl border border-dashed border-slate-200 hover:border-[#004A8D] hover:text-[#004A8D] text-slate-400 font-bold text-[11px] flex items-center justify-center gap-1 transition cursor-pointer"
                       >
                         <Plus className="w-3 h-3" />

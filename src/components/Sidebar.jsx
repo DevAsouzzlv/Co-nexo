@@ -14,7 +14,8 @@ import {
   Building2,
   GraduationCap,
   UserCheck,
-  Sparkles
+  Sparkles,
+  FileText
 } from 'lucide-react';
 import { getStoredAccounts, DEFAULT_ACCOUNTS } from '../services/storage';
 import logoConexo from '../assets/logo-conexo.png';

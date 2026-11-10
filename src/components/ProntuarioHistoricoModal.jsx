@@ -25,12 +25,18 @@ export default function ProntuarioHistoricoModal({
   diarios = [],
   initialSessionNumber = 1
 }) {
+  const [activeSessionNum, setActiveSessionNum] = useState(initialSessionNumber || 1);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setActiveSessionNum(initialSessionNumber || 1);
+    }
+  }, [isOpen, initialSessionNumber]);
+
   if (!isOpen || !student) return null;
 
   const studentDiarios = diarios.filter((d) => d.alunoId === student.id)
     .sort((a, b) => a.sessaoNumero - b.sessaoNumero);
-
-  const [activeSessionNum, setActiveSessionNum] = useState(initialSessionNumber || 1);
 
   // Encontra o diário específico da sessão ativa
   const currentDiario = studentDiarios.find((d) => d.sessaoNumero === activeSessionNum) || studentDiarios[0] || {

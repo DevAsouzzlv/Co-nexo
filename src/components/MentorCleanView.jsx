@@ -131,7 +131,7 @@ export default function MentorCleanView({
       num: 1, 
       title: 'Diagnóstico & Modelo de Negócio', 
       status: 'Concluída', 
-      data: '05/10 (1h)', 
+      data: '03/11 (1h)', 
       summary: 'Mapeamento do estágio atual, identificação de informalidade e definição do plano inicial.',
       entregavel: 'Diagnóstico 360° e Levantamento de Despesas'
     },
@@ -139,7 +139,7 @@ export default function MentorCleanView({
       num: 2, 
       title: 'Custos & Ficha Técnica', 
       status: 'Concluída', 
-      data: '12/10 (2h)', 
+      data: '05/11 (2h)', 
       summary: 'Pesagem de insumos na bancada gastronômica, cálculo de desperdício e formulação de ficha técnica.',
       entregavel: 'Ficha Técnica dos 3 Pratos Mais Vendidos'
     },
@@ -147,7 +147,7 @@ export default function MentorCleanView({
       num: 3, 
       title: 'Precificação & Margem de Contribuição', 
       status: 'Ativa Hoje', 
-      data: 'Hoje (16h-18h)', 
+      data: 'Hoje (10/11 - 16h-18h)', 
       summary: 'Calibragem de preço na prática com teste do prato executivo e corte de despesas ocultas.',
       entregavel: 'Simulação de Preço de Venda com Margem >55%'
     },
@@ -155,7 +155,7 @@ export default function MentorCleanView({
       num: 4, 
       title: 'Fluxo de Caixa & Separação PF/PJ', 
       status: 'Agendada', 
-      data: '26/10 (2h)', 
+      data: '17/11 (2h)', 
       summary: 'Implantação de rotina diária de fluxo de caixa e abertura de conta jurídica sem taxas.',
       entregavel: 'Planilha de Fluxo de Caixa e Conta PJ Ativa'
     },
@@ -163,7 +163,7 @@ export default function MentorCleanView({
       num: 5, 
       title: 'Formalização MEI & Plano 90 Dias', 
       status: 'Planejada', 
-      data: '02/11 (2h)', 
+      data: '24/11 (2h)', 
       summary: 'Emissão oficial do CNPJ no Portal do Empreendedor, enquadramento e plano de crescimento.',
       entregavel: 'Certificado MEI e Plano de 90 Dias'
     }
@@ -373,7 +373,7 @@ export default function MentorCleanView({
                 <div className="space-y-3">
                   <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-slate-800">Sessão 1: Diagnóstico de Entrada (05/10)</span>
+                      <span className="font-bold text-slate-800">Sessão 1: Diagnóstico de Entrada (03/11)</span>
                       <span className="text-emerald-700 font-bold">Concluída ✓</span>
                     </div>
                     <p className="text-xs text-slate-600 mt-2">
@@ -382,7 +382,7 @@ export default function MentorCleanView({
                   </div>
                   <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-slate-800">Sessão 2: Ficha Técnica & Pesagem (12/10)</span>
+                      <span className="font-bold text-slate-800">Sessão 2: Ficha Técnica & Pesagem (05/11)</span>
                       <span className="text-emerald-700 font-bold">Concluída ✓</span>
                     </div>
                     <p className="text-xs text-slate-600 mt-2">

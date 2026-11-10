@@ -20,17 +20,29 @@ export default function DiarioBordoModal({
   onSaveDiario,
   isReadOnly = false
 }) {
-  if (!isOpen || !student) return null;
-
-  const studentDiarios = diarios.filter((d) => d.alunoId === student.id);
-
   const [isAddingNew, setIsAddingNew] = useState(false);
-  const [sessaoNumero, setSessaoNumero] = useState(student.sessaoAtual || 1);
+  const [sessaoNumero, setSessaoNumero] = useState(student?.sessaoAtual || 1);
   const [diagnostico, setDiagnostico] = useState('');
   const [tarefas, setTarefas] = useState('');
   const [linksMateriais, setLinksMateriais] = useState('');
-  const [statusMei, setStatusMei] = useState(student.statusNegocio || 'Informal');
+  const [statusMei, setStatusMei] = useState(student?.statusNegocio || 'Informal');
   const [formError, setFormError] = useState('');
+
+  React.useEffect(() => {
+    if (isOpen && student) {
+      setSessaoNumero(student.sessaoAtual || 1);
+      setStatusMei(student.statusNegocio || 'Informal');
+      setIsAddingNew(false);
+      setDiagnostico('');
+      setTarefas('');
+      setLinksMateriais('');
+      setFormError('');
+    }
+  }, [isOpen, student]);
+
+  if (!isOpen || !student) return null;
+
+  const studentDiarios = diarios.filter((d) => d.alunoId === student.id);
 
   const handleSave = (e) => {
     e.preventDefault();
