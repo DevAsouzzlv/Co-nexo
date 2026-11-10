@@ -265,16 +265,39 @@ export default function App() {
   // Encaixe Rápido de Aluno em Horário Vago
   const handleQuickEncaixe = (targetAppointmentId, alunoId) => {
     setData((prev) => {
-      const student = prev.students.find(s => s.id === alunoId);
+      let student = prev.students.find(s => s.id === alunoId);
       const waitingItem = prev.waitingList?.find(w => w.id === alunoId || w.nome === student?.nome);
+
+      let updatedStudents = [...prev.students];
+      // Se o aluno veio da fila de espera e ainda não está na lista principal, integra automaticamente
+      if (!student && waitingItem) {
+        student = {
+          id: waitingItem.id,
+          nome: waitingItem.nome,
+          negocio: waitingItem.negocio,
+          segmento: waitingItem.segmento || 'Alimentação & Varejo',
+          whatsapp: waitingItem.whatsapp || '(11) 97222-3344',
+          documento: waitingItem.documento || '234.567.890-88',
+          statusNegocio: 'Informal',
+          cnpj: '',
+          etapaPrograma: 'Diagnostico',
+          sessaoAtual: 1,
+          totalFaltas: 0,
+          totalReagendamentos: 0,
+          statusFormalizacaoMei: 'Em Processo',
+          dataConclusao: null,
+          avatar: '🧁'
+        };
+        updatedStudents = [student, ...updatedStudents];
+      }
 
       const updatedAppointments = prev.appointments.map((a) => {
         if (a.id === targetAppointmentId) {
           return {
             ...a,
-            alunoId: alunoId,
+            alunoId: student?.id || alunoId,
             status: 'Confirmado',
-            whatsappStatus: 'Encaixe rápido realizado'
+            whatsappStatus: '✓ Encaixe rápido confirmado'
           };
         }
         return a;
@@ -282,12 +305,13 @@ export default function App() {
 
       // Remove da fila de espera se estiver lá
       const updatedWaiting = waitingItem 
-        ? prev.waitingList.filter(w => w.id !== waitingItem.id)
+        ? prev.waitingList.filter(w => w.id !== waitingItem.id && w.nome !== waitingItem.nome)
         : prev.waitingList;
 
       return {
         ...prev,
         appointments: updatedAppointments,
+        students: updatedStudents,
         waitingList: updatedWaiting
       };
     });
@@ -394,7 +418,7 @@ export default function App() {
     <div className="h-screen bg-[#F5F5F7] text-[#1D1D1F] flex p-3 sm:p-5 gap-4 lg:gap-5 relative overflow-hidden selection:bg-[#004A8D]/15 selection:text-[#004A8D]">
       {/* Luz Ambiente Sutil Estilo Apple */}
       <div className="fixed -top-24 -right-24 w-96 h-96 rounded-full bg-[#004A8D]/5 blur-[120px] pointer-events-none z-0" />
-      <div className="fixed -bottom-24 left-1/4 w-96 h-96 rounded-full bg-[#F29100]/5 blur-[100px] pointer-events-none z-0" />
+      <div className="fixed -bottom-24 left-1/4 w-96 h-96 rounded-full bg-[#84BD00]/5 blur-[100px] pointer-events-none z-0" />
 
       {/* 1. Sidebar Fixa no Desktop (Escondida no Mobile) */}
       <Sidebar
@@ -421,7 +445,7 @@ export default function App() {
         {/* Banner de Aviso de Teste às Cegas & Contexto do Perfil */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-blue-500/5 border border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-2xs">
           <div className="flex items-start sm:items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-[#F29100] text-slate-950 font-black shrink-0 shadow-xs text-xs">
+            <div className="p-2 rounded-xl bg-[#84BD00] text-slate-950 font-black shrink-0 shadow-xs text-xs">
               🧪
             </div>
             <div>
@@ -451,7 +475,7 @@ export default function App() {
               onClick={() => setIsBlindTestGuideOpen(true)}
               className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-[#004A8D] font-bold text-xs border border-blue-200 shadow-2xs transition active:scale-95 cursor-pointer flex items-center gap-1.5"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F29100]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#84BD00]" />
               <span>Roteiro de Teste</span>
             </button>
           </div>
@@ -596,7 +620,7 @@ export default function App() {
       {globalToast && (
         <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none animate-fade-in">
           <div className="bg-slate-900/95 text-white px-5 py-2.5 rounded-2xl shadow-2xl border border-white/20 backdrop-blur-md flex items-center gap-2.5 text-xs font-bold tracking-tight">
-            <Sparkles className="w-4 h-4 text-[#F29100] shrink-0" />
+            <Sparkles className="w-4 h-4 text-[#84BD00] shrink-0" />
             <span>{globalToast}</span>
           </div>
         </div>

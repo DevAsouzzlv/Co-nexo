@@ -1,5 +1,6 @@
 // src/components/ReceptionCleanView.jsx
 import React, { useState } from 'react';
+import EncaixeModal from './EncaixeModal';
 import { 
   Clock, 
   Calendar, 
@@ -16,7 +17,8 @@ import {
   Phone, 
   FileText,
   Zap,
-  Sparkles
+  Sparkles,
+  Building2
 } from 'lucide-react';
 
 export default function ReceptionCleanView({
@@ -60,11 +62,44 @@ export default function ReceptionCleanView({
   const [agendaConsultorFilter, setAgendaConsultorFilter] = useState('todos');
   const [agendaSalaFilter, setAgendaSalaFilter] = useState('todas');
 
+  const now = new Date();
+  const currentMonthNum = now.getMonth();
+  const currentYearNum = now.getFullYear();
+  const todayIso = now.toISOString().split('T')[0];
+
   // Alternância de visão da Agenda e Calendário Anual
   const [agendaMode, setAgendaMode] = useState('semanal'); // 'semanal' | 'mensal'
-  const [calendarMonth, setCalendarMonth] = useState(9); // Outubro (0-indexed: 9 = Outubro)
-  const [calendarYear, setCalendarYear] = useState(2026);
-  const [selectedCalendarDate, setSelectedCalendarDate] = useState('2026-10-21');
+  const [calendarMonth, setCalendarMonth] = useState(currentMonthNum);
+  const [calendarYear, setCalendarYear] = useState(currentYearNum);
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState(todayIso);
+
+  // Estado do Modal de Encaixe Inteligente (Quem e Quando)
+  const [isEncaixeModalOpen, setIsEncaixeModalOpen] = useState(false);
+  const [encaixeCandidate, setEncaixeCandidate] = useState(null);
+  const [encaixeSlot, setEncaixeSlot] = useState(null);
+
+  // Semanas dinâmicas baseadas na data atual de hoje
+  const getWeekDates = () => {
+    const d = new Date(now);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // segunda-feira
+    const monday = new Date(d.setDate(diff));
+
+    const dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    return dias.map((dia, idx) => {
+      const cur = new Date(monday);
+      cur.setDate(monday.getDate() + idx);
+      const iso = cur.toISOString().split('T')[0];
+      const dayFormatted = String(cur.getDate()).padStart(2, '0') + '/' + String(cur.getMonth() + 1).padStart(2, '0');
+      const isToday = cur.toDateString() === now.toDateString();
+      return {
+        dia,
+        dateIso: iso,
+        dateFormatted,
+        isToday
+      };
+    });
+  };
 
   const currentConsultor = consultors.find((c) => c.id === selectedConsultorId) || consultors[0];
   const currentTurno = currentConsultor?.turnos?.find((t) => t.id === selectedTurnoId) || currentConsultor?.turnos?.[0];
@@ -149,9 +184,9 @@ export default function ReceptionCleanView({
         <div className={`fixed top-5 right-5 z-50 px-5 py-3 rounded-2xl shadow-xl border flex items-center gap-3 transition-all duration-300 animate-slide-in ${
           toastMessage.type === 'warning' 
             ? 'bg-amber-500 text-white border-amber-600' 
-            : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#F29100]'
+            : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#84BD00]'
         }`}>
-          <CheckCircle2 className="w-5 h-5 text-[#F29100] shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-[#84BD00] shrink-0" />
           <span className="text-xs font-bold">{toastMessage.msg}</span>
           <button 
             onClick={() => setToastMessage(null)} 
@@ -170,13 +205,13 @@ export default function ReceptionCleanView({
           {/* Header Banner com Vidro e Profundidade Apple */}
           <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
             {/* Efeitos de Luz Difusa Apple */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#84BD00]/20 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
             <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
 
             <div className="relative z-10 space-y-2">
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-blue-100 border border-white/20 inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F29100]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#84BD00]" />
                   Recepção & Governança • Hub SENAC
                 </span>
                 <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
@@ -194,7 +229,7 @@ export default function ReceptionCleanView({
             <div className="relative z-10 flex items-center gap-2.5 shrink-0">
               <button
                 onClick={onOpenNovoMentorado}
-                className="px-5 py-2.5 rounded-full bg-[#F29100] hover:bg-[#E08500] active:scale-95 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#F29100]/25 transition cursor-pointer"
+                className="px-5 py-2.5 rounded-full bg-[#84BD00] hover:bg-[#E08500] active:scale-95 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#84BD00]/25 transition cursor-pointer"
               >
                 <UserPlus className="w-4 h-4" />
                 <span>+ Cadastrar Mentorado</span>
@@ -255,10 +290,10 @@ export default function ReceptionCleanView({
             {/* Card 3: Formalização MEI */}
             <div className="apple-glass-card apple-card-hover rounded-[26px] p-5 flex flex-col justify-between min-h-[160px]">
               <div className="flex items-center justify-between">
-                <div className="w-9 h-9 rounded-2xl bg-[#F29100]/10 flex items-center justify-center text-[#C87500]">
-                  <Sparkles className="w-4 h-4 text-[#F29100]" />
+                <div className="w-9 h-9 rounded-2xl bg-[#84BD00]/10 flex items-center justify-center text-[#C87500]">
+                  <Sparkles className="w-4 h-4 text-[#84BD00]" />
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#F29100]/15 text-[#9A5B00]">
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#84BD00]/15 text-[#4E7100]">
                   Meta D+60
                 </span>
               </div>
@@ -287,7 +322,7 @@ export default function ReceptionCleanView({
               <div className="space-y-2 my-2">
                 <button
                   onClick={handleDispararWhatsApp}
-                  className="w-full py-2 px-3 rounded-full bg-[#F29100]/15 hover:bg-[#F29100]/25 active:scale-95 text-[#9A5B00] font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border border-[#F29100]/30"
+                  className="w-full py-2 px-3 rounded-full bg-[#84BD00]/15 hover:bg-[#84BD00]/25 active:scale-95 text-[#4E7100] font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border border-[#84BD00]/30"
                 >
                   <Send className="w-3.5 h-3.5 text-[#C87500]" />
                   <span>{isWhatsappSent ? '✓ Lembretes Enviados' : 'Disparar WhatsApp 24h'}</span>
@@ -375,7 +410,7 @@ export default function ReceptionCleanView({
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                         isAvailable 
-                          ? 'bg-[#F29100] text-slate-950 font-black' 
+                          ? 'bg-[#84BD00] text-slate-950 font-black' 
                           : 'bg-emerald-100 text-emerald-800'
                       }`}>
                         {isAvailable ? 'Aberta' : 'Confirmado'}
@@ -443,7 +478,7 @@ export default function ReceptionCleanView({
                       </div>
                     </div>
                     <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
-                      isSelected ? 'bg-[#F29100] text-slate-950' : 'bg-slate-100 text-slate-600'
+                      isSelected ? 'bg-[#84BD00] text-slate-950' : 'bg-slate-100 text-slate-600'
                     }`}>
                       {c.sala}
                     </span>
@@ -505,11 +540,11 @@ export default function ReceptionCleanView({
 
                 if (isAvailable) {
                   return (
-                    <div key={ap.id} className="p-4 rounded-2xl bg-[#F29100]/5 border-2 border-dashed border-[#F29100]/60 shadow-2xs flex flex-col justify-between">
+                    <div key={ap.id} className="p-4 rounded-2xl bg-[#84BD00]/5 border-2 border-dashed border-[#84BD00]/60 shadow-2xs flex flex-col justify-between">
                       <div>
                         <div className="flex items-center justify-between mb-1.5">
                           <span className="text-[11px] font-bold text-[#C87500] font-mono">{ap.horarioInicio} - {ap.horarioFim}</span>
-                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#F29100] text-slate-950">
+                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#84BD00] text-slate-950">
                             Vaga Aberta
                           </span>
                         </div>
@@ -522,7 +557,7 @@ export default function ReceptionCleanView({
                             onClick={() => handleEncaixarCandidato(waitingList[0])}
                             className="w-full py-2 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1 transition cursor-pointer shadow-xs"
                           >
-                            <Zap className="w-3.5 h-3.5 text-[#F29100]" />
+                            <Zap className="w-3.5 h-3.5 text-[#84BD00]" />
                             <span>Encaixar {waitingList[0].nome} (Fila)</span>
                           </button>
                         ) : (
@@ -530,7 +565,7 @@ export default function ReceptionCleanView({
                             onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { horario: ap.horarioInicio, tipo: ap.tipo })}
                             className="w-full py-2 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1 transition cursor-pointer shadow-xs"
                           >
-                            <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                            <Plus className="w-3.5 h-3.5 text-[#84BD00]" />
                             <span>+ Agendar Horário</span>
                           </button>
                         )}
@@ -675,7 +710,7 @@ export default function ReceptionCleanView({
                 onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
                 className="px-4 py-2 rounded-full bg-[#004A8D] hover:bg-[#00386C] active:scale-95 text-white font-semibold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-md shadow-[#004A8D]/20"
               >
-                <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                <Plus className="w-3.5 h-3.5 text-[#84BD00]" />
                 <span>+ Novo Agendamento</span>
               </button>
             </div>
@@ -717,7 +752,7 @@ export default function ReceptionCleanView({
                     <div className="flex items-center justify-between border-b border-slate-200/70 pb-2.5 mb-3">
                       <div>
                         <span className="text-xs font-black text-slate-800">{dia}</span>
-                        <p className="text-[10px] text-slate-400 font-mono">{19 + idx}/10 • 14h-18h</p>
+                        <p className="text-[10px] text-slate-400 font-mono">{dateFormatted} • 14h-18h</p>
                       </div>
                       <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
                         isToday 
@@ -746,7 +781,7 @@ export default function ReceptionCleanView({
                               key={ap.id}
                               className={`rounded-2xl transition shadow-2xs relative ${
                                 isAvailable
-                                  ? 'bg-[#F29100]/5 border-2 border-dashed border-[#F29100]/50 hover:bg-[#F29100]/10'
+                                  ? 'bg-[#84BD00]/5 border-2 border-dashed border-[#84BD00]/50 hover:bg-[#84BD00]/10'
                                   : isExpanded
                                     ? 'bg-white border-2 border-[#004A8D] shadow-md ring-2 ring-[#004A8D]/15'
                                     : 'bg-white border border-slate-200/90 hover:border-[#004A8D]/60 hover:shadow-xs'
@@ -761,7 +796,7 @@ export default function ReceptionCleanView({
                                   <span className="font-bold text-slate-700">{ap.horarioInicio} - {ap.horarioFim}</span>
                                   <span className={`font-bold px-1.5 py-0.2 rounded-md ${
                                     isAvailable 
-                                      ? 'bg-[#F29100] text-slate-950 font-black' 
+                                      ? 'bg-[#84BD00] text-slate-950 font-black' 
                                       : ap.tipo === 'Diagnostico_1h'
                                         ? 'bg-blue-100 text-[#004A8D]'
                                         : 'bg-slate-100 text-slate-700'
@@ -772,7 +807,7 @@ export default function ReceptionCleanView({
 
                                 {isAvailable ? (
                                   <div>
-                                    <p className="text-xs font-black text-[#9A5B00]">Horário Livre (Encaixe)</p>
+                                    <p className="text-xs font-black text-[#4E7100]">Horário Livre (Encaixe)</p>
                                     <p className="text-[10px] text-slate-500">Clique para reservar vaga</p>
                                   </div>
                                 ) : (
@@ -807,10 +842,14 @@ export default function ReceptionCleanView({
                                         Vaga livre para manter o turno contínuo e sem intervalos ociosos.
                                       </p>
                                       <button
-                                        onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { horario: ap.horarioInicio, tipo: ap.tipo, diaSemana: dia, data: dayDateStr })}
+                                        onClick={() => {
+                                          setEncaixeSlot({ ...ap, diaSemana: dia, data: dateIso });
+                                          setEncaixeCandidate(null);
+                                          setIsEncaixeModalOpen(true);
+                                        }}
                                         className="w-full py-2 px-2.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer"
                                       >
-                                        <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                                        <Zap className="w-3.5 h-3.5 text-[#84BD00]" />
                                         <span>Encaixar Aluno Neste Horário</span>
                                       </button>
                                     </div>
@@ -880,7 +919,7 @@ export default function ReceptionCleanView({
                                           href={`https://wa.me/55${student.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(student.nome)},%20confirmamos%20seu%20atendimento%20no%20Hub%20SENAC%20às%20${ap.horarioInicio}.`}
                                           target="_blank"
                                           rel="noreferrer"
-                                          className="w-full py-1.5 px-2 rounded-xl bg-[#F29100]/15 hover:bg-[#F29100]/25 border border-[#F29100]/30 font-bold text-[10px] text-[#9A5B00] flex items-center justify-center gap-1 transition text-center"
+                                          className="w-full py-1.5 px-2 rounded-xl bg-[#84BD00]/15 hover:bg-[#84BD00]/25 border border-[#84BD00]/30 font-bold text-[10px] text-[#4E7100] flex items-center justify-center gap-1 transition text-center"
                                         >
                                           <Phone className="w-3 h-3 text-[#C87500]" />
                                           <span>Confirmar WhatsApp</span>
@@ -982,7 +1021,7 @@ export default function ReceptionCleanView({
                           </span>
                           {dayAps.length > 0 && (
                             <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded-md truncate ${
-                              isSelected ? 'bg-[#F29100] text-slate-950 font-black' : 'bg-blue-100 text-[#004A8D]'
+                              isSelected ? 'bg-[#84BD00] text-slate-950 font-black' : 'bg-blue-100 text-[#004A8D]'
                             }`}>
                               {dayAps.length} {dayAps.length === 1 ? 'atend' : 'atends'}
                             </span>
@@ -1006,7 +1045,7 @@ export default function ReceptionCleanView({
                       onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
                       className="px-3 py-1.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1 cursor-pointer shadow-xs"
                     >
-                      <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                      <Plus className="w-3.5 h-3.5 text-[#84BD00]" />
                       <span>+ Agendar</span>
                     </button>
                   </div>
@@ -1020,7 +1059,7 @@ export default function ReceptionCleanView({
                           onClick={() => onOpenAgendamento(currentTurno, currentConsultor, { data: selectedCalendarDate })}
                           className="px-4 py-2 rounded-xl bg-[#004A8D] text-white font-bold text-xs inline-flex items-center gap-1.5"
                         >
-                          <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                          <Plus className="w-3.5 h-3.5 text-[#84BD00]" />
                           <span>Agendar Novo Horário Neste Dia</span>
                         </button>
                       </div>
@@ -1098,7 +1137,7 @@ export default function ReceptionCleanView({
                   </div>
 
                   <div className="p-4 rounded-2xl bg-[#004A8D] text-white shadow-xs space-y-1">
-                    <span className="text-[10px] font-bold text-[#F29100]">Ciclo 3 (Ciclo Ativo)</span>
+                    <span className="text-[10px] font-bold text-[#84BD00]">Ciclo 3 (Ciclo Ativo)</span>
                     <h5 className="text-xs font-black text-white">01/09 a 27/11</h5>
                     <p className="text-[11px] text-blue-100 font-bold">14 Empreendedores na esteira</p>
                   </div>
@@ -1169,7 +1208,7 @@ export default function ReceptionCleanView({
                 onClick={onOpenNovoMentorado}
                 className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#004A8D] hover:bg-[#003B70] transition cursor-pointer flex items-center gap-1.5 shadow-2xs"
               >
-                <UserPlus className="w-3.5 h-3.5 text-[#F29100]" />
+                <UserPlus className="w-3.5 h-3.5 text-[#84BD00]" />
                 <span>+ Novo Mentorado</span>
               </button>
             </div>
@@ -1384,7 +1423,7 @@ export default function ReceptionCleanView({
                   <Users className="w-5 h-5 text-[#004A8D]" />
                   <span>Fila de Espera & Encaixes Imediatos</span>
                 </h2>
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#F29100]/15 text-[#9A5B00] border border-[#F29100]/30">
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#84BD00]/15 text-[#4E7100] border border-[#84BD00]/30">
                   {waitingList.length} aguardando vaga
                 </span>
               </div>
@@ -1396,7 +1435,7 @@ export default function ReceptionCleanView({
               onClick={() => setShowAddWaitingForm(!showAddWaitingForm)}
               className="px-4 py-2 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
             >
-              <UserPlus className="w-3.5 h-3.5 text-[#F29100]" />
+              <UserPlus className="w-3.5 h-3.5 text-[#84BD00]" />
               <span>{showAddWaitingForm ? '✕ Cancelar' : '+ Adicionar à Fila'}</span>
             </button>
           </div>
@@ -1465,10 +1504,14 @@ export default function ReceptionCleanView({
                     Interesse: {item.tipoDesejado === 'Diagnostico_1h' ? 'Diagnóstico 1h' : 'Mentoria 2h'}
                   </span>
                   <button
-                    onClick={() => handleEncaixarCandidato(item)}
+                    onClick={() => {
+                      setEncaixeCandidate(item);
+                      setEncaixeSlot(null);
+                      setIsEncaixeModalOpen(true);
+                    }}
                     className="px-3 py-1.5 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white text-xs font-bold flex items-center gap-1 transition cursor-pointer shadow-2xs"
                   >
-                    <Plus className="w-3 h-3 text-[#F29100]" />
+                    <Zap className="w-3 h-3 text-[#84BD00]" />
                     <span>Encaixar no Turno</span>
                   </button>
                 </div>
@@ -1477,6 +1520,23 @@ export default function ReceptionCleanView({
           </div>
         </div>
       )}
+      {/* Modal de Encaixe com Quem e Quando */}
+      <EncaixeModal
+        isOpen={isEncaixeModalOpen}
+        onClose={() => setIsEncaixeModalOpen(false)}
+        initialCandidate={encaixeCandidate}
+        initialSlot={encaixeSlot}
+        waitingList={waitingList}
+        students={students}
+        appointments={appointments}
+        consultors={consultors}
+        onConfirmEncaixe={({ slotId, candidateId, candidateName, diaSemana, data: slotData, horario, sala, consultorNome }) => {
+          if (onQuickEncaixe) {
+            onQuickEncaixe(slotId, candidateId);
+          }
+          showToast(`✓ ${candidateName} encaixado(a) com sucesso para ${diaSemana}, ${slotData || 'hoje'} às ${horario} na ${sala}!`);
+        }}
+      />
     </div>
   );
 }

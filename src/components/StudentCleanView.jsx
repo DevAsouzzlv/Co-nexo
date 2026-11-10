@@ -1,5 +1,6 @@
 // src/components/StudentCleanView.jsx
 import React, { useState } from 'react';
+import ProntuarioHistoricoModal from './ProntuarioHistoricoModal';
 import { 
   CheckCircle2, 
   Calendar, 
@@ -64,6 +65,8 @@ export default function StudentCleanView({
 
   const [localWhatsappConfirmed, setLocalWhatsappConfirmed] = useState(isConfirmed);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isProntuarioModalOpen, setIsProntuarioModalOpen] = useState(false);
+  const [selectedProntuarioSession, setSelectedProntuarioSession] = useState(1);
 
   const showToast = (msg, type = 'success') => {
     setToastMessage({ msg, type });
@@ -239,10 +242,10 @@ export default function StudentCleanView({
       {toastMessage && (
         <div className={`fixed top-5 right-5 z-50 px-5 py-3 rounded-2xl shadow-xl border flex items-center gap-3 transition-all duration-300 animate-slide-in ${
           toastMessage.type === 'celebrate'
-            ? 'bg-[#F29100] text-slate-950 border-[#F29100] ring-4 ring-[#F29100]/30 font-black'
+            ? 'bg-[#84BD00] text-slate-950 border-[#84BD00] ring-4 ring-[#84BD00]/30 font-black'
             : toastMessage.type === 'warning'
               ? 'bg-rose-600 text-white border-rose-700'
-              : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#F29100]'
+              : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#84BD00]'
         }`}>
           <CheckCircle2 className="w-5 h-5 shrink-0" />
           <span className="text-xs font-bold">{toastMessage.msg}</span>
@@ -275,11 +278,11 @@ export default function StudentCleanView({
         <div className="space-y-6 animate-fade-in">
           {/* Card Destaque - Sessão de Hoje com Estilo Apple */}
           <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#84BD00]/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F29100] text-slate-950 text-xs font-bold shadow-sm">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#84BD00] text-slate-950 text-xs font-bold shadow-sm">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-950"></span>
@@ -300,7 +303,7 @@ export default function StudentCleanView({
                 className={`px-6 py-3 rounded-full font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer shrink-0 shadow-lg active:scale-95 ${
                   localWhatsappConfirmed 
                     ? 'bg-emerald-500 text-white cursor-default' 
-                    : 'bg-[#F29100] hover:bg-[#D97D00] text-slate-950 shadow-[#F29100]/30'
+                    : 'bg-[#84BD00] hover:bg-[#D97D00] text-slate-950 shadow-[#84BD00]/30'
                 }`}
               >
                 <Send className="w-4 h-4" />
@@ -365,48 +368,190 @@ export default function StudentCleanView({
             </div>
           </div>
 
-          {/* Trilha de 5 Semanas */}
+          {/* Trilha de 5 Semanas Interativa com Prontuário */}
           <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                Sua Trilha de Formação (5 Semanas)
-              </h3>
-              <span className="text-xs font-bold text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                Progresso: 60% Concluído (Sessão {currentStudent.sessaoAtual || 3} de 5)
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <span>Sua Trilha de Formação (5 Semanas)</span>
+                  <span className="text-[10px] font-bold text-[#84BD00] bg-lime-50 px-2 py-0.5 rounded-full border border-lime-200">
+                    Clique em qualquer sessão para ver o prontuário
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Acesse os diagnósticos, tarefas de bancada e evolução financeira de cada aula
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-[#004A8D] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                  Progresso: 60% Concluído (Sessão {currentStudent.sessaoAtual || 3} de 5)
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedProntuarioSession(currentStudent.sessaoAtual || 3);
+                    setIsProntuarioModalOpen(true);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-[#004A8D] hover:bg-[#00386C] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition active:scale-95 cursor-pointer"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-[#84BD00]" />
+                  <span>Ver Prontuários</span>
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 pt-2">
-              <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200">
-                <span className="text-[10px] font-bold text-[#004A8D]">Sessão 1 ✓</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProntuarioSession(1);
+                  setIsProntuarioModalOpen(true);
+                }}
+                className="p-3.5 rounded-2xl bg-blue-50/70 hover:bg-blue-100/70 border border-blue-200 text-left transition hover:scale-[1.02] cursor-pointer group shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-[#004A8D]">Sessão 1 ✓</span>
+                  <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Ver Prontuário →</span>
+                </div>
                 <h4 className="text-xs font-bold text-slate-900 mt-1">Diagnóstico</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Realizada em 05/10</p>
-              </div>
+                <p className="text-[10px] text-slate-500 mt-1">Realizada em 20/10</p>
+              </button>
 
-              <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200">
-                <span className="text-[10px] font-bold text-[#004A8D]">Sessão 2 ✓</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProntuarioSession(2);
+                  setIsProntuarioModalOpen(true);
+                }}
+                className="p-3.5 rounded-2xl bg-blue-50/70 hover:bg-blue-100/70 border border-blue-200 text-left transition hover:scale-[1.02] cursor-pointer group shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-[#004A8D]">Sessão 2 ✓</span>
+                  <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Ver Prontuário →</span>
+                </div>
                 <h4 className="text-xs font-bold text-slate-900 mt-1">Custos & Ficha</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Realizada em 12/10</p>
-              </div>
+                <p className="text-[10px] text-slate-500 mt-1">Realizada em 27/10</p>
+              </button>
 
-              <div className="p-3.5 rounded-2xl bg-[#004A8D] text-white shadow-md">
-                <span className="text-[10px] font-bold text-[#F29100]">Sessão 3 (Hoje)</span>
-                <h4 className="text-xs font-bold mt-1">Precificação</h4>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProntuarioSession(3);
+                  setIsProntuarioModalOpen(true);
+                }}
+                className="p-3.5 rounded-2xl bg-[#004A8D] text-white shadow-md text-left transition hover:scale-[1.02] cursor-pointer group ring-2 ring-[#84BD00]/50"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-[#84BD00]">Sessão 3 (Hoje)</span>
+                  <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Abrir →</span>
+                </div>
+                <h4 className="text-xs font-bold mt-1">Precificação & CMV</h4>
                 <p className="text-[10px] text-blue-100 mt-1">Em atendimento</p>
-              </div>
+              </button>
 
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] font-bold text-slate-400">Sessão 4</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProntuarioSession(4);
+                  setIsProntuarioModalOpen(true);
+                }}
+                className="p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-left transition hover:scale-[1.02] cursor-pointer group shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-400">Sessão 4</span>
+                  <span className="text-[9px] font-bold text-slate-400 group-hover:text-[#004A8D]">Ver →</span>
+                </div>
                 <h4 className="text-xs font-bold text-slate-800 mt-1">Fluxo & PF/PJ</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Agendada 26/10</p>
-              </div>
+                <p className="text-[10px] text-slate-500 mt-1">Agendada 10/11</p>
+              </button>
 
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[10px] font-bold text-slate-400">Sessão 5</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProntuarioSession(5);
+                  setIsProntuarioModalOpen(true);
+                }}
+                className="p-3.5 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 text-left transition hover:scale-[1.02] cursor-pointer group shadow-2xs"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-400">Sessão 5</span>
+                  <span className="text-[9px] font-bold text-slate-400 group-hover:text-[#004A8D]">Ver →</span>
+                </div>
                 <h4 className="text-xs font-bold text-slate-800 mt-1">Formalização MEI</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Formatura 02/11</p>
-              </div>
+                <p className="text-[10px] text-slate-500 mt-1">Formatura 17/11</p>
+              </button>
             </div>
+          </div>
+        </div>
+      )}
+
+            {/* ============================================================== */}
+      {/* TELA: HISTÓRICO INTEGRAL DE PRONTUÁRIOS DE TODAS AS AULAS       */}
+      {/* ============================================================== */}
+      {currentTab === 'prontuario' && (
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-6 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-lime-50 text-lime-900 border border-lime-200">
+                  Histórico de Mentorias
+                </span>
+                <h3 className="text-base font-black text-slate-900">
+                  Prontuário Pedagógico de Todas as Aulas Passadas
+                </h3>
+              </div>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Consulte o diagnóstico, pareceres técnicos, tarefas de bancada e anexos de cada sessão realizada
+              </p>
+            </div>
+
+            <button
+              onClick={() => window.print()}
+              className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition cursor-pointer self-start sm:self-auto"
+            >
+              <FileText className="w-3.5 h-3.5 text-[#004A8D]" />
+              <span>Imprimir / Exportar Prontuário</span>
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {diarios.filter(d => d.alunoId === currentStudent.id).map((diario) => (
+              <div key={diario.id} className="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-200/60 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="font-black px-2.5 py-0.5 rounded-full bg-[#004A8D] text-white text-[10px]">
+                      Sessão {diario.sessaoNumero}
+                    </span>
+                    <h4 className="font-bold text-slate-900 text-sm">{diario.titulo || `Módulo ${diario.sessaoNumero}`}</h4>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-400 font-mono text-[11px]">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{diario.dataRegistro}</span>
+                    <span>•</span>
+                    <span className="font-semibold text-slate-700">{diario.consultorNome}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 space-y-1">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Diagnóstico Técnico:</span>
+                    <p className="text-slate-700 leading-relaxed">{diario.diagnostico}</p>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-lime-50/60 border border-lime-200/60 space-y-1">
+                    <span className="text-[10px] font-bold text-lime-900 uppercase block">Parecer do Consultor:</span>
+                    <p className="text-slate-700 leading-relaxed">{diario.parecerConsultor || 'Orientação de bancada executada com sucesso.'}</p>
+                  </div>
+                </div>
+
+                {diario.tarefasProximoEncontro && (
+                  <div className="p-3 rounded-xl bg-white border border-slate-200 text-xs">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Tarefas de Bancada Combinadas:</span>
+                    <p className="text-slate-600 whitespace-pre-line pl-2 border-l-2 border-[#004A8D]">{diario.tarefasProximoEncontro}</p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -448,7 +593,7 @@ export default function StudentCleanView({
               type="submit"
               className="px-4 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer"
             >
-              <Plus className="w-4 h-4 text-[#F29100]" />
+              <Plus className="w-4 h-4 text-[#84BD00]" />
               <span>Adicionar</span>
             </button>
           </form>
@@ -513,7 +658,7 @@ export default function StudentCleanView({
                           className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#004A8D] text-[11px] font-bold inline-flex items-center gap-1 transition cursor-pointer"
                           title="Baixar ou visualizar documento respondido"
                         >
-                          <Download className="w-3 h-3 text-[#F29100]" />
+                          <Download className="w-3 h-3 text-[#84BD00]" />
                           <span>Baixar/Ver</span>
                         </button>
 
@@ -540,7 +685,7 @@ export default function StudentCleanView({
                         htmlFor={`file-upload-${task.id}`}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-dashed border-[#004A8D]/50 hover:border-[#004A8D] bg-white hover:bg-blue-50 text-[#004A8D] text-[11px] font-bold transition cursor-pointer shadow-2xs"
                       >
-                        <Paperclip className="w-3.5 h-3.5 text-[#F29100]" />
+                        <Paperclip className="w-3.5 h-3.5 text-[#84BD00]" />
                         <span>+ Anexar Documento Respondido</span>
                       </label>
 
@@ -639,7 +784,7 @@ export default function StudentCleanView({
                 onClick={downloadFichaTecnica}
                 className="w-full py-2.5 rounded-xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
-                <Download className="w-4 h-4 text-[#F29100]" />
+                <Download className="w-4 h-4 text-[#84BD00]" />
                 <span>Baixar Ficha Técnica (CSV Real)</span>
               </button>
             </div>
@@ -655,7 +800,7 @@ export default function StudentCleanView({
                 onClick={downloadCartilhaMEI}
                 className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
-                <Download className="w-4 h-4 text-[#F29100]" />
+                <Download className="w-4 h-4 text-[#84BD00]" />
                 <span>Baixar Guia MEI Oficial</span>
               </button>
             </div>
@@ -715,7 +860,7 @@ export default function StudentCleanView({
             <div className={`p-5 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
               isMeiFormalizado 
                 ? 'bg-emerald-50 border-emerald-300' 
-                : 'bg-[#F29100]/10 border-2 border-[#F29100]/60'
+                : 'bg-[#84BD00]/10 border-2 border-[#84BD00]/60'
             }`}>
               <div className="flex items-center gap-3">
                 <div className={`h-10 w-10 rounded-2xl flex items-center justify-center font-black text-sm shrink-0 ${
@@ -739,7 +884,7 @@ export default function StudentCleanView({
                   onClick={handleFormalizarAgora}
                   className="px-5 py-3 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] active:scale-98 text-white font-black text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md shrink-0"
                 >
-                  <Award className="w-4 h-4 text-[#F29100]" />
+                  <Award className="w-4 h-4 text-[#84BD00]" />
                   <span>Emitir Certificado MEI & Registrar CNPJ</span>
                 </button>
               ) : (
@@ -751,6 +896,14 @@ export default function StudentCleanView({
           </div>
         </div>
       )}
+      {/* Modal de Prontuário Detalhado */}
+      <ProntuarioHistoricoModal
+        isOpen={isProntuarioModalOpen}
+        onClose={() => setIsProntuarioModalOpen(false)}
+        student={currentStudent}
+        diarios={diarios}
+        initialSessionNumber={selectedProntuarioSession}
+      />
     </div>
   );
 }

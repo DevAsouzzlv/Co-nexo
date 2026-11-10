@@ -225,7 +225,7 @@ export default function CoordinatorCleanView({
                 <h3 className="text-3xl font-bold tracking-tight">{horasDisplay} Horas</h3>
                 <p className="text-xs text-blue-100 mt-1">100% dos turnos docentes sem intervalos ociosos</p>
               </div>
-              <span className="text-[11px] text-[#F29100] font-bold">Zero ociosidade nas salas</span>
+              <span className="text-[11px] text-[#84BD00] font-bold">Zero ociosidade nas salas</span>
             </div>
 
             <div className="apple-glass-card apple-card-hover rounded-[26px] p-6 flex flex-col justify-between">
@@ -253,7 +253,7 @@ export default function CoordinatorCleanView({
                   onClick={exportarCSV}
                   className="w-full py-2.5 px-4 rounded-full bg-[#004A8D] hover:bg-[#00386C] active:scale-95 text-white font-semibold text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-sm shadow-[#004A8D]/20"
                 >
-                  <Download className="w-4 h-4 text-[#F29100]" />
+                  <Download className="w-4 h-4 text-[#84BD00]" />
                   <span>Exportar Prestação CSV</span>
                 </button>
               </div>
@@ -301,7 +301,7 @@ export default function CoordinatorCleanView({
               onClick={exportarCSV}
               className="px-5 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-2 cursor-pointer shadow-sm shrink-0"
             >
-              <Download className="w-4 h-4 text-[#F29100]" />
+              <Download className="w-4 h-4 text-[#84BD00]" />
               <span>Exportar Dados em CSV</span>
             </button>
           </div>
@@ -493,7 +493,7 @@ export default function CoordinatorCleanView({
               {!accounts.some(a => a.id === 'regis' || a.email === 'regis.coordenacao@sp.senac.br') && (
                 <button
                   onClick={handleProvisionRegis}
-                  className="px-4 py-2.5 rounded-full bg-[#F29100] hover:bg-[#D97D00] text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+                  className="px-4 py-2.5 rounded-full bg-[#84BD00] hover:bg-[#6C9C00] text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow-sm transition cursor-pointer"
                   title="Criar o perfil oficial de Coordenação Geral em 1 clique"
                 >
                   <Sparkles className="w-4 h-4" />
@@ -505,7 +505,7 @@ export default function CoordinatorCleanView({
                 onClick={() => setIsNewAccountModalOpen(true)}
                 className="px-4 py-2.5 rounded-full bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-2 shadow-sm transition cursor-pointer"
               >
-                <UserPlus className="w-4 h-4 text-[#F29100]" />
+                <UserPlus className="w-4 h-4 text-[#84BD00]" />
                 <span>+ Cadastrar Novo Perfil</span>
               </button>
             </div>
@@ -572,7 +572,7 @@ export default function CoordinatorCleanView({
             {/* Header */}
             <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-bold">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>
@@ -691,7 +691,7 @@ export default function CoordinatorCleanView({
                   type="submit"
                   className="flex-1 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs shadow-sm transition cursor-pointer flex items-center justify-center gap-2"
                 >
-                  <UserPlus className="w-4 h-4 text-[#F29100]" />
+                  <UserPlus className="w-4 h-4 text-[#84BD00]" />
                   <span>Salvar Perfil</span>
                 </button>
               </div>

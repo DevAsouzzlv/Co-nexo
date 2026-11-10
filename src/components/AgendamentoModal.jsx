@@ -276,13 +276,13 @@ export default function AgendamentoModal({
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-extrabold flex items-center gap-1.5">
-                      <User className={`w-3.5 h-3.5 ${isSelected ? 'text-[#F29100]' : 'text-slate-400'}`} />
+                      <User className={`w-3.5 h-3.5 ${isSelected ? 'text-[#84BD00]' : 'text-slate-400'}`} />
                       {m.nome}
                     </span>
                     <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
                       ocupMentor >= 4 
                         ? 'bg-emerald-100 text-emerald-800' 
-                        : 'bg-[#F29100]/20 text-[#9A5B00]'
+                        : 'bg-[#84BD00]/20 text-[#4E7100]'
                     }`}>
                       {ocupMentor}/4h
                     </span>
@@ -332,7 +332,7 @@ export default function AgendamentoModal({
               </span>
             ) : (
               <span className="font-bold text-[#004A8D] flex items-center gap-1">
-                <Info className="w-3.5 h-3.5 text-[#F29100]" />
+                <Info className="w-3.5 h-3.5 text-[#84BD00]" />
                 Falta(m) <strong>{horasRestantes}h</strong> para fechar as 4h do mentor sem horário vazio.
               </span>
             )}

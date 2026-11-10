@@ -21,7 +21,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-seg',
         diaSemana: 'Segunda-feira',
-        data: '2026-10-19',
+        data: '2026-11-09',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -30,7 +30,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-ter',
         diaSemana: 'Terça-feira',
-        data: '2026-10-20',
+        data: '2026-11-10',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -39,7 +39,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-qua',
         diaSemana: 'Quarta-feira',
-        data: '2026-10-21',
+        data: '2026-11-11',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -48,7 +48,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-qui',
         diaSemana: 'Quinta-feira',
-        data: '2026-10-22',
+        data: '2026-11-12',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -57,7 +57,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-sex',
         diaSemana: 'Sexta-feira',
-        data: '2026-10-23',
+        data: '2026-11-13',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -66,7 +66,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-ali-sab',
         diaSemana: 'Sábado',
-        data: '2026-10-24',
+        data: '2026-11-14',
         horarioInicio: '08:00',
         horarioFim: '12:00',
         capacidadeHoras: 4,
@@ -86,7 +86,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-seg',
         diaSemana: 'Segunda-feira',
-        data: '2026-10-19',
+        data: '2026-11-09',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -95,7 +95,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-ter',
         diaSemana: 'Terça-feira',
-        data: '2026-10-20',
+        data: '2026-11-10',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -104,7 +104,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-qua',
         diaSemana: 'Quarta-feira',
-        data: '2026-10-21',
+        data: '2026-11-11',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -113,7 +113,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-qui',
         diaSemana: 'Quinta-feira',
-        data: '2026-10-22',
+        data: '2026-11-12',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -122,7 +122,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-sex',
         diaSemana: 'Sexta-feira',
-        data: '2026-10-23',
+        data: '2026-11-13',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -131,7 +131,7 @@ export const INITIAL_CONSULTORS = [
       {
         id: 'turno-jam-sab',
         diaSemana: 'Sábado',
-        data: '2026-10-24',
+        data: '2026-11-14',
         horarioInicio: '14:00',
         horarioFim: '18:00',
         capacidadeHoras: 4,
@@ -269,7 +269,7 @@ export const INITIAL_WAITING_LIST = [
 
 export const INITIAL_APPOINTMENTS = [
   // ==========================================================================
-  // SEGUNDA-FEIRA (19/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // SEGUNDA-FEIRA (09/11/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
@@ -279,7 +279,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Segunda',
     tipo: 'Mentoria_2h',
-    data: '2026-10-19',
+    data: '2026-11-09',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -295,7 +295,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Segunda',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-19',
+    data: '2026-11-09',
     horarioInicio: '10:00',
     horarioFim: '11:00',
     status: 'Confirmado',
@@ -311,7 +311,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Segunda',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-19',
+    data: '2026-11-09',
     horarioInicio: '11:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -329,7 +329,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Segunda',
     tipo: 'Mentoria_2h',
-    data: '2026-10-19',
+    data: '2026-11-09',
     horarioInicio: '14:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -345,7 +345,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Segunda',
     tipo: 'Mentoria_2h',
-    data: '2026-10-19',
+    data: '2026-11-09',
     horarioInicio: '16:00',
     horarioFim: '18:00',
     status: 'Confirmado',
@@ -356,7 +356,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // TERÇA-FEIRA (20/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // TERÇA-FEIRA (10/11/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -366,7 +366,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Terça',
     tipo: 'Mentoria_2h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -382,7 +382,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Terça',
     tipo: 'Mentoria_2h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '10:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -400,7 +400,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Terça',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '14:00',
     horarioFim: '15:00',
     status: 'Confirmado',
@@ -416,7 +416,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Terça',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '15:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -432,7 +432,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Terça',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '16:00',
     horarioFim: '17:00',
     status: 'Confirmado',
@@ -448,7 +448,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Terça',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-20',
+    data: '2026-11-10',
     horarioInicio: '17:00',
     horarioFim: '18:00',
     status: 'Confirmado',
@@ -459,7 +459,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // QUARTA-FEIRA (21/10/2026 - HOJE) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // QUARTA-FEIRA (11/11/2026 - HOJE) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h = 4h)
   {
@@ -469,7 +469,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Quarta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-21',
+    data: '2026-11-11',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -485,7 +485,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Quarta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-21',
+    data: '2026-11-11',
     horarioInicio: '10:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -503,7 +503,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Quarta',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-21',
+    data: '2026-11-11',
     horarioInicio: '14:00',
     horarioFim: '15:00',
     status: 'Confirmado',
@@ -519,7 +519,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Quarta',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-21',
+    data: '2026-11-11',
     horarioInicio: '15:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -535,7 +535,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Quarta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-21',
+    data: '2026-11-11',
     horarioInicio: '16:00',
     horarioFim: '18:00',
     status: 'Confirmado',
@@ -546,7 +546,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // QUINTA-FEIRA (22/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // QUINTA-FEIRA (12/11/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação C: 1 Mentoria (2h) + 2 Diagnósticos (1h + 1h)
   {
@@ -556,7 +556,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Quinta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-22',
+    data: '2026-11-12',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -572,7 +572,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Quinta',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-22',
+    data: '2026-11-12',
     horarioInicio: '10:00',
     horarioFim: '11:00',
     status: 'Confirmado',
@@ -588,7 +588,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Quinta',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-22',
+    data: '2026-11-12',
     horarioInicio: '11:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -606,7 +606,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Quinta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-22',
+    data: '2026-11-12',
     horarioInicio: '14:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -622,7 +622,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: null, // Vaga de 2h aberta para encaixe sem ociosidade
     diaSemana: 'Quinta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-22',
+    data: '2026-11-12',
     horarioInicio: '16:00',
     horarioFim: '18:00',
     status: 'Disponivel',
@@ -633,7 +633,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // SEXTA-FEIRA (23/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // SEXTA-FEIRA (13/11/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -643,7 +643,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Sexta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-23',
+    data: '2026-11-13',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -659,7 +659,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Sexta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-23',
+    data: '2026-11-13',
     horarioInicio: '10:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -677,7 +677,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Sexta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-23',
+    data: '2026-11-13',
     horarioInicio: '14:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -693,7 +693,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-5', // Pedro Henrique
     diaSemana: 'Sexta',
     tipo: 'Mentoria_2h',
-    data: '2026-10-23',
+    data: '2026-11-13',
     horarioInicio: '16:00',
     horarioFim: '18:00',
     status: 'Confirmado',
@@ -704,7 +704,7 @@ export const INITIAL_APPOINTMENTS = [
   },
 
   // ==========================================================================
-  // SÁBADO (24/10/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
+  // SÁBADO (14/11/2026) - TOTAL: 8 HORAS (4h Aline + 4h Laíse)
   // ==========================================================================
   // Aline Ferreira (08:00 - 12:00 • 4h) -> Combinação A: 2 Mentorias (2h + 2h)
   {
@@ -714,7 +714,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-4', // Juliana Mendes
     diaSemana: 'Sábado',
     tipo: 'Mentoria_2h',
-    data: '2026-10-24',
+    data: '2026-11-14',
     horarioInicio: '08:00',
     horarioFim: '10:00',
     status: 'Confirmado',
@@ -730,7 +730,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-1', // Arthur Silva
     diaSemana: 'Sábado',
     tipo: 'Mentoria_2h',
-    data: '2026-10-24',
+    data: '2026-11-14',
     horarioInicio: '10:00',
     horarioFim: '12:00',
     status: 'Confirmado',
@@ -748,7 +748,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: 'aluno-2', // Mariana Costa
     diaSemana: 'Sábado',
     tipo: 'Mentoria_2h',
-    data: '2026-10-24',
+    data: '2026-11-14',
     horarioInicio: '14:00',
     horarioFim: '16:00',
     status: 'Confirmado',
@@ -764,7 +764,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: null,
     diaSemana: 'Sábado',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-24',
+    data: '2026-11-14',
     horarioInicio: '16:00',
     horarioFim: '17:00',
     status: 'Disponivel',
@@ -780,7 +780,7 @@ export const INITIAL_APPOINTMENTS = [
     alunoId: null,
     diaSemana: 'Sábado',
     tipo: 'Diagnostico_1h',
-    data: '2026-10-24',
+    data: '2026-11-14',
     horarioInicio: '17:00',
     horarioFim: '18:00',
     status: 'Disponivel',
@@ -797,39 +797,150 @@ export const INITIAL_DIARIOS = [
     alunoId: 'aluno-1',
     consultorId: 'cons-1',
     sessaoNumero: 1,
-    dataRegistro: '2026-09-24',
+    titulo: 'Diagnóstico de Maturidade & Estrutura de Custos',
+    dataRegistro: '2026-10-20',
     tipo: 'Diagnostico_1h',
-    diagnostico: 'Negócio de marmitas delivery. Não possui controle de custos, mistura conta física e jurídica. Alta demanda mas margem incerta.',
-    tarefasProximoEncontro: '1. Separar contas pessoais e do negócio\n2. Anotar todos os gastos de insumos da semana em planilha',
-    linksMateriais: 'https://drive.google.com/exemplo-planilha-gastos-senac',
-    statusMei: 'Informal',
-    consultorNome: 'Aline Ferreira'
+    diagnostico: 'Negócio de marmitas delivery artesanais. Demanda excelente (média de 38 marmitas/dia), mas o empreendedor não apura margem real. Mistura contas bancárias pessoais com despesas da cozinha.',
+    parecerConsultor: 'Excelente potencial gastronômico. Principal urgência é estancar o prejuízo oculto em proteínas pesadas e instituir controle de pesagem rigorosa na bancada.',
+    tarefasProximoEncontro: '1. Separar conta bancária pessoal da jurídica (abrir conta digital PJ exclusiva)\n2. Anotar compras diárias de carnes e embalagens\n3. Pesar porções de proteína (alvo: 180g)',
+    linksMateriais: 'https://drive.google.com/planilha-custos-gastronomia-senac',
+    statusMei: 'Informal (Sem CNPJ)',
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 3.200/mês',
+      cmv: '62% (Crítico)',
+      margem: '4% (Prejuízo oculto)',
+      contasSegregadas: 'Não (0%)'
+    },
+    anexos: [
+      { nome: 'Diagnostico_Inicial_Gastronomia_Arthur.pdf', tamanho: '180 KB' }
+    ]
   },
   {
     id: 'diario-2',
     alunoId: 'aluno-1',
     consultorId: 'cons-1',
     sessaoNumero: 2,
-    dataRegistro: '2026-10-08',
+    titulo: 'Engenharia de Cardápio & Custos Ocultos (CMV)',
+    dataRegistro: '2026-10-27',
     tipo: 'Mentoria_2h',
-    diagnostico: 'Arthur trouxe a relação de despesas. Identificamos que a embalagem custava 18% do preço de venda. Ajustamos cardápio.',
-    tarefasProximoEncontro: '1. Orçar fornecedores alternativos de embalagens sustentáveis\n2. Fazer ficha técnica dos 3 pratos mais vendidos',
-    linksMateriais: 'https://drive.google.com/exemplo-ficha-tecnica-culinaria',
-    statusMei: 'Informal (estudando viabilidade de MEI)',
-    consultorNome: 'Aline Ferreira'
+    diagnostico: 'Arthur apresentou as anotações semanais de bancada. Identificamos que a embalagem térmica representava 18% do custo direto e as carnes estavam sendo servidas com 240g em vez de 180g, gerando sangria de R$ 840/mês.',
+    parecerConsultor: 'Implementada padronização das gramaturas de carnes e guarnições. Cotação de embalagens em distribuidor direto reduziu custo unitário de R$ 2,40 para R$ 1,15.',
+    tarefasProximoEncontro: '1. Finalizar ficha técnica dos 3 pratos campeões (Feijoada, Frango Grelhado e Bife Acebolado)\n2. Testar balança digital na linha de montagem\n3. Simular novo preço de corte',
+    linksMateriais: 'https://drive.google.com/modelo-ficha-tecnica-culinaria',
+    statusMei: 'Informal (Orientado a separar documentos)',
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 3.850/mês',
+      cmv: '48% (Em queda)',
+      margem: '15% (Recuperada)',
+      contasSegregadas: 'Em andamento'
+    },
+    anexos: [
+      { nome: 'Ficha_Pesagem_Proteinas.pdf', tamanho: '245 KB' },
+      { nome: 'Planilha_CMV_Marmitex.xlsx', tamanho: '412 KB' }
+    ]
   },
   {
     id: 'diario-3',
-    alunoId: 'aluno-2', // Mariana
+    alunoId: 'aluno-1',
+    consultorId: 'cons-1',
+    sessaoNumero: 3,
+    titulo: 'Precificação Estratégica, Margem Limpa & Markup',
+    dataRegistro: '2026-11-03',
+    tipo: 'Mentoria_2h',
+    diagnostico: 'Calibragem de preço de venda. Preço médio subiu de R$ 17,00 para R$ 22,00 sem perda de clientela, graças à percepção de qualidade das marmitas seladas e selo de higiene SENAC.',
+    parecerConsultor: 'Margem líquida alcançou 28%. Arthur já acumula capital de giro de R$ 1.200 para compra de insumos à vista com 12% de desconto com fornecedores do CEASA.',
+    tarefasProximoEncontro: '1. Ativar conta PJ digital e solicitar chave Pix corporativa\n2. Organizar comprovantes para formalização MEI\n3. Coletar feedbacks dos 10 maiores clientes corporativos',
+    linksMateriais: 'https://drive.google.com/calculadora-markup-senac',
+    statusMei: 'Informal (Documentos reunidos para abertura MEI)',
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 5.100/mês (+59%)',
+      cmv: '36% (Saudável)',
+      margem: '28% (Excelente)',
+      contasSegregadas: '100% Segregada'
+    },
+    anexos: [
+      { nome: 'Simulacao_Preco_Venda_CMV.pdf', tamanho: '310 KB' }
+    ]
+  },
+  {
+    id: 'diario-4',
+    alunoId: 'aluno-1',
+    consultorId: 'cons-1',
+    sessaoNumero: 4,
+    titulo: 'Fluxo de Caixa, Segregação Bancária & Padronização',
+    dataRegistro: '2026-11-10',
+    tipo: 'Mentoria_2h',
+    diagnostico: 'Sessão de hoje: Conta jurídica PJ 100% operacional no banco digital. Todos os recebimentos via Pix vão para a conta PJ e o pró-labore fixo de Arthur foi estipulado em R$ 2.000 quinzenal.',
+    parecerConsultor: 'Empreendimento atingiu nível de maturidade pleno para emissão de notas fiscais a empresas vizinhas (contrato de 25 marmitas diárias fechado com oficina local).',
+    tarefasProximoEncontro: '1. Dar entrada no Portal do Empreendedor para emissão do CCMEI\n2. Imprimir alvará provisório e termo de boas práticas\n3. Preparar apresentação para banca final de formatura',
+    linksMateriais: 'https://gov.br/empresas-e-negocios/mei-passo-a-passo',
+    statusMei: 'Em Formalização (Etapa Final)',
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 6.300/mês',
+      cmv: '34%',
+      margem: '31%',
+      contasSegregadas: '100% Ativa'
+    },
+    anexos: [
+      { nome: 'Comprovante_Abertura_Conta_PJ.pdf', tamanho: '195 KB' }
+    ]
+  },
+  {
+    id: 'diario-5',
+    alunoId: 'aluno-1',
     consultorId: 'cons-1',
     sessaoNumero: 5,
-    dataRegistro: '2026-09-30',
+    titulo: 'Formalização MEI, Alvarás & Formatura do Ciclo',
+    dataRegistro: '2026-11-17',
     tipo: 'Mentoria_2h',
-    diagnostico: 'Ciclo finalizado com êxito! Ateliê registrou MEI na 4ª sessão. Margem de lucro subiu para 32%. Emitiu primeira NF.',
+    diagnostico: 'Formatura do Ciclo 3 do Co.Nexo. Arthur concluiu todas as 5 sessões com 100% de presença e implementou as recomendações de bancada com excelência.',
+    parecerConsultor: 'CNPJ emitido com sucesso (54.892.102/0001-38). Enquadramento no CNAE 5620-1/04 (Fornecimento de alimentos preparados para consumo domiciliar). Caso de sucesso do SENAC Hub!',
+    tarefasProximoEncontro: 'Acompanhamento trimestral na régua D+60 e emissão do DASN-SIMEI.',
+    linksMateriais: 'https://gov.br/empresas-e-negocios/das-mensal',
+    statusMei: 'Formalizado (MEI Ativo)',
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 7.200/mês',
+      cmv: '32%',
+      margem: '33%',
+      contasSegregadas: '100% MEI'
+    },
+    anexos: [
+      { nome: 'Certificado_Conclusao_CoNexo_Arthur.pdf', tamanho: '520 KB' },
+      { nome: 'Cartao_CNPJ_MEI_Oficial.pdf', tamanho: '280 KB' }
+    ]
+  },
+  {
+    id: 'diario-mariana-1',
+    alunoId: 'aluno-2',
+    consultorId: 'cons-1',
+    sessaoNumero: 5,
+    titulo: 'Conclusão & Emissão de Nota Fiscal de Serviços',
+    dataRegistro: '2026-11-09',
+    tipo: 'Mentoria_2h',
+    diagnostico: 'Ciclo finalizado com êxito! Ateliê Criativo registrou MEI na 4ª sessão. Margem de lucro subiu para 32%. Emitiu primeira NF para feira de artesanato do SENAC.',
+    parecerConsultor: 'Empreendedora capacitada em precificação por hora-trabalho e custo de corte de tecido.',
     tarefasProximoEncontro: 'Manter controle mensal de faturamento para declaração anual DASN-SIMEI.',
     linksMateriais: 'https://gov.br/empresas-e-negocios/mei-guia-pratico',
     statusMei: 'Formalizado (CNPJ 45.123.789/0001-90)',
-    consultorNome: 'Aline Ferreira'
+    consultorNome: 'Aline Ferreira',
+    sala: 'Sala 01 Presencial',
+    metricasSessao: {
+      faturamento: 'R$ 4.400/mês',
+      cmv: '29%',
+      margem: '35%',
+      contasSegregadas: '100% MEI'
+    },
+    anexos: []
   }
 ];
 

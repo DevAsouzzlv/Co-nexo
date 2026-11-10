@@ -19,9 +19,9 @@ export default function Badge({
     senacSolid:
       'bg-[#004A8D] text-white border-transparent font-extrabold',
     accent:
-      'bg-[#F29100] text-slate-950 border-transparent font-black shadow-2xs',
+      'bg-[#84BD00] text-slate-950 border-transparent font-black shadow-2xs',
     accentSubtle:
-      'bg-[#F29100]/15 text-[#9A5300] border-[#F29100]/30 font-bold',
+      'bg-[#84BD00]/15 text-[#4E7100] border-[#84BD00]/30 font-bold',
     success:
       'bg-emerald-50 text-emerald-800 border-emerald-200/80',
     warning:

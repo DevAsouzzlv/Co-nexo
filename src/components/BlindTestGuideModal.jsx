@@ -172,10 +172,10 @@ export default function BlindTestGuideModal({
       >
         {/* Topo / Header */}
         <div className="px-6 py-5 bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#171b26] text-white flex items-center justify-between relative overflow-hidden">
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#F29100]/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#84BD00]/20 rounded-full blur-2xl pointer-events-none" />
           
           <div className="flex items-center gap-3.5 relative z-10">
-            <div className="h-11 w-11 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#F29100]/30 shrink-0">
+            <div className="h-11 w-11 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
               🧪
             </div>
             <div>
@@ -240,7 +240,7 @@ export default function BlindTestGuideModal({
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-[#F29100]" />
+            <Sparkles className="w-4 h-4 text-[#84BD00]" />
             <span>Alternar Perfil Instantâneo</span>
           </button>
 
@@ -561,7 +561,7 @@ export default function BlindTestGuideModal({
                             className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-[#004A8D] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-xs active:scale-98"
                           >
                             <span>Acessar Este Perfil</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-[#F29100]" />
+                            <ArrowRight className="w-3.5 h-3.5 text-[#84BD00]" />
                           </button>
                         )}
                       </div>
@@ -577,7 +577,7 @@ export default function BlindTestGuideModal({
             <div className="space-y-4 animate-fade-in text-xs text-slate-700">
               <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 space-y-2">
                 <h4 className="text-sm font-bold text-blue-950 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#F29100]" />
+                  <Sparkles className="w-4 h-4 text-[#84BD00]" />
                   Propósito Oficial do Sistema Co.Nexo
                 </h4>
                 <p className="leading-relaxed">

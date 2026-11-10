@@ -79,7 +79,7 @@ export default function BottomMobileNav({
                   : 'text-slate-500 hover:text-slate-900 font-medium'
               }`}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-[#F29100]' : 'text-slate-400'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-[#84BD00]' : 'text-slate-400'}`} />
               <span className="text-[10px] tracking-tight">{tab.label}</span>
             </button>
           );

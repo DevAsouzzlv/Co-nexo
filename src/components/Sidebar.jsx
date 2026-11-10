@@ -57,6 +57,7 @@ export default function Sidebar({
       case 'arthur':
         return [
           { id: 'portal', label: 'Meu Painel', icon: BookOpen, badge: '60%' },
+          { id: 'prontuario', label: 'Prontuário das Aulas', icon: FileText, badge: 'Histórico' },
           { id: 'metas', label: 'Plano de Ação & Metas', icon: CheckCircle2 },
           { id: 'metricas', label: 'Evolução & Finanças', icon: BarChart3 },
           { id: 'materiais', label: 'Fichas & Materiais', icon: Layers },
@@ -177,7 +178,7 @@ export default function Sidebar({
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-4 h-4 shrink-0 transition-transform ${
-                      isActive ? 'text-[#F29100] scale-110' : 'text-[#86868B] group-hover:text-[#004A8D]'
+                      isActive ? 'text-[#84BD00] scale-110' : 'text-[#86868B] group-hover:text-[#004A8D]'
                     }`} />
                     {isHovered && (
                       <span className="whitespace-nowrap animate-fade-in font-medium">{item.label}</span>
@@ -196,7 +197,7 @@ export default function Sidebar({
                           {item.badge}
                         </span>
                       ) : (
-                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#F29100] ring-2 ring-white" />
+                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#84BD00] ring-2 ring-white" />
                       )}
                     </>
                   )}

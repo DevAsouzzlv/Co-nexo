@@ -38,7 +38,7 @@ export const USER_PROFILES = [
     descricao: 'Acompanhamento do ciclo de capacitação, compromissos práticos, documentação técnica e formalização.',
     icon: UserCheck,
     color: 'orange',
-    accentBg: 'bg-[#F29100]/15 text-[#9A5B00] border-[#F29100]/30'
+    accentBg: 'bg-[#84BD00]/15 text-[#4E7100] border-[#84BD00]/30'
   },
   {
     id: 'regis',

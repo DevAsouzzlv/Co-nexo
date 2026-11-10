@@ -71,11 +71,11 @@ export default function Modal({
       >
         {/* Cabeçalho Apple / SENAC */}
         <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-[#F29100]/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#84BD00]/20 rounded-full blur-2xl pointer-events-none" />
 
           <div className="flex items-center gap-3 relative z-10">
             {Icon && (
-              <div className="h-10 w-10 bg-gradient-to-br from-[#FFAE33] to-[#F29100] text-slate-950 rounded-2xl flex items-center justify-center shrink-0 shadow-sm">
+              <div className="h-10 w-10 bg-gradient-to-br from-[#FFAE33] to-[#84BD00] text-slate-950 rounded-2xl flex items-center justify-center shrink-0 shadow-sm">
                 <Icon className="w-5 h-5 text-slate-950" />
               </div>
             )}

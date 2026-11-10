@@ -47,7 +47,7 @@ export default function TopNavbar({
               <span className="text-base">👋</span>
             </h1>
             <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[#86868B]">
-              <Sparkles className="w-3 h-3 text-[#F29100]" />
+              <Sparkles className="w-3 h-3 text-[#84BD00]" />
               <span className="capitalize">{today}</span>
             </span>
           </div>

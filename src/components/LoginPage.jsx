@@ -143,7 +143,7 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
     <div className="min-h-screen w-full bg-[#F5F7FB] text-slate-800 flex items-center justify-center p-4 sm:p-6 font-sans relative overflow-hidden">
       {/* Luz ambiente suave Apple HIG */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#004A8D]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#F29100]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#84BD00]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
       {/* Cartão Central Apple HIG */}
@@ -167,7 +167,7 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
         <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 text-xs space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 font-extrabold text-amber-950 uppercase tracking-wider text-[11px]">
-              <Sparkles className="w-4 h-4 text-[#F29100]" />
+              <Sparkles className="w-4 h-4 text-[#84BD00]" />
               <span>Aviso: Teste às Cegas Ativo</span>
             </div>
             <button
@@ -300,7 +300,7 @@ export default function LoginPage({ onLogin, onResetClean, onResetDemo }) {
             className="w-full py-3 rounded-xl bg-gradient-to-r from-[#004A8D] to-[#00386C] hover:opacity-95 active:scale-[0.99] text-white font-bold text-xs shadow-md shadow-[#004A8D]/20 transition flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>{isLoading ? 'Autenticando...' : 'Acessar Painel'}</span>
-            <ArrowRight className="w-4 h-4 text-[#F29100]" />
+            <ArrowRight className="w-4 h-4 text-[#84BD00]" />
           </button>
         </form>
 

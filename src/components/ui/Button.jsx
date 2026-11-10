@@ -22,7 +22,7 @@ export default function Button({
     primary:
       'bg-[#004A8D] text-white hover:bg-[#003B70] border-transparent shadow-sm shadow-[#004A8D]/20',
     accent:
-      'bg-[#F29100] text-slate-950 font-bold hover:bg-[#D97D00] border-transparent shadow-sm shadow-[#F29100]/25',
+      'bg-[#84BD00] text-slate-950 font-bold hover:bg-[#6C9C00] border-transparent shadow-sm shadow-[#84BD00]/25',
     secondary:
       'bg-black/[0.04] text-[#1D1D1F] hover:bg-black/[0.08] border-black/[0.04]',
     outline:

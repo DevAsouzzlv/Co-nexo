@@ -133,7 +133,7 @@ export default function AdminCleanView({
       password: newPassword,
       badge: roleLabels[newRoleType],
       gradient: getProfileGradient(newRoleType),
-      color: newRoleType === 'regis' ? '#7C3AED' : newRoleType === 'max' ? '#004A8D' : newRoleType === 'aline' ? '#F29100' : '#10B981',
+      color: newRoleType === 'regis' ? '#7C3AED' : newRoleType === 'max' ? '#004A8D' : newRoleType === 'aline' ? '#84BD00' : '#10B981',
       aliases: [newNome.trim().toLowerCase().split(' ')[0], newEmail.trim().toLowerCase()]
     };
 
@@ -190,7 +190,7 @@ export default function AdminCleanView({
         <div className="relative z-10 space-y-2">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-blue-100 border border-white/20 inline-flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#F29100]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[#84BD00]" />
               Painel do Admin Supremo • Acesso Raiz Master
             </span>
             <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
@@ -208,7 +208,7 @@ export default function AdminCleanView({
         <div className="relative z-10 flex items-center gap-2.5 shrink-0">
           <button
             onClick={() => openModalForRole('regis', 'Coordenação Geral')}
-            className="px-5 py-2.5 rounded-full bg-[#F29100] hover:bg-[#E08500] active:scale-95 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#F29100]/25 transition cursor-pointer"
+            className="px-5 py-2.5 rounded-full bg-[#84BD00] hover:bg-[#72A600] active:scale-95 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#84BD00]/25 transition cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             <span>+ Cadastrar Perfil</span>
@@ -256,7 +256,7 @@ export default function AdminCleanView({
           <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-[#F29100]" />
+                <Sparkles className="w-5 h-5 text-[#84BD00]" />
                 <h3 className="text-base font-black text-slate-900">
                   Cadastrar Perfil por Função
                 </h3>
@@ -323,7 +323,7 @@ export default function AdminCleanView({
                   <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md">
                     Docência
                   </span>
-                  <UserPlus className="w-4 h-4 text-[#F29100] group-hover:scale-110 transition" />
+                  <UserPlus className="w-4 h-4 text-[#84BD00] group-hover:scale-110 transition" />
                 </div>
                 <div>
                   <h4 className="text-sm font-black text-slate-900">Consultoria de Negócios</h4>
@@ -385,7 +385,7 @@ export default function AdminCleanView({
                   onClick={() => openModalForRole('regis', 'Coordenação Geral')}
                   className="px-3.5 py-1.5 rounded-xl bg-[#004A8D] hover:bg-[#00386B] text-white text-xs font-bold transition cursor-pointer shadow-xs flex items-center gap-1.5"
                 >
-                  <UserPlus className="w-3.5 h-3.5 text-[#F29100]" />
+                  <UserPlus className="w-3.5 h-3.5 text-[#84BD00]" />
                   <span>Novo Perfil</span>
                 </button>
               </div>
@@ -483,7 +483,7 @@ export default function AdminCleanView({
           <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
             <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
               <div className="h-10 w-10 rounded-2xl bg-[#004A8D] text-white flex items-center justify-center font-bold">
-                <Clock className="w-5 h-5 text-[#F29100]" />
+                <Clock className="w-5 h-5 text-[#84BD00]" />
               </div>
               <div>
                 <h3 className="text-lg font-black text-slate-900">
@@ -566,7 +566,7 @@ export default function AdminCleanView({
                   className="w-full py-3 px-4 rounded-2xl bg-blue-50 hover:bg-blue-100 text-[#004A8D] font-bold text-xs flex items-center justify-between transition cursor-pointer border border-blue-200"
                 >
                   <span className="flex items-center gap-2">
-                    <DownloadCloud className="w-4 h-4 text-[#F29100]" />
+                    <DownloadCloud className="w-4 h-4 text-[#84BD00]" />
                     Exportar Backup Geral Completo (JSON)
                   </span>
                   <span className="text-[10px] bg-[#004A8D] text-white px-2 py-0.5 rounded-full font-bold">
@@ -659,7 +659,7 @@ export default function AdminCleanView({
             {/* Header */}
             <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 px-6 py-5 text-white flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center font-bold">
+                <div className="h-10 w-10 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-bold">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>
@@ -777,7 +777,7 @@ export default function AdminCleanView({
                   type="submit"
                   className="px-5 py-2 rounded-2xl bg-[#004A8D] hover:bg-[#00386B] text-white text-xs font-bold transition shadow-md cursor-pointer flex items-center gap-1.5"
                 >
-                  <UserPlus className="w-4 h-4 text-[#F29100]" />
+                  <UserPlus className="w-4 h-4 text-[#84BD00]" />
                   <span>Salvar Perfil</span>
                 </button>
               </div>

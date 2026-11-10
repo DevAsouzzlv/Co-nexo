@@ -75,7 +75,7 @@ export default function DiarioBordoModal({
         {/* Cabeçalho Oficial SENAC */}
         <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center text-lg font-black shrink-0 shadow-md">
+            <div className="h-10 w-10 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center text-lg font-black shrink-0 shadow-md">
               {student.avatar || '💼'}
             </div>
             <div>
@@ -142,7 +142,7 @@ export default function DiarioBordoModal({
                   onClick={() => setIsAddingNew(true)}
                   className="px-3.5 py-2 rounded-xl bg-[#004A8D] hover:bg-[#00386C] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
                 >
-                  <Plus className="w-3.5 h-3.5 text-[#F29100]" />
+                  <Plus className="w-3.5 h-3.5 text-[#84BD00]" />
                   <span>+ Novo Registro Pedagógico</span>
                 </button>
               )}
@@ -158,7 +158,7 @@ export default function DiarioBordoModal({
                   <div key={diario.id} className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2.5">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-black text-[#004A8D] flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-[#F29100]" />
+                        <CheckCircle2 className="w-4 h-4 text-[#84BD00]" />
                         Sessão {diario.sessaoNumero} • {diario.tipo === 'Diagnostico_1h' ? 'Diagnóstico 1h' : 'Mentoria 2h'}
                       </span>
                       <span className="text-slate-400 font-mono text-[11px]">{diario.dataRegistro}</span>

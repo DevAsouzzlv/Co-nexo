@@ -9,7 +9,11 @@
     --apple-text-secondary: #86868B;
     --apple-blue: #0071E3;
     --senac-navy: #004A8D;
-    --senac-orange: #F29100;
+    --senac-orange: #84BD00;
+    --conexo-blue: #004A8D;
+    --conexo-blue-dark: #003666;
+    --conexo-green: #84BD00;
+    --conexo-green-light: #F4F9E8;
   }
 
   body {

@@ -178,9 +178,9 @@ export default function MentorCleanView({
         <div className={`fixed top-5 right-5 z-50 px-5 py-3 rounded-2xl shadow-xl border flex items-center gap-3 transition-all duration-300 animate-slide-in ${
           toastMessage.type === 'warning' 
             ? 'bg-amber-500 text-white border-amber-600' 
-            : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#F29100]'
+            : 'bg-[#004A8D] text-white border-blue-900 ring-2 ring-[#84BD00]'
         }`}>
-          <CheckCircle2 className="w-5 h-5 text-[#F29100] shrink-0" />
+          <CheckCircle2 className="w-5 h-5 text-[#84BD00] shrink-0" />
           <span className="text-xs font-bold">{toastMessage.msg}</span>
           <button 
             onClick={() => setToastMessage(null)} 
@@ -197,7 +197,7 @@ export default function MentorCleanView({
       {currentTab === 'minha-agenda' && (
         <div className="space-y-6 animate-fade-in">
           <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#003B70] via-[#004A8D] to-[#00284D] text-white p-6 sm:p-8 shadow-[0_8px_32px_rgba(0,74,141,0.18)] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-[#F29100]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#84BD00]/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 space-y-1.5">
               <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-blue-100 border border-white/20 inline-block">
@@ -211,7 +211,7 @@ export default function MentorCleanView({
               </p>
             </div>
             <div className="relative z-10">
-              <span className="text-xs font-bold px-4 py-2 rounded-full bg-[#F29100] text-slate-950 shadow-md">
+              <span className="text-xs font-bold px-4 py-2 rounded-full bg-[#84BD00] text-slate-950 shadow-md">
                 08:00 às 12:00 (4h Fechadas)
               </span>
             </div>
@@ -233,7 +233,7 @@ export default function MentorCleanView({
                         </span>
                         <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ${
                           isAvailable 
-                            ? 'bg-[#F29100] text-slate-950 font-black' 
+                            ? 'bg-[#84BD00] text-slate-950 font-black' 
                             : 'bg-blue-100 text-[#004A8D]'
                         }`}>
                           {isAvailable ? 'Vaga Livre' : ap.tipo === 'Diagnostico_1h' ? '1h Diagnóstico' : '2h Mentoria'}
@@ -252,7 +252,7 @@ export default function MentorCleanView({
 
                     <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                       {isAvailable ? (
-                        <span className="text-xs text-[#9A5B00] font-bold">Aguardando encaixe</span>
+                        <span className="text-xs text-[#4E7100] font-bold">Aguardando encaixe</span>
                       ) : (
                         <button
                           onClick={() => {
@@ -264,7 +264,7 @@ export default function MentorCleanView({
                           }}
                           className="w-full py-2 px-3 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer"
                         >
-                          <BookOpen className="w-3.5 h-3.5 text-[#F29100]" />
+                          <BookOpen className="w-3.5 h-3.5 text-[#84BD00]" />
                           <span>Iniciar Atendimento & Prontuário</span>
                         </button>
                       )}
@@ -309,7 +309,7 @@ export default function MentorCleanView({
                 onClick={handleSaveProntuario}
                 className="px-5 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-2 transition cursor-pointer shadow-xs"
               >
-                <Save className="w-4 h-4 text-[#F29100]" />
+                <Save className="w-4 h-4 text-[#84BD00]" />
                 <span>Salvar Diário de Bordo</span>
               </button>
             </div>
@@ -361,7 +361,7 @@ export default function MentorCleanView({
                     onClick={handleSaveProntuario}
                     className="px-4 py-2 bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
                   >
-                    <Save className="w-3.5 h-3.5 text-[#F29100]" />
+                    <Save className="w-3.5 h-3.5 text-[#84BD00]" />
                     <span>Gravar Registro no Prontuário</span>
                   </button>
                 </div>
@@ -446,13 +446,13 @@ export default function MentorCleanView({
                     onClick={handleAddTask}
                     className="p-2 rounded-xl bg-[#004A8D] text-white hover:bg-[#003B70] transition cursor-pointer"
                   >
-                    <Plus className="w-4 h-4 text-[#F29100]" />
+                    <Plus className="w-4 h-4 text-[#84BD00]" />
                   </button>
                 </div>
               </div>
 
               <div className="bg-gradient-to-br from-[#0030A3] via-[#004A8D] to-[#002660] text-white rounded-3xl p-5 shadow-sm space-y-3">
-                <span className="text-[10px] font-black uppercase tracking-wider text-[#F29100]">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#84BD00]">
                   Material de Apoio Oficial
                 </span>
                 <h5 className="text-sm font-bold">Ficha_Tecnica_Modelo.csv</h5>
@@ -463,7 +463,7 @@ export default function MentorCleanView({
                   onClick={downloadFichaTecnicaCSV}
                   className="w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#F29100]" />
+                  <Download className="w-3.5 h-3.5 text-[#84BD00]" />
                   <span>Baixar Planilha Oficial</span>
                 </button>
               </div>
@@ -517,7 +517,7 @@ export default function MentorCleanView({
                         isDone
                           ? 'bg-blue-100 text-[#004A8D]'
                           : isCurrent
-                            ? 'bg-[#F29100] text-slate-950 font-black'
+                            ? 'bg-[#84BD00] text-slate-950 font-black'
                             : 'bg-slate-200 text-slate-600'
                       }`}>
                         {sess.status}
@@ -574,7 +574,7 @@ export default function MentorCleanView({
               onClick={handleSalvarFichaNoProntuario}
               className="px-4 py-2 rounded-xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs"
             >
-              <Save className="w-4 h-4 text-[#F29100]" />
+              <Save className="w-4 h-4 text-[#84BD00]" />
               <span>Salvar Simulação no Prontuário</span>
             </button>
           </div>
@@ -643,7 +643,7 @@ export default function MentorCleanView({
             {/* Resultado Margem */}
             <div className="p-5 rounded-2xl bg-[#004A8D] text-white space-y-3 flex flex-col justify-between">
               <div>
-                <span className="text-[11px] font-black uppercase tracking-wider text-[#F29100]">Margem de Lucro</span>
+                <span className="text-[11px] font-black uppercase tracking-wider text-[#84BD00]">Margem de Lucro</span>
                 <div className="text-3xl font-black mt-1">{margemPercentual}%</div>
                 <p className="text-[10px] text-blue-100 mt-1">
                   Lucro bruto: R$ {lucroBrutoUnitario} por prato
@@ -719,7 +719,7 @@ export default function MentorCleanView({
                       href={`https://wa.me/55${s.whatsapp.replace(/\D/g, '')}?text=Olá%20${encodeURIComponent(s.nome)},%20aqui%20é%20${encodeURIComponent(mentor.nome.split(' ')[0])}%20do%20SENAC!`}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-1.5 rounded-xl bg-[#F29100]/15 hover:bg-[#F29100]/25 text-[#9A5B00] transition"
+                      className="p-1.5 rounded-xl bg-[#84BD00]/15 hover:bg-[#84BD00]/25 text-[#4E7100] transition"
                     >
                       <Phone className="w-3.5 h-3.5 text-[#C87500]" />
                     </a>

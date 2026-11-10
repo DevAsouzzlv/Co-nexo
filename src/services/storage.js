@@ -18,13 +18,13 @@ import {
 } from './mockData';
 
 const STORAGE_KEYS = {
-  ACCOUNTS: 'conexo_accounts_v5',
-  STUDENTS: 'conexo_students_v5',
-  APPOINTMENTS: 'conexo_appointments_v5',
-  DIARIOS: 'conexo_diarios_v5',
-  CONSULTORS: 'conexo_consultors_v5',
-  WAITING_LIST: 'conexo_waiting_list_v5',
-  LAST_BACKUP: 'conexo_last_backup_v5'
+  ACCOUNTS: 'conexo_accounts_v6',
+  STUDENTS: 'conexo_students_v6',
+  APPOINTMENTS: 'conexo_appointments_v6',
+  DIARIOS: 'conexo_diarios_v6',
+  CONSULTORS: 'conexo_consultors_v6',
+  WAITING_LIST: 'conexo_waiting_list_v6',
+  LAST_BACKUP: 'conexo_last_backup_v6'
 };
 
 // Conta Mestra Raiz do Sistema (Admin Supremo)
@@ -81,7 +81,7 @@ export const DEMO_ACCOUNTS = [
     password: 'senac123',
     badge: 'Prontuário & Trilha',
     gradient: 'from-amber-500 to-orange-600',
-    color: '#F29100',
+    color: '#84BD00',
     aliases: ['aline', 'aline.consultora', 'aline@senac.br', 'consultoria@sp.senac.br', 'laise', 'laise.consultora', 'laise@senac.br']
   },
   {
