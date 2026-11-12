@@ -470,7 +470,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+          <div className="hidden sm:flex items-center gap-2 shrink-0 self-end sm:self-auto">
             <button
               onClick={() => setIsBlindTestGuideOpen(true)}
               className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-[#004A8D] font-bold text-xs border border-blue-200 shadow-2xs transition active:scale-95 cursor-pointer flex items-center gap-1.5"
