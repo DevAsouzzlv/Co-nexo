@@ -401,7 +401,7 @@ export default function StudentCleanView({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => {
@@ -415,7 +415,7 @@ export default function StudentCleanView({
                   <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Ver Prontuário →</span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-900 mt-1">Diagnóstico</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Realizada em 20/10</p>
+                <p className="text-[10px] text-slate-500 mt-1">Realizada em 03/11</p>
               </button>
 
               <button
@@ -431,7 +431,7 @@ export default function StudentCleanView({
                   <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Ver Prontuário →</span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-900 mt-1">Custos & Ficha</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Realizada em 27/10</p>
+                <p className="text-[10px] text-slate-500 mt-1">Realizada em 05/11</p>
               </button>
 
               <button
@@ -447,7 +447,7 @@ export default function StudentCleanView({
                   <span className="text-[9px] font-bold text-[#84BD00] group-hover:underline">Abrir →</span>
                 </div>
                 <h4 className="text-xs font-bold mt-1">Precificação & CMV</h4>
-                <p className="text-[10px] text-blue-100 mt-1">Em atendimento</p>
+                <p className="text-[10px] text-blue-100 mt-1">Hoje (10/11) • 16h-18h</p>
               </button>
 
               <button
@@ -463,7 +463,7 @@ export default function StudentCleanView({
                   <span className="text-[9px] font-bold text-slate-400 group-hover:text-[#004A8D]">Ver →</span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-800 mt-1">Fluxo & PF/PJ</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Agendada 10/11</p>
+                <p className="text-[10px] text-slate-500 mt-1">Agendada 17/11</p>
               </button>
 
               <button
@@ -479,7 +479,7 @@ export default function StudentCleanView({
                   <span className="text-[9px] font-bold text-slate-400 group-hover:text-[#004A8D]">Ver →</span>
                 </div>
                 <h4 className="text-xs font-bold text-slate-800 mt-1">Formalização MEI</h4>
-                <p className="text-[10px] text-slate-500 mt-1">Formatura 17/11</p>
+                <p className="text-[10px] text-slate-500 mt-1">Formatura 24/11</p>
               </button>
             </div>
           </div>

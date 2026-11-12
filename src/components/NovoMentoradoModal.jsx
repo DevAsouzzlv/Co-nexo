@@ -96,7 +96,7 @@ export default function NovoMentoradoModal({ isOpen, onClose, onSaveStudent }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-slate-900/60 backdrop-blur-sm overflow-y-auto animate-fade-in"
       role="presentation"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -107,25 +107,25 @@ export default function NovoMentoradoModal({ isOpen, onClose, onSaveStudent }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-cad-title"
-        className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200/90 transition-all"
+        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-lg w-full max-h-[92dvh] flex flex-col overflow-hidden border border-slate-200/90 transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabeçalho Oficial SENAC */}
-        <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center shadow-md shrink-0">
-              <UserPlus className="w-5 h-5" />
+        <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-4 sm:px-6 py-3.5 sm:py-5 text-white flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-[#F29100] text-slate-950 flex items-center justify-center shadow-md shrink-0">
+              <UserPlus className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 id="modal-cad-title" className="text-base font-black tracking-tight text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h2 id="modal-cad-title" className="text-sm sm:text-base font-black tracking-tight text-white truncate">
                   Cadastrar Novo Mentorado
                 </h2>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-white/20 text-white">
+                <span className="text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full bg-white/20 text-white">
                   SENAC Hub
                 </span>
               </div>
-              <p className="text-xs text-blue-100">
+              <p className="text-[11px] sm:text-xs text-blue-100 truncate">
                 Inscrição de empreendedor na esteira do Co.Nexo SENAC
               </p>
             </div>
@@ -134,14 +134,14 @@ export default function NovoMentoradoModal({ isOpen, onClose, onSaveStudent }) {
             type="button"
             onClick={onClose}
             aria-label="Fechar janela"
-            className="text-white/80 hover:text-white p-2 rounded-xl hover:bg-white/10 transition cursor-pointer"
+            className="text-white/80 hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-white/10 transition cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Formulário com visual limpo, moderno e profissional */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1">
           {/* Nome e Ícone */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <div className="sm:col-span-3 space-y-1">

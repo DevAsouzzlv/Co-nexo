@@ -75,29 +75,29 @@ export default function DiarioBordoModal({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-2.5 sm:p-4 overflow-y-auto animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div 
-        className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200/90"
+        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[92dvh] flex flex-col overflow-hidden border border-slate-200/90 text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabeçalho Oficial SENAC */}
-        <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-6 py-5 text-white flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center text-lg font-black shrink-0 shadow-md">
+        <div className="bg-gradient-to-r from-[#00386C] via-[#004A8D] to-[#00264A] px-4 sm:px-6 py-3.5 sm:py-5 text-white flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center text-lg font-black shrink-0 shadow-md">
               {student.avatar || '💼'}
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-base font-black tracking-tight text-white">{student.nome}</h3>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-white/20 text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h3 className="text-sm sm:text-base font-black tracking-tight text-white truncate">{student.nome}</h3>
+                <span className="text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-full bg-white/20 text-white truncate">
                   {student.negocio}
                 </span>
               </div>
-              <p className="text-xs text-blue-100">
+              <p className="text-[11px] sm:text-xs text-blue-100 truncate">
                 Prontuário Pedagógico Digital • Etapa: {student.etapaPrograma} • MEI: {student.statusNegocio}
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function DiarioBordoModal({
           <button
             type="button"
             onClick={onClose}
-            className="text-white/80 hover:text-white p-2 rounded-xl hover:bg-white/10 transition cursor-pointer"
+            className="text-white/80 hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-white/10 transition cursor-pointer shrink-0"
             title="Fechar"
           >
             <X className="w-5 h-5" />
@@ -113,7 +113,7 @@ export default function DiarioBordoModal({
         </div>
 
         {/* Corpo do Prontuário */}
-        <div className="p-6 overflow-y-auto space-y-5 flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 flex-1 custom-scrollbar">
           {/* Card Resumo do Empreendedor */}
           <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
             <div>

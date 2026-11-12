@@ -415,7 +415,7 @@ export default function App() {
 
   // Se autenticado, entra no painel exclusivo do usuário
   return (
-    <div className="h-screen bg-[#F5F5F7] text-[#1D1D1F] flex p-3 sm:p-5 gap-4 lg:gap-5 relative overflow-hidden selection:bg-[#004A8D]/15 selection:text-[#004A8D]">
+    <div className="h-[100dvh] min-h-[100dvh] w-full bg-[#F5F5F7] text-[#1D1D1F] flex p-2 sm:p-4 lg:p-5 gap-3 lg:gap-5 relative overflow-hidden selection:bg-[#004A8D]/15 selection:text-[#004A8D]">
       {/* Luz Ambiente Sutil Estilo Apple */}
       <div className="fixed -top-24 -right-24 w-96 h-96 rounded-full bg-[#004A8D]/5 blur-[120px] pointer-events-none z-0" />
       <div className="fixed -bottom-24 left-1/4 w-96 h-96 rounded-full bg-[#84BD00]/5 blur-[100px] pointer-events-none z-0" />
@@ -431,7 +431,7 @@ export default function App() {
       />
 
       {/* 2. Área Principal com Scroll Independente e Sidebar Fixa */}
-      <div className="flex-1 flex flex-col gap-4 sm:gap-5 min-w-0 h-full overflow-y-auto overflow-x-hidden relative z-10 custom-scrollbar scroll-smooth pr-1 pb-24 lg:pb-6">
+      <div className="flex-1 flex flex-col gap-3.5 sm:gap-5 min-w-0 h-full overflow-y-auto overflow-x-hidden relative z-10 custom-scrollbar scroll-smooth pr-0.5 sm:pr-1 pb-28 lg:pb-6">
         {/* Top Navbar Responsiva (Fixada no topo do painel de conteúdo) */}
         <TopNavbar
           currentPersona={currentPersona}

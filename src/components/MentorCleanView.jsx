@@ -283,9 +283,9 @@ export default function MentorCleanView({
       {currentTab === 'prontuario' && (
         <div className="space-y-6">
           {/* Seletor do Aluno em Atendimento */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="bg-white rounded-3xl border border-slate-200/80 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">
                 Mentorado Ativo:
               </span>
               <select
@@ -294,7 +294,7 @@ export default function MentorCleanView({
                   setSelectedStudentId(e.target.value);
                   showToast('Prontuário alterado para o aluno selecionado.');
                 }}
-                className="py-2 px-3 rounded-xl border border-slate-200 bg-slate-50 font-bold text-xs text-[#004A8D] focus:outline-none focus:bg-white cursor-pointer"
+                className="w-full sm:w-auto py-2 px-3 rounded-xl border border-slate-200 bg-slate-50 font-bold text-xs text-[#004A8D] focus:outline-none focus:bg-white cursor-pointer"
               >
                 {students.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -304,10 +304,10 @@ export default function MentorCleanView({
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
               <button
                 onClick={handleSaveProntuario}
-                className="px-5 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center gap-2 transition cursor-pointer shadow-xs"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-2xl bg-[#004A8D] hover:bg-[#003B70] text-white font-bold text-xs flex items-center justify-center gap-2 transition cursor-pointer shadow-xs"
               >
                 <Save className="w-4 h-4 text-[#84BD00]" />
                 <span>Salvar Diário de Bordo</span>
@@ -492,7 +492,7 @@ export default function MentorCleanView({
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {sessions.map((sess) => {
               const isSelected = selectedSessionNumber === sess.num;
               const isDone = sess.num < 3;
@@ -579,7 +579,7 @@ export default function MentorCleanView({
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {/* Input Preço de Venda */}
             <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
               <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Preço de Venda</span>

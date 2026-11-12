@@ -102,33 +102,33 @@ export default function EncaixeModal({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 overflow-y-auto animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-2.5 sm:p-4 overflow-y-auto animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div 
-        className="bg-white rounded-3xl shadow-2xl max-w-xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-slate-200/90 text-slate-800"
+        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-xl w-full max-h-[92dvh] flex flex-col overflow-hidden border border-slate-200/90 text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabeçalho Oficial Co.Nexo (Azul Royal & Verde Limão da Logo) */}
-        <div className="bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#00264A] px-6 py-5 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#00264A] px-4 sm:px-6 py-3.5 sm:py-5 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
           <div className="absolute -top-10 -right-10 w-36 h-36 bg-[#84BD00]/20 rounded-full blur-2xl pointer-events-none" />
           
-          <div className="flex items-center gap-3 relative z-10">
-            <div className="h-10 w-10 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 relative z-10 min-w-0 pr-2">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
               ⚡
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-base font-black tracking-tight text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h3 className="text-sm sm:text-base font-black tracking-tight text-white truncate">
                   Encaixe Rápido de Vaga Ociosa
                 </h3>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#84BD00] text-slate-950 shadow-xs">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#84BD00] text-slate-950 shadow-xs">
                   Zero Ociosidade
                 </span>
               </div>
-              <p className="text-xs text-blue-100">
+              <p className="text-[11px] sm:text-xs text-blue-100 truncate">
                 Preenchimento inteligente de horários para atingir a meta de 8h/dia
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function EncaixeModal({
           <button
             type="button"
             onClick={onClose}
-            className="text-white/80 hover:text-white p-2 rounded-xl hover:bg-white/10 transition cursor-pointer relative z-10 shrink-0"
+            className="text-white/80 hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-white/10 transition cursor-pointer relative z-10 shrink-0"
             title="Fechar"
           >
             <X className="w-5 h-5" />
@@ -145,7 +145,7 @@ export default function EncaixeModal({
         </div>
 
         {/* Formulário / Conteúdo */}
-        <form onSubmit={handleConfirm} className="p-6 overflow-y-auto space-y-5 flex-1 custom-scrollbar text-xs">
+        <form onSubmit={handleConfirm} className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 flex-1 custom-scrollbar text-xs">
           
           {errorMsg && (
             <div className="p-3 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 flex items-center gap-2 font-medium">
@@ -281,15 +281,15 @@ export default function EncaixeModal({
                 <Sparkles className="w-4 h-4 text-[#84BD00]" />
                 <span>Resumo da Convocação Oficial:</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 text-[11px] pt-1">
-                <div>
-                  <span className="text-slate-400 font-bold block">Empreendedor:</span>
-                  <span className="font-black text-slate-800">{selectedCandidate.nome}</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+                <div className="bg-white/60 p-2.5 rounded-xl border border-blue-100/60">
+                  <span className="text-slate-400 font-bold block text-[10px]">Empreendedor:</span>
+                  <span className="font-black text-slate-800 text-xs">{selectedCandidate.nome}</span>
                   <p className="text-[10px] text-slate-500">{selectedCandidate.negocio}</p>
                 </div>
-                <div>
-                  <span className="text-slate-400 font-bold block">Data & Horário:</span>
-                  <span className="font-black text-[#004A8D]">
+                <div className="bg-white/60 p-2.5 rounded-xl border border-blue-100/60">
+                  <span className="text-slate-400 font-bold block text-[10px]">Data & Horário:</span>
+                  <span className="font-black text-[#004A8D] text-xs">
                     {selectedSlot.diaSemana}, {selectedSlot.data || 'Hoje'} às {selectedSlot.horarioInicio}
                   </span>
                   <p className="text-[10px] text-slate-500">{selectedSlot.sala || 'Sala 01 Presencial'}</p>
@@ -297,34 +297,34 @@ export default function EncaixeModal({
               </div>
 
               {/* Notificação WhatsApp */}
-              <label className="flex items-center gap-2 pt-2 border-t border-blue-100/80 cursor-pointer text-[11px] text-slate-700">
+              <label className="flex items-start sm:items-center gap-2 pt-2 border-t border-blue-100/80 cursor-pointer text-[11px] text-slate-700">
                 <input
                   type="checkbox"
                   checked={sendWhatsApp}
                   onChange={(e) => setSendWhatsApp(e.target.checked)}
-                  className="rounded text-[#004A8D] focus:ring-[#004A8D]"
+                  className="rounded text-[#004A8D] focus:ring-[#004A8D] mt-0.5 sm:mt-0"
                 />
-                <span className="flex items-center gap-1 font-semibold">
-                  <Phone className="w-3 h-3 text-emerald-600" />
-                  Disparar mensagem automática de convocação no WhatsApp ({selectedCandidate.whatsapp || '(11) 97222-3344'})
+                <span className="flex items-center gap-1 font-semibold flex-wrap">
+                  <Phone className="w-3 h-3 text-emerald-600 shrink-0" />
+                  Disparar mensagem automática no WhatsApp ({selectedCandidate.whatsapp || '(11) 97222-3344'})
                 </span>
               </label>
             </div>
           )}
 
           {/* Botões do Rodapé */}
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+          <div className="pt-3 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition cursor-pointer text-center"
             >
               Cancelar
             </button>
 
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-[#004A8D] hover:bg-[#00386C] text-white font-extrabold flex items-center gap-2 transition cursor-pointer shadow-md shadow-[#004A8D]/20 active:scale-98"
+              className="px-5 py-2.5 rounded-xl bg-[#004A8D] hover:bg-[#00386C] text-white font-extrabold flex items-center justify-center gap-2 transition cursor-pointer shadow-md shadow-[#004A8D]/20 active:scale-98"
             >
               <Zap className="w-4 h-4 text-[#84BD00]" />
               <span>Confirmar Encaixe no Turno</span>

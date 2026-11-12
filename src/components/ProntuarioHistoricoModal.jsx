@@ -65,42 +65,42 @@ export default function ProntuarioHistoricoModal({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-3 sm:p-5 overflow-y-auto animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-2 sm:p-5 overflow-y-auto animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div 
-        className="bg-white rounded-[32px] shadow-[0_25px_70px_rgba(0,0,0,0.25)] border border-slate-200/90 max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden text-slate-800"
+        className="bg-white rounded-2xl sm:rounded-[32px] shadow-[0_25px_70px_rgba(0,0,0,0.25)] border border-slate-200/90 max-w-3xl w-full max-h-[92dvh] flex flex-col overflow-hidden text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cabeçalho Oficial Co.Nexo SENAC */}
-        <div className="bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#00264A] px-6 py-5 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#00264A] px-4 sm:px-6 py-3.5 sm:py-5 text-white flex items-center justify-between shrink-0 relative overflow-hidden">
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#84BD00]/20 rounded-full blur-2xl pointer-events-none" />
           
-          <div className="flex items-center gap-3.5 relative z-10">
-            <div className="h-11 w-11 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 relative z-10 min-w-0 pr-2">
+            <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
               📖
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-base sm:text-lg font-black tracking-tight text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h3 className="text-sm sm:text-lg font-black tracking-tight text-white truncate">
                   Prontuário Pedagógico Digital
                 </h3>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#84BD00] text-slate-950 shadow-xs">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#84BD00] text-slate-950 shadow-xs">
                   Histórico Oficial SENAC Hub
                 </span>
               </div>
-              <p className="text-xs text-blue-100">
+              <p className="text-[11px] sm:text-xs text-blue-100 truncate">
                 {student.nome} • {student.negocio} ({student.etapaPrograma})
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 relative z-10">
+          <div className="flex items-center gap-1.5 sm:gap-2 relative z-10 shrink-0">
             <button
               onClick={handlePrint}
-              className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition cursor-pointer"
+              className="p-1.5 sm:p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition cursor-pointer"
               title="Imprimir Prontuário"
             >
               <Printer className="w-4 h-4" />
@@ -108,7 +108,7 @@ export default function ProntuarioHistoricoModal({
             <button
               type="button"
               onClick={onClose}
-              className="text-white/80 hover:text-white p-2 rounded-xl hover:bg-white/10 transition cursor-pointer"
+              className="text-white/80 hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-white/10 transition cursor-pointer"
               title="Fechar"
             >
               <X className="w-5 h-5" />
@@ -117,9 +117,9 @@ export default function ProntuarioHistoricoModal({
         </div>
 
         {/* Barra de Navegação entre Sessões (Sessão 1 a 5) */}
-        <div className="px-6 py-3 bg-slate-50 border-b border-slate-200/80 flex items-center gap-2 overflow-x-auto custom-scrollbar">
-          <span className="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider shrink-0 mr-1">
-            Sessões do Ciclo:
+        <div className="px-3 sm:px-6 py-2.5 sm:py-3 bg-slate-50 border-b border-slate-200/80 flex items-center gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar">
+          <span className="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider shrink-0 mr-1 hidden xs:inline">
+            Sessões:
           </span>
           {sessionsNav.map((sNum) => {
             const diarioExistente = studentDiarios.find((d) => d.sessaoNumero === sNum);
@@ -132,7 +132,7 @@ export default function ProntuarioHistoricoModal({
                 key={sNum}
                 type="button"
                 onClick={() => setActiveSessionNum(sNum)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer ${
                   isSelected
                     ? 'bg-[#004A8D] text-white shadow-xs'
                     : isCompleted
@@ -155,7 +155,7 @@ export default function ProntuarioHistoricoModal({
         </div>
 
         {/* Conteúdo Detalhado da Sessão Selecionada */}
-        <div className="p-6 overflow-y-auto space-y-5 flex-1 custom-scrollbar text-xs">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 flex-1 custom-scrollbar text-xs">
           
           {/* Topo da Sessão: Título, Data & Consultor */}
           <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 to-slate-50 border border-blue-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">

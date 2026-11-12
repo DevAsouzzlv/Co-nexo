@@ -165,29 +165,34 @@ export default function BlindTestGuideModal({
   const currentRoleObj = roles.find(r => r.id === currentPersona) || roles[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-900/60 backdrop-blur-md animate-fade-in">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 bg-slate-900/60 backdrop-blur-md overflow-y-auto animate-fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div 
-        className="bg-white rounded-[32px] shadow-[0_25px_70px_rgba(0,0,0,0.25)] border border-white/80 max-w-4xl w-full overflow-hidden flex flex-col max-h-[92vh] text-slate-800"
+        className="bg-white rounded-2xl sm:rounded-[32px] shadow-[0_25px_70px_rgba(0,0,0,0.25)] border border-white/80 max-w-4xl w-full overflow-hidden flex flex-col max-h-[92dvh] text-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Topo / Header */}
-        <div className="px-6 py-5 bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#171b26] text-white flex items-center justify-between relative overflow-hidden">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-5 bg-gradient-to-r from-[#004A8D] via-[#00386C] to-[#171b26] text-white flex items-center justify-between relative overflow-hidden shrink-0">
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#84BD00]/20 rounded-full blur-2xl pointer-events-none" />
           
-          <div className="flex items-center gap-3.5 relative z-10">
-            <div className="h-11 w-11 rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 relative z-10 min-w-0 pr-2">
+            <div className="h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl bg-[#84BD00] text-slate-950 flex items-center justify-center font-black text-sm shadow-md shadow-[#84BD00]/30 shrink-0">
               🧪
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-base sm:text-lg font-bold tracking-tight">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h2 className="text-sm sm:text-lg font-bold tracking-tight truncate">
                   Guia Interativo de Avaliação • Teste às Cegas
                 </h2>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-400 text-emerald-950 shadow-xs">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-400 text-emerald-950 shadow-xs">
                   Oficial SENAC Hub
                 </span>
               </div>
-              <p className="text-xs text-blue-100 font-medium">
+              <p className="text-[11px] sm:text-xs text-blue-100 font-medium truncate">
                 Roteiro passo a passo para testar fluxos, personas e funcionalidades em tempo real
               </p>
             </div>
@@ -195,7 +200,7 @@ export default function BlindTestGuideModal({
 
           <button
             onClick={onClose}
-            className="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition cursor-pointer relative z-10 shrink-0"
+            className="p-1.5 sm:p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition cursor-pointer relative z-10 shrink-0"
             title="Fechar Guia"
           >
             <X className="w-5 h-5" />
@@ -203,7 +208,7 @@ export default function BlindTestGuideModal({
         </div>
 
         {/* Barra de Progresso do Teste */}
-        <div className="px-6 py-3 bg-slate-50 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-50 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs shrink-0">
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-700">Progresso da sua Avaliação:</span>
             <span className="font-bold text-[#004A8D] bg-blue-100/70 px-2 py-0.5 rounded-full">
@@ -219,7 +224,7 @@ export default function BlindTestGuideModal({
         </div>
 
         {/* Abas Superiores */}
-        <div className="px-6 pt-3 border-b border-slate-100 flex items-center gap-2 overflow-x-auto">
+        <div className="px-4 sm:px-6 pt-2.5 sm:pt-3 border-b border-slate-100 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0">
           <button
             onClick={() => setActiveTab('roteiro')}
             className={`px-4 py-2 text-xs font-bold rounded-t-xl transition cursor-pointer flex items-center gap-1.5 ${

@@ -54,7 +54,8 @@ export default function AgendamentoModal({
   const initialConsultorId = initialSlot?.consultorId || consultor?.id || 'cons-1';
   const defaultConsultorId = MENTORES_CONFIG[initialConsultorId] ? initialConsultorId : 'cons-1';
 
-  const defaultData = initialSlot?.data || turno?.data || '2026-10-21';
+  const todayStr = new Date().toISOString().split('T')[0];
+  const defaultData = initialSlot?.data || turno?.data || todayStr;
   const defaultDia = initialSlot?.diaSemana || turno?.diaSemana || 'Quarta';
   const defaultHorario = initialSlot?.horario || initialSlot?.horarioInicio || (defaultConsultorId === 'cons-1' ? '08:00' : '14:00');
 
@@ -76,7 +77,8 @@ export default function AgendamentoModal({
       const validCId = MENTORES_CONFIG[cId] ? cId : 'cons-1';
       setConsultorId(validCId);
       
-      const dData = initialSlot?.data || turno?.data || '2026-10-21';
+      const currentToday = new Date().toISOString().split('T')[0];
+      const dData = initialSlot?.data || turno?.data || currentToday;
       const dDia = initialSlot?.diaSemana || turno?.diaSemana || 'Quarta';
       const defaultH = validCId === 'cons-1' ? '08:00' : '14:00';
       const dHorario = initialSlot?.horario || initialSlot?.horarioInicio || defaultH;

@@ -63,8 +63,8 @@ export default function BottomMobileNav({
   const tabs = getTabs();
 
   return (
-    <div className="lg:hidden fixed bottom-3 left-3 right-3 z-40">
-      <nav className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-xl rounded-2xl px-2 py-1.5 flex items-center justify-around">
+    <div className="lg:hidden fixed bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 z-40">
+      <nav className="bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-xl rounded-2xl px-1.5 sm:px-2 py-1 flex items-center justify-between gap-1 overflow-x-auto custom-scrollbar">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = currentTab === tab.id;
@@ -73,14 +73,14 @@ export default function BottomMobileNav({
             <button
               key={tab.id}
               onClick={() => setCurrentTab(tab.id)}
-              className={`flex-1 py-1.5 px-1 rounded-xl flex flex-col items-center justify-center gap-0.5 transition cursor-pointer min-h-[46px] ${
+              className={`flex-1 py-1.5 px-1 rounded-xl flex flex-col items-center justify-center gap-0.5 transition cursor-pointer min-h-[44px] min-w-[50px] shrink-0 ${
                 isActive
                   ? 'bg-[#004A8D] text-white font-bold shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 font-medium'
+                  : 'text-slate-500 hover:text-slate-900 font-medium hover:bg-slate-50'
               }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? 'text-[#84BD00]' : 'text-slate-400'}`} />
-              <span className="text-[10px] tracking-tight">{tab.label}</span>
+              <span className="text-[9px] sm:text-[10px] tracking-tight truncate max-w-[64px]">{tab.label}</span>
             </button>
           );
         })}
@@ -88,10 +88,10 @@ export default function BottomMobileNav({
         <button
           onClick={onLogout}
           title="Sair"
-          className="py-1 px-2 rounded-xl text-rose-600 hover:bg-rose-50 flex flex-col items-center justify-center gap-0.5 min-h-[46px] cursor-pointer"
+          className="py-1 px-1.5 rounded-xl text-rose-600 hover:bg-rose-50 flex flex-col items-center justify-center gap-0.5 min-h-[44px] min-w-[44px] shrink-0 cursor-pointer"
         >
           <LogOut className="w-4 h-4 text-rose-500" />
-          <span className="text-[10px] font-bold">Sair</span>
+          <span className="text-[9px] sm:text-[10px] font-bold">Sair</span>
         </button>
       </nav>
     </div>
